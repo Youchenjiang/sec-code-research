@@ -9,8 +9,12 @@ VAULT_DIR = os.path.join(BASE_DIR, "research-vault")
 
 # Ensure UTF-8 output in Windows
 if sys.platform.startswith("win"):
-    import io
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        if hasattr(sys.stdout, 'buffer'):
+            import io
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Restructured category definitions with 2.9 added and duplicates cleaned
 CATEGORIES = {
@@ -54,7 +58,7 @@ CATEGORIES = {
             "title": "1.4 符號執行 (Symbolic Execution)",
             "concept": "用符號值（而非具體數值）替代程式輸入，以 SAT/SMT 求解器探索程式路徑，產生觸發漏洞的具體輸入。「純靜態」符號執行不需真正執行，而是偏靜態分析端。",
             "sub_genres": [
-                {"name": "Source-level Symbolic Execution", "desc": "在原始碼層（或 IR 層）進行路徑探索. 代表工具：KLEE、S2E。"},
+                {"name": "Source-level Symbolic Execution", "desc": "在原始碼層（或 IR 層）進行路徑探索。代表工具：KLEE、S2E。"},
                 {"name": "Binary-level Symbolic Execution", "desc": "作用於編譯後的二進位，不需原始碼（用於逆向分析、韌體分析）。代表工具：angr、Triton、BINSEC/SE。"}
             ],
             "keywords": ["path explosion", "constraint solving", "SMT solver", "path condition", "symbolic pointer", "binary analysis", "VEX IR", "CFG recovery", "vulnerability discovery"],
@@ -194,7 +198,7 @@ CATEGORIES = {
         {
             "filename": "2.8-語意差異與並發偵測 (Differential & Concurrency).md",
             "title": "2.8 語意差異與並發偵測 (Differential & Concurrency)",
-            "concept": "透過對多個等價實作進行差異比對以發現語意缺陷，或動態監控多執行緒執行緒交錯，捕捉並發相關的非確定性漏洞。",
+            "concept": "透過對多個等價實作進行差異比對以發現語意缺陷，或動態監控多執行緒交錯，捕捉並發相關的非確定性漏洞。",
             "sub_genres": [
                 {"name": "編譯器與虛擬機差異測試", "desc": "自動生成程式並比較不同編譯器優化等級或 VM 實作的輸出差異。代表工具：Csmith、Rustlantis、EVMFuzz。"},
                 {"name": "並發與競爭條件偵測", "desc": "追蹤記憶體存取與鎖定，偵測 data race, deadlock 等並發缺陷。代表工具：TSan、Helgrind、CHESS、RAZZER。"},
@@ -280,7 +284,7 @@ CATEGORIES = {
             "sub_genres": [
                 {"name": "LLM Zero/Few-shot Prompting 修復", "desc": "直接以漏洞報告、錯誤訊息、程式碼上下文組成 Prompt 餵入 LLM。代表工具：ChatRepair、LLM4APR、SWE-bench 參賽模型。"},
                 {"name": "LLM 迭代反饋修復 (Iterative Feedback Loop)", "desc": "LLM 生成補丁 → 執行測試 → 將失敗資訊回饋給 LLM → 重新生成。代表工具：LLM4CVE、RAVEN。"},
-                {"name": "多 Agent 自動化修復系統 (Multi-Agent Agentic APR)", "desc": "建立多個專責 Agent（故障定位、補丁生成、測試驗證）協同解決複雜跨文件問題。代表工具：SWE-agent、AutoCodeRover., AutoPatch、AgenticVM、RAVEN。"},
+                {"name": "多 Agent 自動化修復系統 (Multi-Agent Agentic APR)", "desc": "建立多個專責 Agent（故障定位、補丁生成、測試驗證）協同解決複雜跨文件問題。代表工具：SWE-agent、AutoCodeRover、AutoPatch、AgenticVM、RAVEN。"},
                 {"name": "RAG 輔助修復 (Retrieval-Augmented Repair)", "desc": "以 RAG 從歷史 CVE 補丁庫、CWE 知識庫中檢索相關修復案例。代表工具：RAVEN、VulKey。"}
             ],
             "keywords": ["LLM program repair", "zero-shot APR", "few-shot patch", "iterative repair", "feedback-based LLM repair", "test-driven LLM fix", "agentic APR", "multi-agent repair", "SWE-bench", "tool-using agent", "RAG repair"],
@@ -518,7 +522,7 @@ categories:
         f.write(content2)
 
     # Example Paper 3: A black-box & grey-box hybrid dynamic analysis paper (e.g. stateful network fuzzing)
-    paper3_path = os.path.join(VAULT_DIR, "papers", "example-paper-stateful-fuzzing-2025.md")
+    paper3_path = os.path.join(VAULT_DIR, "papers", "example-paper-aflnet-2020.md")
     content3 = """---
 title: "AFLNet: A Greybox Fuzzer for Network Protocols"
 authors: "Van-Thuan Pham, et al."
@@ -543,7 +547,7 @@ categories:
 3. **反饋調度**：優先突變那些能觸發新代碼路徑或新協定狀態的訊息序列。
 
 ## 📊 實驗設計 & 數據集 (Evaluation & Benchmarks)
-- **使用的基準資料集**: 實際的開源網路伺服器 (ProFTPD, Pure-FTPD, Live555)。
+- **使用的基準資料集**: 實際的開源網路伺服器 (ProFTPD, Pure-FTPd, Live555)。
 - **對比的 Baseline**: 傳統黑箱協定 Fuzzer (Peach Fuzzer) 以及純 CGF。
 
 ## 📝 個人筆記 / 啟發 (Notes & Insights)
