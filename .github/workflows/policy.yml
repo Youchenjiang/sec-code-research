@@ -54,8 +54,8 @@ jobs:
               if (subject.endsWith(".")) {
                 errors.push(`${label} must not end with a period.`);
               }
-              if (subject.length > 50) {
-                errors.push(`${label} must be 50 characters or less.`);
+              if (subject.length > 72) {
+                errors.push(`${label} must be 72 characters or less.`);
               }
               const description = subject.replace(
                 new RegExp(`^(${typePattern})\\((${scopePattern})\\):\\s+`),

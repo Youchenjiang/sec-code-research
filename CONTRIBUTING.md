@@ -62,7 +62,7 @@ Use a new scope only when none of the above is accurate.
 ## Commit Message Rules
 
 - Use English.
-- Keep the subject under 50 characters.
+- Keep the subject under 72 characters (per Conventional Commits official recommendation).
 - Use lowercase after the colon.
 - Do not end the subject with a period.
 - Do not use vague subjects like `update files`, `fix bug`, or `misc changes`.
