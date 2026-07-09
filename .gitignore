@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Obsidian Vault PDFs
+research-vault/pdfs/
+
+# Obsidian local settings
+.obsidian/
+
+# Local PDFs
+*.pdf
+
+
