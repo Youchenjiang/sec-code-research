@@ -67,6 +67,7 @@ Use a new scope only when none of the above is accurate.
 - Do not end the subject with a period.
 - Do not use vague subjects like `update files`, `fix bug`, or `misc changes`.
 - Reference issues in the body, not the subject.
+- The commit message body is required and must detail the changes using numbered list items starting with `1. ` (e.g., `1. Add X.`, `2. Generate Y.`).
 
 ## Atomic Commit Rules
 
