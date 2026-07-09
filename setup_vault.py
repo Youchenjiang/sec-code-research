@@ -265,6 +265,18 @@ CATEGORIES = {
             ],
             "keywords": ["kernel fuzzing", "syscall generation", "hardware-assisted tracing", "Intel PT", "hypervisor escape", "state snapshot", "device emulation fuzzing"],
             "tools": ["syzkaller", "kAFL", "Nyx", "QEMU Fuzzer"]
+        },
+        {
+            "filename": "2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security).md",
+            "title": "2.12 智能合約與 Web3 安全 (Smart Contract & Web3 Security)",
+            "concept": "針對區塊鏈智能合約（如 EVM/Solidity, WASM）特有的運行機制與漏洞特徵（如重入、邏輯溢出、Gas耗盡），進行專門的模糊測試、符號執行與形式化驗證。",
+            "sub_genres": [
+                {"name": "智能合約模糊測試 (Smart Contract Fuzzing)", "desc": "針對合約狀態機與屬性（Invariants）進行自動化輸入變異。代表工具：Echidna、ItyFuzz、Foundry。"},
+                {"name": "智能合約符號執行 (Symbolic Execution)", "desc": "在合約位元組碼層探索執行路徑並求解约束。代表工具：Mythril、Manticore。"},
+                {"name": "形式化驗證與靜態審計 (Formal Verification)", "desc": "對合約業務邏輯屬性進行嚴謹數學證明或靜態約束檢查。代表工具：Certora Prover、Slither。"}
+            ],
+            "keywords": ["smart contract fuzzing", "EVM symbolic execution", "contract formal verification", "invariant testing", "reentrancy vulnerability", "Web3 security audit"],
+            "tools": ["Echidna", "ItyFuzz", "Mythril", "Manticore", "Certora Prover", "Slither"]
         }
     ],
     "3-自動修復 (Automated Program Repair - APR)": [
