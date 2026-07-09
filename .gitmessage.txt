@@ -1,0 +1,29 @@
+<type>(<scope>): <description>
+
+Why:
+
+1. 
+
+What changed:
+
+1. 
+
+Verification:
+
+1. 
+
+# Format:
+#   <type>(<scope>): <description>
+#
+# Allowed types:
+#   feat, fix, refactor, docs, test, chore, style, perf, security
+#
+# Preferred scopes:
+#   vault, script, template, papers, ci, docs, deps
+#
+# Rules:
+#   - English only
+#   - Subject under 50 characters
+#   - Lowercase after the colon
+#   - No period at the end
+#   - One logical change per commit
