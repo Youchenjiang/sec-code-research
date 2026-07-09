@@ -220,3 +220,10 @@ __marimo__/
 # Obsidian Vault PDFs
 research-vault/pdfs/
 
+# Obsidian local settings
+.obsidian/
+
+# Local PDFs
+*.pdf
+
+
