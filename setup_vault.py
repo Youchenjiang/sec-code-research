@@ -253,6 +253,18 @@ CATEGORIES = {
             ],
             "keywords": ["micro-execution", "page fault intercept", "dynamic memory allocation", "isolated execution", "unicorn emulator", "peripheral emulation", "firmware dynamic testing"],
             "tools": ["Unicorn Engine", "HAL-fuzz", "Jetset"]
+        },
+        {
+            "filename": "2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing).md",
+            "title": "2.11 作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)",
+            "concept": "針對作業系統內核、硬體驅動程式或雲端虛擬化管理程式（Hypervisor），透過特製輸入、虛擬化狀態回復、硬體輔助追蹤等方式進行深度的動態漏洞挖掘。",
+            "sub_genres": [
+                {"name": "內核系統呼叫模糊測試 (Kernel Syscall Fuzzing)", "desc": "自動生成或變異 syscall 序列來測試內核邊界安全性。代表工具：syzkaller、HEVD。"},
+                {"name": "硬體輔助追蹤與狀態重置 (Hardware-assisted Trace)", "desc": "利用 Intel PT 等硬體技術收集覆蓋率，並在發生 crash 時快速重置系統狀態。代表工具：kAFL、Nyx。"},
+                {"name": "虛擬化與 Hypervisor 漏洞挖掘", "desc": "模擬虛擬設備或 PCI 請求，測試虛擬化逃逸與 Hypervisor 的邏輯漏洞。代表工作：QEMU Fuzzing。"}
+            ],
+            "keywords": ["kernel fuzzing", "syscall generation", "hardware-assisted tracing", "Intel PT", "hypervisor escape", "state snapshot", "device emulation fuzzing"],
+            "tools": ["syzkaller", "kAFL", "Nyx", "QEMU Fuzzer"]
         }
     ],
     "3-自動修復 (Automated Program Repair - APR)": [
