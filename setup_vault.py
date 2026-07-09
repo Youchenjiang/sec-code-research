@@ -371,6 +371,18 @@ CATEGORIES = {
             ],
             "keywords": ["patch correctness assessment", "overfitting detection", "static feature classification", "plausible vs correct", "semantic validation", "invariant-based PCA", "preservation condition", "test generation for APR", "test augmentation", "oracle strengthening"],
             "tools": ["PATCH-SIM", "OASIs", "Invalidator", "Poracle", "EvoSuite", "OPAD"]
+        },
+        {
+            "filename": "3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching).md",
+            "title": "3.7 二進位熱補丁與漏洞修復 (Binary & Hot Patching)",
+            "concept": "針對無法停機重新編譯的閉源程式或生產環境，直接在機器碼、彙編級別或記憶體中進行就地修復與熱補丁注入，通常涉及彙編代碼生成與跳轉跳轉（Trampoline）。",
+            "sub_genres": [
+                {"name": "熱補丁注入 (Hot Patching)", "desc": "在不重啟進程的情況下，於記憶體中動態替換漏洞函數。代表工具：Kpatch、Livepatch。"},
+                {"name": "二進位代碼重寫 (Binary Rewriting for APR)", "desc": "直接靜態重寫二進位執行檔以修復漏洞（如安全邊界檢查插入）。代表工具：Uroboros、RetroWrite。"},
+                {"name": "跳轉跳轉生成 (Trampoline Generation)", "desc": "在 Bug 處插入跳轉指令指向新編譯的修復程式碼塊，再跳轉回原控制流。"}
+            ],
+            "keywords": ["binary patching", "hot patching", "binary rewriting", "trampoline insertion", "in-memory patch", "kernel hot patch", "trampoline function"],
+            "tools": ["Kpatch", "Livepatch", "Uroboros", "RetroWrite"]
         }
     ]
 }
