@@ -108,6 +108,18 @@ CATEGORIES = {
             ],
             "keywords": ["binary analysis", "disassembly", "CFG recovery", "lifted IR", "reverse engineering", "binary lifter", "VEX", "Ghidra Pcode"],
             "tools": ["Ghidra", "BAP", "angr", "IDA Pro", "Binary Ninja"]
+        },
+        {
+            "filename": "1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA).md",
+            "title": "1.9 軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)",
+            "concept": "分析軟體的第三方依賴與庫，生成與驗證軟體物料清單（SBOM），並檢測相依組件 of 已知安全漏洞與惡意供應鏈投毒。",
+            "sub_genres": [
+                {"name": "依賴漏洞掃描 (Dependency Vulnerability Scanning)", "desc": "識別程式中引入的開源組件，比對已知漏洞庫（如 CVE/NVD）。代表工具：Snyk、OWASP Dependency-Check、Dependabot。"},
+                {"name": "軟體物料清單 (SBOM Analysis)", "desc": "分析與生成軟體清單（如 SPDX、CycloneDX 格式），驗證其許可證合規性。代表工具：Syft、Grype。"},
+                {"name": "套件投毒與惡意代碼檢測 (Package Poisoning Detection)", "desc": "靜態分析第三方代碼中的惡意行為，防範域名搶註與惡意腳本。代表工具：Socket、GuardDog。"}
+            ],
+            "keywords": ["software composition analysis", "dependency scanning", "SBOM validation", "license compliance", "supply chain attack", "package poisoning", "malicious package detection"],
+            "tools": ["Snyk", "Dependency-Check", "Dependabot", "Syft", "Grype", "Socket", "GuardDog"]
         }
     ],
     "2A-黑箱動態分析 (Black-box Dynamic Analysis)": [
