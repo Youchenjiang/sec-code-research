@@ -99,15 +99,15 @@ CATEGORIES = {
             "tools": ["VulDeePecker", "LineVul", "Devign", "Reveal", "VulBERTa", "IRIS", "GPTScan"]
         },
         {
-            "filename": "1.8-二進位與組合分析 (Binary & SCA).md",
-            "title": "1.8 二進位與組合分析 (Binary / Composition Analysis)",
-            "concept": "不依賴原始碼，直接分析二進位或第三方套件，適用於閉源軟體、韌體、供應鏈風險。",
+            "filename": "1.8-二進位與逆向分析 (Binary & Reverse Engineering).md",
+            "title": "1.8 二進位與逆向分析 (Binary & Reverse Engineering)",
+            "concept": "不依賴原始碼，直接反組譯或分析編譯後的二進位執行檔或韌體鏡像，適用於閉源安全審查、漏洞挖掘與反編譯分析。",
             "sub_genres": [
-                {"name": "靜態二進位分析 (Static Binary Analysis)", "desc": "逆向工程手法，反組譯後分析控制流、資料流。代表工具：Ghidra、BAP、angr。"},
-                {"name": "軟體組成分析 (Software Composition Analysis, SCA)", "desc": "識別第三方/開源相依套件，比對已知 CVE 資料庫。代表工具：OWASP Dependency-Check、Snyk、GitHub Dependabot。"}
+                {"name": "靜態二進位分析 (Static Binary Analysis)", "desc": "逆向工程手法，反組譯後分析控制流、資料流。代表工具：Ghidra、BAP、angr、IDA Pro、Binary Ninja。"},
+                {"name": "中間表示層提升 (IR Lifting)", "desc": "將機器碼反編譯並提升為中間表示（如 LLVM IR、VEX IR）以進行高層次語意分析。"}
             ],
-            "keywords": ["binary analysis", "disassembly", "CFG recovery", "lifted IR", "software composition analysis", "dependency vulnerability", "CVE matching", "SBOM (Software Bill of Materials)"],
-            "tools": ["Ghidra", "BAP", "angr", "Dependency-Check", "Snyk", "Dependabot"]
+            "keywords": ["binary analysis", "disassembly", "CFG recovery", "lifted IR", "reverse engineering", "binary lifter", "VEX", "Ghidra Pcode"],
+            "tools": ["Ghidra", "BAP", "angr", "IDA Pro", "Binary Ninja"]
         }
     ],
     "2A-黑箱動態分析 (Black-box Dynamic Analysis)": [
