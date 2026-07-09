@@ -277,6 +277,17 @@ CATEGORIES = {
             ],
             "keywords": ["smart contract fuzzing", "EVM symbolic execution", "contract formal verification", "invariant testing", "reentrancy vulnerability", "Web3 security audit"],
             "tools": ["Echidna", "ItyFuzz", "Mythril", "Manticore", "Certora Prover", "Slither"]
+        },
+        {
+            "filename": "2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis).md",
+            "title": "2.13 微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)",
+            "concept": "分析並檢測軟體在共享硬體資源（如 CPU 快取、分支預測器）時產生的可觀測洩漏（快取側通道、過渡執行漏洞如 Spectre），常用於加密庫與安全封裝環境。",
+            "sub_genres": [
+                {"name": "快取狀態與洩漏分析 (Cache Side-Channel)", "desc": "分析程序執行期間對 CPU 快取狀態的影響，以量化資訊洩漏。代表工具：CACHEQL。"},
+                {"name": "微架構漏洞與過渡執行檢測 (Transient Execution)", "desc": "檢測程式碼中易受預測執行引導而洩漏機密資訊的漏洞模式。代表工具：CacheAudit。"}
+            ],
+            "keywords": ["cache side-channel", "information leakage quantification", "transient execution vulnerability", "Spectre detection", "microarchitectural side-channel"],
+            "tools": ["CACHEQL", "CacheAudit"]
         }
     ],
     "3-自動修復 (Automated Program Repair - APR)": [
