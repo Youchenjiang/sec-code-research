@@ -241,6 +241,18 @@ CATEGORIES = {
             ],
             "keywords": ["mutation testing", "mutation analysis", "mutant generation", "equivalent mutant", "mutation score", "fuzzer evaluation", "fault injection"],
             "tools": ["Pitest", "Mull", "Milu", "Duesenberg"]
+        },
+        {
+            "filename": "2.10-微執行與模擬測試 (Micro-execution & Emulation).md",
+            "title": "2.10 微執行與模擬測試 (Micro-execution & Emulation)",
+            "concept": "在缺乏主程式進入點與完整運行環境的狀態下，直接虛擬執行目標程式的任意函式或代碼片段。核心是透過攔截記憶體異常（Page Fault）動態分配記憶體與輸入。",
+            "sub_genres": [
+                {"name": "微執行 (Micro-execution)", "desc": "執行任意程式碼片段，並在執行期攔截存取異常以動態建構具體上下文。代表工作：PLDI 2014 Micro-execution。"},
+                {"name": "函式級模擬與微模糊測試 (Function-level Fuzzing)", "desc": "利用 Unicorn / QEMU 載入特定函數進行快速的 concrete 虛擬運行與漏洞探測。代表工具：Unicorn-based micro-fuzzer。"},
+                {"name": "硬體與外設模擬執行", "desc": "在虛擬機中動態模擬外部設備，以支持嵌入式系統或韌體片段的動態測試。代表工具：HAL-fuzz、Jetset。"}
+            ],
+            "keywords": ["micro-execution", "page fault intercept", "dynamic memory allocation", "isolated execution", "unicorn emulator", "peripheral emulation", "firmware dynamic testing"],
+            "tools": ["Unicorn Engine", "HAL-fuzz", "Jetset"]
         }
     ],
     "3-自動修復 (Automated Program Repair - APR)": [
