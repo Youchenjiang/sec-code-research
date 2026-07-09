@@ -120,6 +120,17 @@ CATEGORIES = {
             ],
             "keywords": ["software composition analysis", "dependency scanning", "SBOM validation", "license compliance", "supply chain attack", "package poisoning", "malicious package detection"],
             "tools": ["Snyk", "Dependency-Check", "Dependabot", "Syft", "Grype", "Socket", "GuardDog"]
+        },
+        {
+            "filename": "1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security).md",
+            "title": "1.10 密碼學與協議安全審計 (Cryptographic & Protocol Security)",
+            "concept": "專注於檢測密碼學 API 誤用（如弱金鑰、靜態 IV、不安全填充）以及協議實現中控制流與狀態機的正確性與時序安全。",
+            "sub_genres": [
+                {"name": "密碼學 API 誤用檢測 (Cryptographic API Misuse)", "desc": "靜態分析程式碼中密碼學函數的調用參數，核對安全規則。代表工具：CogniCrypt、CrySL、CryptoLint。"},
+                {"name": "時序與恆定時間驗證 (Constant-time Verification)", "desc": "分析代碼執行時間是否與輸入數據相關，防止時序側通道攻擊。代表工具：dudect、CacheD。"}
+            ],
+            "keywords": ["cryptographic API misuse", "weak key detection", "constant-time implementation", "timing leak verification", "protocol state machine", "SSL/TLS configuration audit"],
+            "tools": ["CogniCrypt", "CrySL", "CryptoLint", "dudect", "CacheD"]
         }
     ],
     "2A-黑箱動態分析 (Black-box Dynamic Analysis)": [
