@@ -417,10 +417,8 @@ GENRE_RELATIONS = {
         ],
     },
     "1.3-抽象解釋 (Abstract Interpretation)": {
-        "shares_technique": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
-        ],
         "complementary": [
+            "[[1.4-符號執行 (Symbolic Execution)]]",
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
         ],
     },
@@ -453,6 +451,7 @@ GENRE_RELATIONS = {
         "extends": [
             "[[1.1-語法與結構分析 (Syntactic & AST)]]",
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
+            "[[1.5-圖結構分析 (Graph-based Analysis)]]",
         ],
         "shares_technique": [
             "[[3.4-深度學習修復流派 (DL & NMT)]]",
@@ -466,17 +465,17 @@ GENRE_RELATIONS = {
         "precondition_of": [
             "[[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
-        "domain_overlap": [
+        "complementary": [
             "[[1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]]",
         ],
     },
     "1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)": {
-        "domain_overlap": [
+        "complementary": [
             "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
         ],
     },
     "1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)": {
-        "dynamic_counterpart": [
+        "domain_overlap": [
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
         "shares_technique": [
@@ -487,8 +486,6 @@ GENRE_RELATIONS = {
     "2.1-Web與API動態漏洞掃描 (DAST)": {
         "complementary": [
             "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
-        ],
-        "dynamic_counterpart": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
         ],
     },
@@ -559,7 +556,7 @@ GENRE_RELATIONS = {
         ],
     },
     "2.10-微執行與模擬測試 (Micro-execution & Emulation)": {
-        "extends": [
+        "complementary": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
         "shares_technique": [
@@ -591,7 +588,7 @@ GENRE_RELATIONS = {
         ],
     },
     "2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)": {
-        "dynamic_counterpart": [
+        "domain_overlap": [
             "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
         ],
         "shares_technique": [
