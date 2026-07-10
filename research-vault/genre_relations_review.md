@@ -1,19 +1,20 @@
 # Code Security Research: Genre Relations Review Schema
 
-This document lists all defined semantic relationships between the 31 research genres in the Code Security Research Vault. It is formatted for direct ingestion and auditing by other AI systems.
+This document lists all defined semantic relationships between the 38 research genres in the Code Security Research Vault. It is formatted for direct ingestion and auditing by other AI systems.
 
 ---
 
 ## 1. Relationship Types & Definitions
 
-The relationship ontology uses 6 distinct typed directed edges:
+The relationship ontology uses 7 distinct typed directed edges:
 
-- **`extends`**: A is a specialization or direct subtype of B (e.g., Learning-based static analysis extends Syntactic & AST analysis).
-- **`shares_technique`**: A and B share core algorithms, intermediate representations (IR), or formal solvers (e.g., Semantics-based Synthesis and Symbolic Execution both use SMT solvers).
-- **`complementary`**: A and B represent different approaches that address the same security problem or work together in a pipeline (e.g., SAST and DAST).
-- **`precondition_of`**: A must execute or exist prior to B in the program analysis pipeline (e.g., Fault Localization is a precondition for Automated Program Repair).
-- **`domain_overlap`**: A and B address the same class of vulnerabilities but use completely different analysis paradigms (e.g., Cryptographic Static Auditing and Timing Side-Channel Analysis).
-- **`dynamic_counterpart`**: A and B are the static and dynamic variants of the exact same analysis paradigm (e.g., Static Data Flow vs. Dynamic Taint Analysis).
+- **`extends`**: A is a specialization or direct subtype of B.
+- **`precondition_of`**: A must execute or exist prior to B in the program analysis pipeline.
+- **`dynamic_counterpart`**: A and B are the static and dynamic variants of the exact same analysis paradigm.
+- **`shares_technique`**: A and B share core algorithms, intermediate representations (IR), or formal solvers.
+- **`domain_overlap`**: A and B address the same class of vulnerabilities but use completely different analysis paradigms.
+- **`co_deployed`**: A and B are regularly combined in the same analysis pipeline or toolchain.
+- **`same_problem_different_paradigm`**: A and B address the same vulnerability class via incompatible analysis strategies.
 
 ---
 
@@ -21,162 +22,139 @@ The relationship ontology uses 6 distinct typed directed edges:
 
 Below is the flat map of all active relationships defined in `setup_vault.py`.
 
-### Group 1: Static Analysis (1.1 - 1.10)
+### 0-設計安全與威脅分析 (Secure Design & Threat Analysis)
 
-- **1.1 Syntactic & AST**
-  - `precondition_of` -> **1.2 Data Flow Analysis** (AST is built first to traverse control/data dependence).
-  - `precondition_of` -> **1.5 Graph-based Analysis** (AST forms the backbone of the Code Property Graph).
-  - `precondition_of` -> **1.7 Learning-based Static** (Neural models learn syntax embeddings from ASTs).
+- **0.1-威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis)**
+  - `precondition_of` -> [[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]], [[1.2-資料流分析 (Data Flow Analysis)]]
+  - `same_problem_different_paradigm` -> [[1.13-網路協定形式化分析 (Protocol Formal Analysis)]]
 
-- **1.2 Data Flow Analysis**
-  - `dynamic_counterpart` -> **2.5 Dynamic Taint Analysis (DTA)** (DTA tracks taint tags at runtime; Data Flow propagates taint statically).
-  - `shares_technique` -> **1.5 Graph-based Analysis** (Both build/traverse dependency graphs like PDG/SDG).
-  - `shares_technique` -> **1.6 Type System & IFC** (Type checkers propagate safety labels similar to data flow equations).
-  - `complementary` -> **2.1 Web & API DAST** (SAST data flow tracks internal code sources-to-sinks; DAST scans external behavior).
-  - `complementary` -> **1.3 Abstract Interpretation** (DFA is iterative over-approximation; AI provides the formal mathematical framework for it).
+### 1-靜態分析 (Static Analysis)
 
-- **1.3 Abstract Interpretation**
-  - `complementary` -> **1.4 Symbolic Execution** (AI is over-approximation for soundness; SE is under-approximation for precision/bug finding).
-  - `complementary` -> **1.2 Data Flow Analysis** (AI mathematically generalizes data flow analysis lattices).
+- **1.1-語法與結構分析 (Syntactic & AST)**
+  - `precondition_of` -> [[1.2-資料流分析 (Data Flow Analysis)]], [[1.5-圖結構分析 (Graph-based Analysis)]], [[1.7-學習型靜態分析 (Learning-based Static)]]
+- **1.2-資料流分析 (Data Flow Analysis)**
+  - `dynamic_counterpart` -> [[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]
+  - `same_problem_different_paradigm` -> [[2.1-Web與API動態漏洞掃描 (DAST)]]
+  - `shares_technique` -> [[1.5-圖結構分析 (Graph-based Analysis)]], [[1.6-型別系統與資訊流分析 (Type System & IFC)]]
+- **1.3-抽象解釋 (Abstract Interpretation)**
+  - `precondition_of` -> [[1.2-資料流分析 (Data Flow Analysis)]], [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]], [[3.1-生成與驗證流派 (Generate-and-Validate)]]
+  - `same_problem_different_paradigm` -> [[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]], [[1.4-符號執行 (Symbolic Execution)]]
+- **1.4-符號執行 (Symbolic Execution)**
+  - `co_deployed` -> [[2.6-混合與Concolic執行 (Concolic & Hybrid)]]
+  - `same_problem_different_paradigm` -> [[1.3-抽象解釋 (Abstract Interpretation)]]
+  - `shares_technique` -> [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]], [[2.10-微執行與模擬測試 (Micro-execution & Emulation)]], [[2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)]], [[3.2-語意合成流派 (Semantics-based Synthesis)]]
+- **1.5-圖結構分析 (Graph-based Analysis)**
+  - `precondition_of` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[1.2-資料流分析 (Data Flow Analysis)]], [[1.7-學習型靜態分析 (Learning-based Static)]]
+- **1.6-型別系統與資訊流分析 (Type System & IFC)**
+  - `domain_overlap` -> [[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]], [[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]
+  - `shares_technique` -> [[1.2-資料流分析 (Data Flow Analysis)]], [[3.2-語意合成流派 (Semantics-based Synthesis)]]
+- **1.7-學習型靜態分析 (Learning-based Static)**
+  - `extends` -> [[1.1-語法與結構分析 (Syntactic & AST)]], [[1.2-資料流分析 (Data Flow Analysis)]], [[1.5-圖結構分析 (Graph-based Analysis)]]
+  - `precondition_of` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[1.5-圖結構分析 (Graph-based Analysis)]], [[1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]], [[3.3-範本與模式匹配流派 (Template-based)]], [[3.4-深度學習修復流派 (DL & NMT)]]
+- **1.8-二進位與逆向分析 (Binary & Reverse Engineering)**
+  - `co_deployed` -> [[1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]], [[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]]
+  - `domain_overlap` -> [[2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)]]
+  - `precondition_of` -> [[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]
+  - `shares_technique` -> [[1.4-符號執行 (Symbolic Execution)]], [[2.10-微執行與模擬測試 (Micro-execution & Emulation)]], [[2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)]], [[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]
+- **1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)**
+  - `co_deployed` -> [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]
+  - `precondition_of` -> [[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]], [[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]
+  - `shares_technique` -> [[1.7-學習型靜態分析 (Learning-based Static)]]
+- **1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)**
+  - `domain_overlap` -> [[1.13-網路協定形式化分析 (Protocol Formal Analysis)]], [[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]
+  - `shares_technique` -> [[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]
+- **1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)**
+  - `domain_overlap` -> [[1.6-型別系統與資訊流分析 (Type System & IFC)]]
+  - `same_problem_different_paradigm` -> [[1.3-抽象解釋 (Abstract Interpretation)]]
+  - `shares_technique` -> [[1.13-網路協定形式化分析 (Protocol Formal Analysis)]]
+- **1.12-靜態污點分析 (Static Taint Analysis)**
+  - `dynamic_counterpart` -> [[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]
+  - `extends` -> [[1.2-資料流分析 (Data Flow Analysis)]]
+- **1.13-網路協定形式化分析 (Protocol Formal Analysis)**
+  - `domain_overlap` -> [[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]], [[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]
+  - `same_problem_different_paradigm` -> [[0.1-威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis)]]
+  - `shares_technique` -> [[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]
+- **1.14-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)**
+  - `precondition_of` -> [[1.7-學習型靜態分析 (Learning-based Static)]], [[3.3-範本與模式匹配流派 (Template-based)]], [[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]
 
-- **1.4 Symbolic Execution**
-  - `complementary` -> **2.6 Concolic & Hybrid** (Concolic execution guides symbolic paths with concrete runs; SE is purely symbolic).
-  - `complementary` -> **1.3 Abstract Interpretation** (Formal duals: AI is over-approximated, SE is under-approximated).
-  - `shares_technique` -> **2.10 Micro-execution & Emulation** (Both execute paths; micro-execution intercepts memory exceptions to feed inputs dynamically).
-  - `shares_technique` -> **3.2 Semantics-based Synthesis** (Synthesis uses symbolic execution engines and SMT solvers to construct correct code patches).
+### 2A-黑箱動態分析 (Black-box Dynamic Analysis)
 
-- **1.5 Graph-based Analysis**
-  - `extends` -> **1.2 Data Flow Analysis** (Code Property Graphs incorporate program dependence graphs).
-  - `shares_technique` -> **1.7 Learning-based Static** (Learning models like GNNs train directly on Code Property Graphs).
+- **2.1-Web與API動態漏洞掃描 (DAST)**
+  - `same_problem_different_paradigm` -> [[1.2-資料流分析 (Data Flow Analysis)]], [[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]
+- **2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)**
+  - `domain_overlap` -> [[1.13-網路協定形式化分析 (Protocol Formal Analysis)]]
+  - `same_problem_different_paradigm` -> [[2.1-Web與API動態漏洞掃描 (DAST)]], [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+- **2.3-惡意程式沙盒與行為分析 (Malware Sandbox)**
+  - `co_deployed` -> [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]], [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]], [[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]
 
-- **1.6 Type System & IFC**
-  - `shares_technique` -> **1.2 Data Flow Analysis** (Static information flow control relies on type-based data flow analysis).
-  - `domain_overlap` -> **2.13 Microarchitectural & Side-Channel** (IFC type systems prove timing/cache leakage safety; side-channel analysis tests for real leakage).
+### 2B-白與灰箱動態分析 (White & Grey-box Dynamic Analysis)
 
-- **1.7 Learning-based Static**
-  - `extends` -> **1.1 Syntactic & AST** (Learns from token sequences and AST representations).
-  - `extends` -> **1.2 Data Flow Analysis** (Learns from data flow graphs).
-  - `extends` -> **1.5 Graph-based Analysis** (Uses Graph Neural Networks on CPG representations).
-  - `shares_technique` -> **3.4 DL & NMT Repair** (Both share deep learning models like CodeBERT / LLMs for coding tasks).
-  - `shares_technique` -> **3.3 Template-based Repair** (Learning models are often used to mine or select repair templates).
+- **2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)**
+  - `co_deployed` -> [[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]], [[2.6-混合與Concolic執行 (Concolic & Hybrid)]]
+  - `domain_overlap` -> [[2.8-語意差異與並發偵測 (Differential & Concurrency)]]
+  - `precondition_of` -> [[3.6-安全補丁驗證與PCA (Validation & PCA)]]
+  - `same_problem_different_paradigm` -> [[2.10-微執行與模擬測試 (Micro-execution & Emulation)]], [[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]], [[2.9-變異測試 (Mutation Testing)]]
+- **2.5-動態污點分析 (Dynamic Taint Analysis - DTA)**
+  - `dynamic_counterpart` -> [[1.12-靜態污點分析 (Static Taint Analysis)]], [[1.2-資料流分析 (Data Flow Analysis)]]
+  - `precondition_of` -> [[3.1-生成與驗證流派 (Generate-and-Validate)]]
+  - `shares_technique` -> [[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]], [[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]], [[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]], [[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]
+- **2.6-混合與Concolic執行 (Concolic & Hybrid)**
+  - `co_deployed` -> [[1.4-符號執行 (Symbolic Execution)]], [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[2.10-微執行與模擬測試 (Micro-execution & Emulation)]], [[2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)]]
+- **2.7-執行期插樁與監控 (Instrumentation & Sanitizers)**
+  - `co_deployed` -> [[2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)]]
+  - `precondition_of` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]], [[3.1-生成與驗證流派 (Generate-and-Validate)]]
+  - `shares_technique` -> [[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]], [[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]], [[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]
+- **2.8-語意差異與並發偵測 (Differential & Concurrency)**
+  - `domain_overlap` -> [[2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)]], [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+- **2.9-變異測試 (Mutation Testing)**
+  - `same_problem_different_paradigm` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[3.6-安全補丁驗證與PCA (Validation & PCA)]]
+- **2.10-微執行與模擬測試 (Micro-execution & Emulation)**
+  - `domain_overlap` -> [[2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]
+  - `same_problem_different_paradigm` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[1.4-符號執行 (Symbolic Execution)]], [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]], [[2.6-混合與Concolic執行 (Concolic & Hybrid)]]
+- **2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)**
+  - `domain_overlap` -> [[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]
+  - `extends` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+- **2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)**
+  - `domain_overlap` -> [[2.8-語意差異與並發偵測 (Differential & Concurrency)]]
+  - `extends` -> [[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]
+  - `shares_technique` -> [[1.4-符號執行 (Symbolic Execution)]]
+- **2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)**
+  - `domain_overlap` -> [[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]], [[1.6-型別系統與資訊流分析 (Type System & IFC)]]
+  - `shares_technique` -> [[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]
+- **2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)**
+  - `domain_overlap` -> [[2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)]]
+  - `shares_technique` -> [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]], [[2.6-混合與Concolic執行 (Concolic & Hybrid)]]
+- **2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)**
+  - `co_deployed` -> [[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]
+  - `domain_overlap` -> [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]], [[2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)]]
 
-- **1.8 Binary & Reverse Engineering**
-  - `shares_technique` -> **1.4 Symbolic Execution** (Binary engines like Triton/angr use symbolic execution on disassembled code).
-  - `shares_technique` -> **2.10 Micro-execution & Emulation** (Both run compiled code in isolated virtual environments/emulators without source code).
-  - `precondition_of` -> **3.7 Binary & Hot Patching** (Disassembly/reverse engineering is required to locate and apply binary patches).
-  - `complementary` -> **1.9 Software Composition & Supply Chain SCA** (SCA lists declared open-source packages; binary analysis validates if they exist in compiled output).
+### 3-自動修復 (Automated Program Repair - APR)
 
-- **1.9 Software Composition & Supply Chain SCA**
-  - `complementary` -> **1.8 Binary & Reverse Engineering** (Validates declarations against binary/compiled reality).
-
-- **1.10 Cryptographic & Protocol Security**
-  - `domain_overlap` -> **2.13 Microarchitectural & Side-Channel** (1.10 audits API/protocol misuse statically; 2.13 timing side-channels analyze real hardware timing leakage).
-  - `shares_technique` -> **2.5 Dynamic Taint Analysis (DTA)** (DTA tracks cryptographic keys to prevent them from leaking into public channels/sinks).
-
----
-
-### Group 2: Dynamic Analysis (2.1 - 2.13)
-
-- **2.1 Web & API DAST**
-  - `complementary` -> **2.2 Black-box Protocol Fuzzing** (DAST targets web application flows; protocol fuzzing targets protocol parsing layers).
-  - `complementary` -> **1.2 Data Flow Analysis** (Provides the dynamic validation for static source-to-sink findings).
-
-- **2.2 Black-box Protocol Fuzzing**
-  - `complementary` -> **2.4 Feedback-directed Fuzzing** (Black-box relies on protocol generation/mutation; Grey-box utilizes coverage feedback).
-  - `complementary` -> **2.1 Web & API DAST** (Targets communication protocol implementation rather than HTTP application endpoints).
-
-- **2.3 Malware Sandbox**
-  - `shares_technique` -> **2.7 Instrumentation & Sanitizers** (Both monitor API calls and system execution hooks in real-time).
-
-- **2.4 Feedback-directed Fuzzing**
-  - `complementary` -> **2.6 Concolic & Hybrid** (Hybrid fuzzing switches to concolic execution when stuck at magic bytes/complex constraints).
-  - `complementary` -> **2.2 Black-box Protocol Fuzzing** (Compares coverage-guided grey-box vs. pure black-box generation).
-  - `complementary` -> **2.10 Micro-execution & Emulation** (Fuzzers run whole-program cycles; micro-execution targets isolated basic blocks).
-  - `complementary` -> **2.9 Mutation Testing** (Fuzzing generates inputs to find bugs; mutation testing injects bugs to test the quality of tests/fuzzing).
-  - `precondition_of` -> **2.11 Kernel & Hypervisor Fuzzing** (AFL/LibFuzzer coverage instrumentation is a prerequisite for kernel-level fuzzers).
-  - `domain_overlap` -> **2.8 Differential & Concurrency** (Fuzzing generates tests; differential testing runs those tests across multiple engines).
-
-- **2.5 Dynamic Taint Analysis (DTA)**
-  - `dynamic_counterpart` -> **1.2 Data Flow Analysis** (Runs taint tracking on concrete execution paths).
-  - `shares_technique` -> **1.10 Cryptographic & Protocol Security** (Crypto tracking techniques are identical to DTA information flow).
-  - `shares_technique` -> **2.13 Microarchitectural & Side-Channel** (DTA tracks secret variables to branch conditions to identify timing leaks).
-
-- **2.6 Concolic & Hybrid**
-  - `complementary` -> **1.4 Symbolic Execution** (Mitigates path explosion by pinning paths with concrete inputs).
-  - `complementary` -> **2.4 Feedback-directed Fuzzing** (Works as a hybrid fuzzer combo like Driller/QSYM).
-  - `shares_technique` -> **2.10 Micro-execution & Emulation** (Uses micro-execution runtime components to concrete-execute parts of code).
-
-- **2.7 Instrumentation & Sanitizers**
-  - `precondition_of` -> **2.4 Feedback-directed Fuzzing** (Sanitizers like ASan/MSan compile into binary to report crashes/coverage for fuzzers).
-  - `shares_technique` -> **2.5 Dynamic Taint Analysis (DTA)** (DTA relies on heavy dynamic instrumentation engines like Intel PIN/Valgrind).
-  - `shares_technique` -> **2.3 Malware Sandbox** (Uses system-level instrumentation hooks).
-  - `shares_technique` -> **3.7 Binary & Hot Patching** (Patch insertion relies on hot-patching instrumentation techniques).
-
-- **2.8 Differential & Concurrency**
-  - `domain_overlap` -> **2.4 Feedback-directed Fuzzing** (Both execute code dynamically; differential uses another program version as an oracle).
-  - `domain_overlap` -> **2.12 Smart Contract & Web3 Security** (Web3 security relies on differential execution of transactions to find fork/consensus bugs).
-
-- **2.9 Mutation Testing**
-  - `complementary` -> **2.4 Feedback-directed Fuzzing** (Mutation gauges fuzzer suite test quality).
-  - `complementary` -> **3.1 Generate-and-Validate** (Evaluates if generated patches are semantically robust or just overfitting).
-  - `shares_technique` -> **3.6 Validation & PCA** (Patch validation uses mutation testing concepts to evaluate patch robustness).
-
-- **2.10 Micro-execution & Emulation**
-  - `complementary` -> **2.4 Feedback-directed Fuzzing** (Runs isolated functions bypassing setup code vs. whole system testing).
-  - `shares_technique` -> **1.4 Symbolic Execution** (Forks concrete executions into symbolic path exploration).
-  - `shares_technique` -> **2.6 Concolic & Hybrid** (Shares emulator state tracking components).
-  - `shares_technique` -> **1.8 Binary & Reverse Engineering** (Emulates dynamic basic blocks during decompilation).
-  - `domain_overlap` -> **2.11 Kernel & Hypervisor Fuzzing** (Both isolate executing code; kernel fuzzing emulates hypervisor states while micro-execution runs basic blocks).
-
-- **2.11 Kernel & Hypervisor Fuzzing**
-  - `extends` -> **2.4 Feedback-directed Fuzzing** (Kernel fuzzing is coverage-guided fuzzing adapted to OS/Virtualization layers).
-  - `domain_overlap` -> **2.10 Micro-execution & Emulation** (Isolating system states vs. isolating user functions).
-
-- **2.12 Smart Contract & Web3 Security**
-  - `extends` -> **2.4 Feedback-directed Fuzzing** (Echidna/Foundry fuzzing adapted for EVM environments and stateful properties).
-  - `shares_technique` -> **1.4 Symbolic Execution** (Manticore/Mythril use symbolic EVM execution).
-  - `domain_overlap` -> **2.8 Differential & Concurrency** (Web3 uses differential testing to find consensus and reentrancy bugs).
-
-- **2.13 Microarchitectural & Side-Channel**
-  - `domain_overlap` -> **1.10 Cryptographic & Protocol Security** (Timing attacks target cryptography; audited statically/analytically).
-  - `shares_technique` -> **2.5 Dynamic Taint Analysis (DTA)** (Tracks key leakage to timing/cache side channels).
-  - `domain_overlap` -> **1.6 Type System & IFC** (Static IFC types prove absence of side channels).
-
----
-
-### Group 3: Automated Program Repair (3.0 - 3.7)
-
-- **3.0 Fault Localization**
-  - `precondition_of` -> **3.1 Generate-and-Validate**, **3.2 Semantics-based Synthesis**, **3.3 Template-based**, **3.4 DL & NMT Repair**, **3.5 LLM & Agentic** (All repair workflows must locate the bug before attempting fixes).
-
-- **3.1 Generate-and-Validate**
-  - `complementary` -> **3.2 Semantics-based Synthesis** (Heuristic search vs. SMT solver synthesis).
-  - `complementary` -> **2.9 Mutation Testing** (Mutation scores validate test suite strength to avoid patch overfitting).
-  - `shares_technique` -> **3.5 LLM & Agentic** (LLM/Agentic repairs use a generate-validate loop with unit tests).
-  - `complementary` -> **3.6 Validation & PCA** (PCA techniques actively filter out weak/overfitted patches generated by G&V).
-
-- **3.2 Semantics-based Synthesis**
-  - `shares_technique` -> **1.4 Symbolic Execution** (Relies on symbolic execution to collect patch constraints).
-  - `complementary` -> **3.1 Generate-and-Validate** (Analytical synthesis vs. randomized search space traversal).
-
-- **3.3 Template-based**
-  - `extends` -> **3.1 Generate-and-Validate** (Specialization of G&V search space constrained by templates).
-  - `shares_technique` -> **1.7 Learning-based Static** (Mines static analysis bug patterns to auto-generate templates).
-
-- **3.4 DL & NMT Repair**
-  - `extends` -> **3.1 Generate-and-Validate** (G&V where patch candidates are generated by deep neural networks).
-  - `shares_technique` -> **1.7 Learning-based Static** (Both share deep learning and embedding algorithms for code representations).
-
-- **3.5 LLM & Agentic**
-  - `extends` -> **3.4 DL & NMT Repair** (Autonomous agent systems extending basic sequence-to-sequence neural network model code repair).
-  - `shares_technique` -> **3.1 Generate-and-Validate** (Uses unit-test execution loops for agent validation).
-  - `complementary` -> **3.6 Validation & PCA** (Validation engines check LLM-generated patches for regressions/overfitting).
-
-- **3.6 Validation & PCA**
-  - `complementary` -> **3.1 Generate-and-Validate** (Filters out weak patches).
-  - `complementary` -> **3.5 LLM & Agentic** (Checks agent-synthesized patches for logic regression).
-  - `shares_technique` -> **2.9 Mutation Testing** (Uses mutation metrics to evaluate test test coverage and patch verification strength).
-
-- **3.7 Binary & Hot Patching**
-  - `shares_technique` -> **1.8 Binary & Reverse Engineering** (Requires binary decompilation to identify payload injection points).
-  - `shares_technique` -> **2.7 Instrumentation & Sanitizers** (Hot patching hooks into executing code using dynamic binary instrumentation techniques like detours).
+- **3.0-故障定位 (Fault Localization)**
+  - `precondition_of` -> [[3.1-生成與驗證流派 (Generate-and-Validate)]], [[3.2-語意合成流派 (Semantics-based Synthesis)]], [[3.3-範本與模式匹配流派 (Template-based)]], [[3.4-深度學習修復流派 (DL & NMT)]], [[3.5-LLM與Agent驅動修復 (LLM & Agentic)]], [[3.6-安全補丁驗證與PCA (Validation & PCA)]], [[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]
+- **3.1-生成與驗證流派 (Generate-and-Validate)**
+  - `co_deployed` -> [[3.6-安全補丁驗證與PCA (Validation & PCA)]]
+  - `same_problem_different_paradigm` -> [[3.2-語意合成流派 (Semantics-based Synthesis)]]
+- **3.2-語意合成流派 (Semantics-based Synthesis)**
+  - `same_problem_different_paradigm` -> [[3.1-生成與驗證流派 (Generate-and-Validate)]]
+  - `shares_technique` -> [[1.4-符號執行 (Symbolic Execution)]], [[1.6-型別系統與資訊流分析 (Type System & IFC)]]
+- **3.3-範本與模式匹配流派 (Template-based)**
+  - `extends` -> [[3.1-生成與驗證流派 (Generate-and-Validate)]]
+  - `shares_technique` -> [[1.7-學習型靜態分析 (Learning-based Static)]]
+- **3.4-深度學習修復流派 (DL & NMT)**
+  - `extends` -> [[3.1-生成與驗證流派 (Generate-and-Validate)]]
+  - `shares_technique` -> [[1.7-學習型靜態分析 (Learning-based Static)]]
+- **3.5-LLM與Agent驅動修復 (LLM & Agentic)**
+  - `co_deployed` -> [[3.6-安全補丁驗證與PCA (Validation & PCA)]]
+  - `extends` -> [[3.4-深度學習修復流派 (DL & NMT)]]
+- **3.6-安全補丁驗證與PCA (Validation & PCA)**
+  - `co_deployed` -> [[3.1-生成與驗證流派 (Generate-and-Validate)]], [[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]
+  - `shares_technique` -> [[2.9-變異測試 (Mutation Testing)]]
+- **3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)**
+  - `shares_technique` -> [[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]], [[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]
