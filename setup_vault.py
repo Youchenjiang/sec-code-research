@@ -33,8 +33,8 @@ CATEGORIES = {
     ],
     "1-靜態分析 (Static Analysis)/1A-基礎與結構分析 (Foundational & Structural)": [
         {
-            "filename": "1.1-語法與結構分析 (Syntactic & AST).md",
-            "title": "1.1 語法與結構分析 (Syntactic / AST-based Analysis)",
+            "filename": "1A.1-語法與結構分析 (Syntactic & AST).md",
+            "title": "1A.1 語法與結構分析 (Syntactic / AST-based Analysis)",
             "concept": "將原始碼解析為結構化表示（如抽象語法樹 AST），透過模式匹配或規則查詢偵測已知漏洞樣式。速度快、易實作，但語意深度有限，對邏輯型漏洞無能為力。",
             "sub_genres": [
                 {"name": "Pattern Matching / Rule-based", "desc": "直接在 token 流或 AST 上做規則比對。代表工具：grep、Semgrep、Flawfinder。"},
@@ -44,8 +44,8 @@ CATEGORIES = {
             "tools": ["Semgrep", "Flawfinder", "Checkmarx", "ESLint", "SpotBugs"]
         },
         {
-            "filename": "1.5-圖結構分析 (Graph-based Analysis).md",
-            "title": "1.5 圖結構分析 (Graph-based Analysis)",
+            "filename": "1A.2-圖結構分析 (Graph-based Analysis).md",
+            "title": "1A.2 圖結構分析 (Graph-based Analysis)",
             "concept": "將程式表示為各種圖結構（CFG、PDG、CPG 等），再透過圖查詢或圖神經網路進行漏洞偵測，可捕捉跨層次的程式語意。",
             "sub_genres": [
                 {"name": "程式碼屬性圖 (Code Property Graph, CPG)", "desc": "將 AST + CFG + PDG 合併為單一屬性圖，存入 Neo4j 等圖資料庫，用 Gremlin/Cypher 查詢漏洞模式。代表工具：Joern、ShiftLeft Ocular。"},
@@ -55,8 +55,8 @@ CATEGORIES = {
             "tools": ["Joern", "ShiftLeft Ocular"]
         },
         {
-            "filename": "1.6-型別系統與資訊流分析 (Type System & IFC).md",
-            "title": "1.6 型別系統與資訊流分析 (Type System / Information Flow Typing)",
+            "filename": "1A.3-型別系統與資訊流分析 (Type System & IFC).md",
+            "title": "1A.3 型別系統與資訊流分析 (Type System / Information Flow Typing)",
             "concept": "透過靜態型別系統，強制標注資料的安全等級（High / Low），編譯期驗證高安全性資料不會「流出」到低安全性輸出（Non-interference 保證）。",
             "sub_genres": [
                 {"name": "Security Type Systems", "desc": "資訊流安全性檢查與標注。代表工具：Jif、FlowSpec。"},
@@ -67,8 +67,8 @@ CATEGORIES = {
     ],
     "1-靜態分析 (Static Analysis)/1B-語意與資料流分析 (Semantics & Data Flow)": [
         {
-            "filename": "1.2-資料流分析 (Data Flow Analysis).md",
-            "title": "1.2 資料流分析 (Data Flow Analysis)",
+            "filename": "1B.1-資料流分析 (Data Flow Analysis).md",
+            "title": "1B.1 資料流分析 (Data Flow Analysis)",
             "concept": "追蹤資料在程式中如何流動，特別關注「外部輸入」是否未經驗證便流入危險操作（如資料庫查詢、系統命令）。這是靜態分析中最核心的技術族群。",
             "sub_genres": [
                 {"name": "污點分析 (Taint Analysis)", "desc": "將外部輸入標記為「污染源（Source）」，追蹤其是否抵達「危險接收點（Sink）」而未經清理（Sanitizer）。代表工具：CodeQL、Pixy、FlowDroid、IRIS。"},
@@ -79,8 +79,8 @@ CATEGORIES = {
             "tools": ["CodeQL", "Pixy", "FlowDroid", "LLVM Alias Analysis", "IDEal"]
         },
         {
-            "filename": "1.3-抽象解釋 (Abstract Interpretation).md",
-            "title": "1.3 抽象解釋 (Abstract Interpretation)",
+            "filename": "1B.2-抽象解釋 (Abstract Interpretation).md",
+            "title": "1B.2 抽象解釋 (Abstract Interpretation)",
             "concept": "以數學上「正確近似（Sound Approximation）」的方式，計算程式所有可能執行狀態的超集合（Over-approximation），保證不漏報（Sound）。",
             "sub_genres": [
                 {"name": "數值域抽象 (Numerical Abstract Domains)", "desc": "追蹤整數範圍、陣列邊界，偵測 Buffer Overflow、整數溢位。代表工具：Astrée、Polyspace、Frama-C。"},
@@ -90,8 +90,8 @@ CATEGORIES = {
             "tools": ["Astrée", "Polyspace", "Frama-C (Value Analysis)", "Infer"]
         },
         {
-            "filename": "1.4-符號執行 (Symbolic Execution).md",
-            "title": "1.4 符號執行 (Symbolic Execution)",
+            "filename": "1B.3-符號執行 (Symbolic Execution).md",
+            "title": "1B.3 符號執行 (Symbolic Execution)",
             "concept": "用符號值（而非具體數值）替代程式輸入，以 SAT/SMT 求解器探索程式路徑，產生觸發漏洞的具體輸入。「純靜態」符號執行不需真正執行，而是偏靜態分析端。",
             "sub_genres": [
                 {"name": "Source-level Symbolic Execution", "desc": "在原始碼層（或 IR 層）進行路徑探索。代表工具：KLEE、S2E。"},
@@ -101,8 +101,8 @@ CATEGORIES = {
             "tools": ["KLEE", "S2E", "angr", "Triton", "BINSEC/SE"]
         },
         {
-            "filename": "1.12-靜態污點分析 (Static Taint Analysis).md",
-            "title": "1.12 靜態污點分析 (Static Taint Analysis)",
+            "filename": "1B.4-靜態污點分析 (Static Taint Analysis).md",
+            "title": "1B.4 靜態污點分析 (Static Taint Analysis)",
             "concept": "專門追蹤外部輸入（Source）在不執行程式下，如何沿變數與函式呼叫路徑傳播至敏感接收點（Sink），著重於污點傳播規則與隱含流處理。",
             "sub_genres": [
                 {"name": "Source-to-Sink Taint Tracking (源頭到接收點追蹤)", "desc": "在控制流與資料流圖上尋找未經過濾的污點傳播路徑。代表工具：FlowDroid、CodeQL、Joern Taint Engine。"},
@@ -114,8 +114,8 @@ CATEGORIES = {
     ],
     "1-靜態分析 (Static Analysis)/1C-逆向與相依性安全 (Reverse & Dependency)": [
         {
-            "filename": "1.8-二進位與逆向分析 (Binary & Reverse Engineering).md",
-            "title": "1.8 二進位與逆向分析 (Binary & Reverse Engineering)",
+            "filename": "1C.1-二進位與逆向分析 (Binary & Reverse Engineering).md",
+            "title": "1C.1 二進位與逆向分析 (Binary & Reverse Engineering)",
             "concept": "不依賴原始碼，直接反組譯或分析編譯後的二進位執行檔或韌體鏡像，適用於閉源安全審查、漏洞挖掘與反編譯分析。",
             "sub_genres": [
                 {"name": "靜態二進位分析 (Static Binary Analysis)", "desc": "逆向工程手法，反組譯後分析控制流、資料流。代表工具：Ghidra、BAP、angr、IDA Pro、Binary Ninja。"},
@@ -125,8 +125,8 @@ CATEGORIES = {
             "tools": ["Ghidra", "BAP", "angr", "IDA Pro", "Binary Ninja"]
         },
         {
-            "filename": "1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA).md",
-            "title": "1.9 軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)",
+            "filename": "1C.2-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA).md",
+            "title": "1C.2 軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)",
             "concept": "分析軟體的第三方依賴與庫，生成與驗證軟體物料清單（SBOM），並檢測相依組件之已知安全漏洞與惡意供應鏈投毒。",
             "sub_genres": [
                 {"name": "依賴漏洞掃描 (Dependency Vulnerability Scanning)", "desc": "識別程式中引入的開源組件，比對已知漏洞庫（如 CVE/NVD）。代表工具：Snyk、OWASP Dependency-Check、Dependabot。"},
@@ -139,8 +139,8 @@ CATEGORIES = {
     ],
     "1-靜態分析 (Static Analysis)/1D-領域與智慧型靜態分析 (Domain-Specific & AI)": [
         {
-            "filename": "1.7-學習型靜態分析 (Learning-based Static).md",
-            "title": "1.7 基於機器學習的靜態檢測 (Learning-based Static Analysis)",
+            "filename": "1D.1-學習型靜態分析 (Learning-based Static).md",
+            "title": "1D.1 基於機器學習的靜態檢測 (Learning-based Static Analysis)",
             "concept": "以原始碼或程式中間表示作為模型輸入，訓練神經網路自動學習漏洞模式，免去人工撰寫規則。近年發展為最活躍的子領域。",
             "sub_genres": [
                 {"name": "序列模型 (Sequence-based)", "desc": "將程式碼視為 token 序列，使用 LSTM / Transformer 分類。代表工作：VulDeePecker、SySeVR、LineVul。"},
@@ -152,8 +152,8 @@ CATEGORIES = {
             "tools": ["VulDeePecker", "LineVul", "Devign", "Reveal", "VulBERTa", "IRIS", "GPTScan"]
         },
         {
-            "filename": "1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security).md",
-            "title": "1.10 密碼學與協議安全審計 (Cryptographic & Protocol Security)",
+            "filename": "1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security).md",
+            "title": "1D.2 密碼學與協議安全審計 (Cryptographic & Protocol Security)",
             "concept": "專注於檢測密碼學 API 誤用（如弱金鑰、靜態 IV、不安全填充）以及協議實現中控制流與狀態機的正確性與時序安全。",
             "sub_genres": [
                 {"name": "密碼學 API 誤用檢測 (Cryptographic API Misuse)", "desc": "靜態分析程式碼中密碼學函數的調用參數，核對安全規則。代表工具：CogniCrypt、CrySL、CryptoLint。"},
@@ -163,8 +163,8 @@ CATEGORIES = {
             "tools": ["CogniCrypt", "CrySL", "CryptoLint", "dudect", "CacheD"]
         },
         {
-            "filename": "1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking).md",
-            "title": "1.11 形式化驗證與模型檢查 (Formal Verification & Model Checking)",
+            "filename": "1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking).md",
+            "title": "1D.3 形式化驗證與模型檢查 (Formal Verification & Model Checking)",
             "concept": "透過數學方法對軟體規格或程式碼的有限狀態空間進行窮舉檢索或定理證明，以在數學上確保程式完全符合特定安全屬性。",
             "sub_genres": [
                 {"name": "Model Checking (模型檢查)", "desc": "窮舉有限狀態系統中的所有狀態以檢驗安全性質，失敗時提供反例。代表工具：SPIN、NuSMV、TLA⁺、CBMC。"},
@@ -174,8 +174,8 @@ CATEGORIES = {
             "tools": ["SPIN", "NuSMV", "TLA+", "CBMC", "Coq", "Isabelle", "F*"]
         },
         {
-            "filename": "1.13-網路協定形式化分析 (Protocol Formal Analysis).md",
-            "title": "1.13 網路協定形式化分析 (Protocol Formal Analysis)",
+            "filename": "1D.4-網路協定形式化分析 (Protocol Formal Analysis).md",
+            "title": "1D.4 網路協定形式化分析 (Protocol Formal Analysis)",
             "concept": "在協定規格與設計層面，使用代數或符號模型抽象化加密協定的訊息交換流程，在 Dolev-Yao 攻擊者模型下證明或尋找攻擊路徑。",
             "sub_genres": [
                 {"name": "Symbolic Protocol Verification (符號協定驗證)", "desc": "將密碼協定抽象為代數項重寫系統以自動驗證。代表工具：ProVerif、Tamarin Prover。"},
@@ -185,8 +185,8 @@ CATEGORIES = {
             "tools": ["ProVerif", "Tamarin Prover", "Scyther", "CryptoVerif"]
         },
         {
-            "filename": "1.14-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining).md",
-            "title": "1.14 漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)",
+            "filename": "1D.5-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining).md",
+            "title": "1D.5 漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)",
             "concept": "自動開採歷史 Git 提交記錄、漏洞資料庫（CVE/NVD）及漏洞修復補丁，分析漏洞引入規律與安全修復特徵，為機器學習與模板修復提供語料。",
             "sub_genres": [
                 {"name": "Patch Locating & Tracing (補丁定位與追蹤)", "desc": "從代碼變更歷史中自動定位安全修復提交。代表算法：SZZ、PatchFinder。"},
@@ -198,8 +198,8 @@ CATEGORIES = {
     ],
     "2-動態分析 (Dynamic Analysis)/2A-黑箱與外圍掃描 (Black-box & Boundary)": [
         {
-            "filename": "2.1-Web與API動態漏洞掃描 (DAST).md",
-            "title": "2.1 Web與API動態漏洞掃描 (DAST)",
+            "filename": "2A.1-Web與API動態漏洞掃描 (DAST).md",
+            "title": "2A.1 Web與API動態漏洞掃描 (DAST)",
             "concept": "在不獲取原始碼或程式內部運行狀態的情況下，模擬外部攻擊者對運行中的 Web 應用或 API 發送惡意請求，分析回應特徵（如狀態碼、內容、延遲）以識別漏洞（如 SQL 注入、XSS、IDOR、邏輯缺陷）。",
             "sub_genres": [
                 {"name": "Web 應用與 API 差異測試", "desc": "對 API 注入相同請求，比較授權前後或多個端點的回應差異，用於發現 IDOR 或邏輯漏洞。代表工具：RESTler、EvoMaster、PrediQL。"},
@@ -209,8 +209,8 @@ CATEGORIES = {
             "tools": ["OWASP ZAP", "Burp Suite", "RESTler", "EvoMaster"]
         },
         {
-            "filename": "2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing).md",
-            "title": "2.2 黑箱協定模糊測試 (Black-box Protocol Fuzzing)",
+            "filename": "2A.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing).md",
+            "title": "2A.2 黑箱協定模糊測試 (Black-box Protocol Fuzzing)",
             "concept": "針對有狀態（Stateful）或無狀態的網路與工業協定，在沒有原始碼或內部反饋下，生成符合協定格式但帶有異常的訊息序列，測試協定實作的健壯性。需維護或推斷狀態機模型。",
             "sub_genres": [
                 {"name": "協定與網路模糊測試", "desc": "自動推斷或依據規格生成變異訊息序列，分析服務端是否崩潰或異常。代表工具：Peach Fuzzer、boofuzz、AFLNet（帶狀態）、Z-Fuzzer。"},
@@ -219,8 +219,8 @@ CATEGORIES = {
             "tools": ["Peach Fuzzer", "boofuzz", "AFLNet"]
         },
         {
-            "filename": "2.3-惡意程式沙盒與行為分析 (Malware Sandbox).md",
-            "title": "2.3 惡意程式沙盒與行為分析 (Malware Sandbox)",
+            "filename": "2A.3-惡意程式沙盒與行為分析 (Malware Sandbox).md",
+            "title": "2A.3 惡意程式沙盒與行為分析 (Malware Sandbox)",
             "concept": "在隔離的虛擬化沙盒環境中執行未知的可疑樣本，在黑箱狀態下記錄其與系統的交互特徵（系統呼叫序列、網絡請求、文件/登錄檔讀寫），用以分析其惡意特徵與 IoC（威脅指標）。",
             "sub_genres": [
                 {"name": "沙盒執行與特徵提取", "desc": "分析惡意樣本在隔離沙盒中的動態行為。代表工具：Cuckoo Sandbox、Any.run、Joe Sandbox。"},
@@ -232,8 +232,8 @@ CATEGORIES = {
     ],
     "2-動態分析 (Dynamic Analysis)/2B-反饋模糊測試與污點分析 (Feedback Fuzzing & Taint)": [
         {
-            "filename": "2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing).md",
-            "title": "2.4 反饋引導式模糊測試 (Feedback-directed Fuzzing)",
+            "filename": "2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing).md",
+            "title": "2B.1 反饋引導式模糊測試 (Feedback-directed Fuzzing)",
             "concept": "透過編譯期插樁或硬體追蹤，動態獲取程式執行時的內部資訊（如分支覆蓋率），以此引導模糊器朝向未探索的路徑進行演化變異，是目前發現未知漏洞最有效的方法。",
             "sub_genres": [
                 {"name": "覆蓋率引導灰箱模糊測試 (CGF)", "desc": "動態收集邊緣覆蓋率（Bitmap）作為演化反饋。代表工具：AFL、AFL++、libFuzzer、honggfuzz。"},
@@ -247,8 +247,8 @@ CATEGORIES = {
             "tools": ["AFL", "AFL++", "libFuzzer", "syzkaller", "kAFL", "Nautilus", "AFLGo", "MALintent", "NASS", "FANS", "CovAgent", "GAPS"]
         },
         {
-            "filename": "2.5-動態污點分析 (Dynamic Taint Analysis - DTA).md",
-            "title": "2.5 動態污點分析 (Dynamic Taint Analysis - DTA)",
+            "filename": "2B.2-動態污點分析 (Dynamic Taint Analysis - DTA).md",
+            "title": "2B.2 動態污點分析 (Dynamic Taint Analysis - DTA)",
             "concept": "在程式執行時，對每個暫存器或記憶體位元組維護污染標籤（Taint Tag），精確追蹤污染源資料流向危險接收點（Sink）的實際執行路徑。精準度高但具有顯著的運行期開銷。",
             "sub_genres": [
                 {"name": "全系統動態污點追蹤 (Whole-System DIFT)", "desc": "在仿真器（如 QEMU）層插樁，追蹤跨程式、跨系統呼叫的資料流。代表工具：DECAF、DECAF++、TEMU。"},
@@ -259,8 +259,8 @@ CATEGORIES = {
             "tools": ["DECAF", "DECAF++", "libdft"]
         },
         {
-            "filename": "2.6-混合與Concolic執行 (Concolic & Hybrid).md",
-            "title": "2.6 混合與Concolic執行 (Concolic & Hybrid)",
+            "filename": "2B.3-混合與Concolic執行 (Concolic & Hybrid).md",
+            "title": "2B.3 混合與Concolic執行 (Concolic & Hybrid)",
             "concept": "結合具體執行（Concrete）與符號執行（Symbolic），在真實執行的同時收集分支路徑的符號約束，利用 SMT 求解器生成能突破複雜條件分支的新輸入，解決模糊測試盲點。",
             "sub_genres": [
                 {"name": "並行符號執行 (Concolic Execution)", "desc": "用真實值引導符號追蹤，求解新分支。代表工具：SAGE、Mayhem、Triton、KLEE (偏靜態)。"},
@@ -270,8 +270,8 @@ CATEGORIES = {
             "tools": ["SAGE", "Mayhem", "QSYM", "Driller", "SymCC", "SymDroid", "SIG-Droid"]
         },
         {
-            "filename": "2.9-變異測試 (Mutation Testing).md",
-            "title": "2.9 變異測試 (Mutation Testing)",
+            "filename": "2B.4-變異測試 (Mutation Testing).md",
+            "title": "2B.4 變異測試 (Mutation Testing)",
             "concept": "藉由在原始碼或二進位中注入微小的錯誤（Mutants），並執行測試套件，用以評估測試套件的充分性（Mutation Score）或引導測試案例生成。在安全領域，常被用來評估與基準化模糊測試器（Fuzzer）的漏洞發現能力。",
             "sub_genres": [
                 {"name": "Fuzzer 漏洞評估與基準化 (Fuzzer Benchmarking)", "desc": "以變異測試注入人工缺陷，衡量 Fuzzer 能殺死多少變異體，評估其缺陷發現率。代表工具：Mull、Pitest。"},
@@ -284,8 +284,8 @@ CATEGORIES = {
     ],
     "2-動態分析 (Dynamic Analysis)/2C-插樁、監控與防禦強化 (Instrumentation, Monitor & Hardening)": [
         {
-            "filename": "2.7-執行期插樁與監控 (Instrumentation & Sanitizers).md",
-            "title": "2.7 執行期插樁與監控 (Instrumentation & Sanitizers)",
+            "filename": "2C.1-執行期插樁與監控 (Instrumentation & Sanitizers).md",
+            "title": "2C.1 執行期插樁與監控 (Instrumentation & Sanitizers)",
             "concept": "在編譯期、載入期或執行期將檢測邏輯注入目標程式中，以在執行時監控程式行為、捕捉違規行為或主動進行防禦。",
             "sub_genres": [
                 {"name": "編譯期 Sanitizers", "desc": "編譯時插入輕量檢查指令，高效偵測記憶體與未定義行為。代表工具：ASan (Address)、MSan (Memory)、TSan (Thread)、UBSan。"},
@@ -297,8 +297,8 @@ CATEGORIES = {
             "tools": ["ASan", "TSan", "Intel PIN", "DynamoRIO", "Frida", "Contrast Security", "OpenRASP"]
         },
         {
-            "filename": "2.8-語意差異與並發偵測 (Differential & Concurrency).md",
-            "title": "2.8 語意差異與並發偵測 (Differential & Concurrency)",
+            "filename": "2C.2-語意差異與並發偵測 (Differential & Concurrency).md",
+            "title": "2C.2 語意差異與並發偵測 (Differential & Concurrency)",
             "concept": "透過對多個等價實作進行差異比對以發現語意缺陷，或動態監控多執行緒交錯，捕捉並發相關的非確定性漏洞。",
             "sub_genres": [
                 {"name": "編譯器與虛擬機差異測試", "desc": "自動生成程式並比較不同編譯器優化等級或 VM 實作的輸出差異。代表工具：Csmith、Rustlantis、EVMFuzz。"},
@@ -309,8 +309,8 @@ CATEGORIES = {
             "tools": ["Csmith", "Rustlantis", "EVMFuzz", "TSan", "Valgrind/Memcheck", "Dr. Memory"]
         },
         {
-            "filename": "2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI).md",
-            "title": "2.15 記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)",
+            "filename": "2C.3-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI).md",
+            "title": "2C.3 記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)",
             "concept": "評估並測試部署在實際生產環境中的執行期硬體/軟體安全加固技術（如控制流完整性 CFI、堆疊金絲雀、隨機化佈局）的實用效能與繞過方法。",
             "sub_genres": [
                 {"name": "Control-Flow Integrity (控制流完整性)", "desc": "在編譯或執行期驗證間接跳轉目標位址是否在合法 CFG 內。代表技術：LLVM CFI。"},
@@ -322,8 +322,8 @@ CATEGORIES = {
     ],
     "2-動態分析 (Dynamic Analysis)/2D-系統與特定領域測試 (System & Target-Specific)": [
         {
-            "filename": "2.10-微執行與模擬測試 (Micro-execution & Emulation).md",
-            "title": "2.10 微執行與模擬測試 (Micro-execution & Emulation)",
+            "filename": "2D.1-微執行與模擬測試 (Micro-execution & Emulation).md",
+            "title": "2D.1 微執行與模擬測試 (Micro-execution & Emulation)",
             "concept": "在缺乏主程式進入點與完整運行環境的狀態下，直接虛擬執行目標程式的任意函式或代碼片段。核心是透過攔截記憶體異常（Page Fault）動態分配記憶體與輸入。",
             "sub_genres": [
                 {"name": "微執行 (Micro-execution)", "desc": "執行任意程式碼片段，並在執行期攔截存取異常以動態建構具體上下文。代表工作：PLDI 2014 Micro-execution。"},
@@ -334,8 +334,8 @@ CATEGORIES = {
             "tools": ["Unicorn Engine", "HAL-fuzz", "Jetset"]
         },
         {
-            "filename": "2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing).md",
-            "title": "2.11 作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)",
+            "filename": "2D.2-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing).md",
+            "title": "2D.2 作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)",
             "concept": "針對作業系統內核、硬體驅動程式或雲端虛擬化管理程式（Hypervisor），透過特製輸入、虛擬化狀態回復、硬體輔助追蹤等方式進行深度的動態漏洞挖掘。",
             "sub_genres": [
                 {"name": "內核系統呼叫模糊測試 (Kernel Syscall Fuzzing)", "desc": "自動生成或變異 syscall 序列來測試內核邊界安全性。代表工具：syzkaller、HEVD。"},
@@ -346,8 +346,8 @@ CATEGORIES = {
             "tools": ["syzkaller", "kAFL", "Nyx", "QEMU Fuzzer", "TEEzz"]
         },
         {
-            "filename": "2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security).md",
-            "title": "2.12 智能合約與 Web3 安全 (Smart Contract & Web3 Security)",
+            "filename": "2D.3-智能合約與 Web3 安全 (Smart Contract & Web3 Security).md",
+            "title": "2D.3 智能合約與 Web3 安全 (Smart Contract & Web3 Security)",
             "concept": "針對區塊鏈智能合約（如 EVM/Solidity, WASM）特有的運行機制與漏洞特徵（如重入、邏輯溢出、Gas耗盡），進行專門的模糊測試、符號執行與形式化驗證。",
             "sub_genres": [
                 {"name": "智能合約模糊測試 (Smart Contract Fuzzing)", "desc": "針對合約狀態機與屬性（Invariants）進行自動化輸入變異。代表工具：Echidna、ItyFuzz、Foundry。"},
@@ -358,8 +358,8 @@ CATEGORIES = {
             "tools": ["Echidna", "ItyFuzz", "Mythril", "Manticore", "Certora Prover", "Slither"]
         },
         {
-            "filename": "2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis).md",
-            "title": "2.13 微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)",
+            "filename": "2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis).md",
+            "title": "2D.4 微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)",
             "concept": "分析並檢測軟體在共享硬體資源（如 CPU 快取、分支預測器）時產生的可觀測洩漏（快取側通道、過渡執行漏洞如 Spectre），常用於加密庫與安全封裝環境。",
             "sub_genres": [
                 {"name": "快取狀態與洩漏分析 (Cache Side-Channel)", "desc": "分析程序執行期間對 CPU 快取狀態的影響，以量化資訊洩漏。代表工具：CACHEQL。"},
@@ -369,8 +369,8 @@ CATEGORIES = {
             "tools": ["CACHEQL", "CacheAudit"]
         },
         {
-            "filename": "2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG).md",
-            "title": "2.14 自動漏洞利用生成 (Automated Exploit Generation - AEG)",
+            "filename": "2D.5-自動漏洞利用生成 (Automated Exploit Generation - AEG).md",
+            "title": "2D.5 自動漏洞利用生成 (Automated Exploit Generation - AEG)",
             "concept": "動態分析漏洞觸發上下文，結合符號執行與約束求解，自動生成可運行的漏洞利用載荷（Exploit）以確定漏洞的實際危害性。",
             "sub_genres": [
                 {"name": "AEG Execution Hijacking (控制流劫持生成)", "desc": "自動推算劫持程式執行流所需的輸入與緩衝區填充。代表工作：AEG (Avgerinos et al.)。"},
@@ -382,8 +382,8 @@ CATEGORIES = {
     ],
     "3-自動修復 (Automated Program Repair - APR)/3A-定位與驗證基礎 (Localization & Validation)": [
         {
-            "filename": "3.0-故障定位 (Fault Localization).md",
-            "title": "3.0 前置條件：故障定位 (Fault Localization, FL)",
+            "filename": "3A.1-故障定位 (Fault Localization).md",
+            "title": "3A.1 前置條件：故障定位 (Fault Localization, FL)",
             "concept": "APR 的品質上限受限於故障定位的精確度——必須先找對「哪行/哪個函式有問題」，才能進行修復。FL 是 APR 管線的必要前置步驟，通常獨立研究。",
             "sub_genres": [
                 {"name": "譜基礎故障定位 (Spectrum-based FL, SBFL)", "desc": "以測試覆蓋矩陣計算語句可疑度（Ochiai 公式最常用）。代表工具：GZoltar、Ochiai。"},
@@ -393,8 +393,8 @@ CATEGORIES = {
             "tools": ["GZoltar", "DeepFL"]
         },
         {
-            "filename": "3.6-安全補丁驗證與PCA (Validation & PCA).md",
-            "title": "3.6 安全補丁驗證 (Patch Validation & Correctness Assessment)",
+            "filename": "3A.2-安全補丁驗證與PCA (Validation & PCA).md",
+            "title": "3A.2 安全補丁驗證 (Patch Validation & Correctness Assessment)",
             "concept": "不論由哪個流派生成補丁，最終都需要自動化驗證其正確性而非僅僅合理性（即解決補丁過擬合 Patch Overfitting 的關鍵技術）。",
             "sub_genres": [
                 {"name": "靜態特徵 PCA", "desc": "以補丁的靜態結構特徵（AST 差異、修改範圍）訓練分類器預測是否過擬合。代表工具：PATCH-SIM、OASIs。"},
@@ -407,8 +407,8 @@ CATEGORIES = {
     ],
     "3-自動修復 (Automated Program Repair - APR)/3B-經典語意修復 (Classical & Semantic Repair)": [
         {
-            "filename": "3.1-生成與驗證流派 (Generate-and-Validate).md",
-            "title": "3.1 生成與驗證流派 (Generate-and-Validate APR / Search-based APR)",
+            "filename": "3B.1-生成與驗證流派 (Generate-and-Validate).md",
+            "title": "3B.1 生成與驗證流派 (Generate-and-Validate APR / Search-based APR)",
             "concept": "以啟發式搜索或演化演算法在補丁空間中搜索，對每個候選補丁執行測試套件驗證，找到第一個通過測試的補丁即為輸出。是 APR 研究的起源，開創了整個領域。",
             "sub_genres": [
                 {"name": "遺傳程式設計基礎 APR (Genetic Programming)", "desc": "以程式語句為「基因」，透過隨機刪除、插入、替換等操作生成候選補丁。代表工具：GenProg、MutRepair、SPR。"},
@@ -418,8 +418,8 @@ CATEGORIES = {
             "tools": ["GenProg", "MutRepair", "SPR", "RSRepair", "ACS", "Astor"]
         },
         {
-            "filename": "3.2-語意合成流派 (Semantics-based Synthesis).md",
-            "title": "3.2 語意合成流派 (Semantics-based / Synthesis-based APR)",
+            "filename": "3B.2-語意合成流派 (Semantics-based Synthesis).md",
+            "title": "3B.2 語意合成流派 (Semantics-based / Synthesis-based APR)",
             "concept": "將修復問題轉化為約束求解（Constraint Solving）問題，以 SMT 求解器或符號執行精確合成出語意正確的修復表達式，理論上比搜索流派更嚴謹。",
             "sub_genres": [
                 {"name": "基於 SMT 求解的修復合成", "desc": "從通過測試的輸入/輸出對提取語意約束，形式化為 SMT 公式，求解器合成修復的條件式或表達式。代表工具：Nopol、Angelix、S3、SemFix。"},
@@ -429,8 +429,8 @@ CATEGORIES = {
             "tools": ["Nopol", "Angelix", "SemFix", "ExtractFix", "SymFix"]
         },
         {
-            "filename": "3.3-範本與模式匹配流派 (Template-based).md",
-            "title": "3.3 範本 / 模式匹配流派 (Template-based / Pattern-based APR)",
+            "filename": "3B.3-範本與模式匹配流派 (Template-based).md",
+            "title": "3B.3 範本 / 模式匹配流派 (Template-based / Pattern-based APR)",
             "concept": "從歷史人類補丁中挖掘反覆出現的「修復模板」（如：加入 null check、修改條件式、插入邊界檢查），再將模板套用至對應的故障位置，模式可解釋性強。",
             "sub_genres": [
                 {"name": "通用 Bug 修復模板", "desc": "聚焦於通用軟體缺陷，建立跨專案、跨類型的修復模板庫。代表工具：TBar、SimFix、AVATAR。"},
@@ -440,8 +440,8 @@ CATEGORIES = {
             "tools": ["TBar", "SimFix", "AVATAR", "FixMiner", "VulKey"]
         },
         {
-            "filename": "3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching).md",
-            "title": "3.7 二進位熱補丁與漏洞修復 (Binary & Hot Patching)",
+            "filename": "3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching).md",
+            "title": "3B.4 二進位熱補丁與漏洞修復 (Binary & Hot Patching)",
             "concept": "針對無法停機重新編譯的閉源程式或生產環境，直接在機器碼、彙編級別或記憶體中進行就地修復與熱補丁注入，通常涉及彙編代碼生成與跳轉跳轉（Trampoline）。",
             "sub_genres": [
                 {"name": "熱補丁注入 (Hot Patching)", "desc": "在不重啟進程的情況下，於記憶體中動態替換漏洞函數。代表工具：Kpatch、Livepatch。"},
@@ -454,8 +454,8 @@ CATEGORIES = {
     ],
     "3-自動修復 (Automated Program Repair - APR)/3C-深度學習與大模型修復 (Deep Learning & LLM Repair)": [
         {
-            "filename": "3.4-深度學習修復流派 (DL & NMT).md",
-            "title": "3.4 深度學習修復流派 (DL-based / NMT-based APR)",
+            "filename": "3C.1-深度學習修復流派 (DL & NMT).md",
+            "title": "3C.1 深度學習修復流派 (DL-based / NMT-based APR)",
             "concept": "將程式碼修復視為神經機器翻譯（NMT）問題——把「有 Bug 的程式碼」翻譯成「修復後的程式碼」，以大量歷史補丁對訓練模型，自動學習修復規律。",
             "sub_genres": [
                 {"name": "Seq2Seq / 早期 NMT 修復", "desc": "以 Encoder-Decoder 架構將 buggy 程式碼編碼，解碼生成 fixed 程式碼。代表工具：SequenceR、CoCoNuT、DLFix。"},
@@ -466,8 +466,8 @@ CATEGORIES = {
             "tools": ["SequenceR", "CoCoNuT", "DEAR", "Recoder", "VulRepair", "InferFix"]
         },
         {
-            "filename": "3.5-LLM與Agent驅動修復 (LLM & Agentic).md",
-            "title": "3.5 大語言模型與 Agent 驅動修復 (LLM-based & Agentic APR)",
+            "filename": "3C.2-LLM與Agent驅動修復 (LLM & Agentic).md",
+            "title": "3C.2 大語言模型與 Agent 驅動修復 (LLM-based & Agentic APR)",
             "concept": "LLM 在無需微調的情況下，通過 Zero/Few-shot Prompting 直接生成修復補丁；進一步整合工具呼叫、測試執行反饋、多輪迭代，形成自主 Agent 閉環，是目前前沿趨勢。",
             "sub_genres": [
                 {"name": "LLM Zero/Few-shot Prompting 修復", "desc": "直接以漏洞報告、錯誤訊息、程式碼上下文組成 Prompt 餵入 LLM。代表工具：ChatRepair"},
@@ -494,14 +494,14 @@ GENRE_RELATIONS = {
     },
 
     # ── STATIC ANALYSIS (Group 1) ───────────────────────────────────────────────
-    "1.1-語法與結構分析 (Syntactic & AST)": {
+    "1A.1-語法與結構分析 (Syntactic & AST)": {
         "precondition_of": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
             "[[1.5-圖結構分析 (Graph-based Analysis)]]",
             "[[1.7-學習型靜態分析 (Learning-based Static)]]",
         ],
     },
-    "1.2-資料流分析 (Data Flow Analysis)": {
+    "1B.1-資料流分析 (Data Flow Analysis)": {
         "dynamic_counterpart": [
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
@@ -512,7 +512,7 @@ GENRE_RELATIONS = {
             "[[2.1-Web與API動態漏洞掃描 (DAST)]]",
         ],
     },
-    "1.3-抽象解釋 (Abstract Interpretation)": {
+    "1B.2-抽象解釋 (Abstract Interpretation)": {
         "same_problem_different_paradigm": [
             "[[1.4-符號執行 (Symbolic Execution)]]",
             "[[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
@@ -523,7 +523,7 @@ GENRE_RELATIONS = {
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
-    "1.4-符號執行 (Symbolic Execution)": {
+    "1B.3-符號執行 (Symbolic Execution)": {
         "co_deployed": [
             "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
         ],
@@ -532,7 +532,7 @@ GENRE_RELATIONS = {
             "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
     },
-    "1.5-圖結構分析 (Graph-based Analysis)": {
+    "1A.2-圖結構分析 (Graph-based Analysis)": {
         "shares_technique": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
             "[[1.7-學習型靜態分析 (Learning-based Static)]]",
@@ -541,7 +541,7 @@ GENRE_RELATIONS = {
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
-    "1.6-型別系統與資訊流分析 (Type System & IFC)": {
+    "1A.3-型別系統與資訊流分析 (Type System & IFC)": {
         "domain_overlap": [
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
@@ -549,7 +549,7 @@ GENRE_RELATIONS = {
             "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
     },
-    "1.7-學習型靜態分析 (Learning-based Static)": {
+    "1D.1-學習型靜態分析 (Learning-based Static)": {
         "extends": [
             "[[1.1-語法與結構分析 (Syntactic & AST)]]",
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
@@ -563,7 +563,7 @@ GENRE_RELATIONS = {
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
-    "1.8-二進位與逆向分析 (Binary & Reverse Engineering)": {
+    "1C.1-二進位與逆向分析 (Binary & Reverse Engineering)": {
         "shares_technique": [
             "[[1.4-符號執行 (Symbolic Execution)]]",
             "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
@@ -575,7 +575,7 @@ GENRE_RELATIONS = {
             "[[1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]]",
         ],
     },
-    "1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)": {
+    "1C.2-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)": {
         "shares_technique": [
             "[[1.7-學習型靜態分析 (Learning-based Static)]]",
         ],
@@ -584,7 +584,7 @@ GENRE_RELATIONS = {
             "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
         ],
     },
-    "1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)": {
+    "1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security)": {
         "domain_overlap": [
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
@@ -592,12 +592,12 @@ GENRE_RELATIONS = {
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
     },
-    "1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)": {
+    "1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking)": {
         "domain_overlap": [
             "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
     },
-    "1.12-靜態污點分析 (Static Taint Analysis)": {
+    "1B.4-靜態污點分析 (Static Taint Analysis)": {
         "extends": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
         ],
@@ -605,7 +605,7 @@ GENRE_RELATIONS = {
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
     },
-    "1.13-網路協定形式化分析 (Protocol Formal Analysis)": {
+    "1D.4-網路協定形式化分析 (Protocol Formal Analysis)": {
         "domain_overlap": [
             "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
             "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
@@ -614,7 +614,7 @@ GENRE_RELATIONS = {
             "[[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
         ],
     },
-    "1.14-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)": {
+    "1D.5-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)": {
         "precondition_of": [
             "[[1.7-學習型靜態分析 (Learning-based Static)]]",
             "[[3.3-範本與模式匹配流派 (Template-based)]]",
@@ -623,17 +623,17 @@ GENRE_RELATIONS = {
     },
 
     # ── BLACK-BOX DYNAMIC (Group 2A) ────────────────────────────────────────────
-    "2.1-Web與API動態漏洞掃描 (DAST)": {
+    "2A.1-Web與API動態漏洞掃描 (DAST)": {
         "same_problem_different_paradigm": [
             "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
         ],
     },
-    "2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)": {
+    "2A.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)": {
         "same_problem_different_paradigm": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
-    "2.3-惡意程式沙盒與行為分析 (Malware Sandbox)": {
+    "2A.3-惡意程式沙盒與行為分析 (Malware Sandbox)": {
         "shares_technique": [
             "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
@@ -645,7 +645,7 @@ GENRE_RELATIONS = {
     },
 
     # ── WHITE/GREY-BOX DYNAMIC (Group 2B) ────────────────────────────────────────
-    "2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)": {
+    "2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)": {
         "same_problem_different_paradigm": [
             "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
             "[[2.9-變異測試 (Mutation Testing)]]",
@@ -657,7 +657,7 @@ GENRE_RELATIONS = {
             "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
-    "2.5-動態污點分析 (Dynamic Taint Analysis - DTA)": {
+    "2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)": {
         "shares_technique": [
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
@@ -665,7 +665,7 @@ GENRE_RELATIONS = {
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
-    "2.6-混合與Concolic執行 (Concolic & Hybrid)": {
+    "2B.3-混合與Concolic執行 (Concolic & Hybrid)": {
         "co_deployed": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
@@ -673,7 +673,7 @@ GENRE_RELATIONS = {
             "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
         ],
     },
-    "2.7-執行期插樁與監控 (Instrumentation & Sanitizers)": {
+    "2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)": {
         "precondition_of": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
@@ -683,27 +683,27 @@ GENRE_RELATIONS = {
             "[[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
     },
-    "2.8-語意差異與並發偵測 (Differential & Concurrency)": {
+    "2C.2-語意差異與並發偵測 (Differential & Concurrency)": {
         "domain_overlap": [
             "[[2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)]]",
         ],
     },
-    "2.9-變異測試 (Mutation Testing)": {
+    "2B.4-變異測試 (Mutation Testing)": {
         "shares_technique": [
             "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
-    "2.10-微執行與模擬測試 (Micro-execution & Emulation)": {
+    "2D.1-微執行與模擬測試 (Micro-execution & Emulation)": {
         "domain_overlap": [
             "[[2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]",
         ],
     },
-    "2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)": {
+    "2D.2-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)": {
         "extends": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
-    "2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)": {
+    "2D.3-智能合約與 Web3 安全 (Smart Contract & Web3 Security)": {
         "extends": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
@@ -711,18 +711,18 @@ GENRE_RELATIONS = {
             "[[1.4-符號執行 (Symbolic Execution)]]",
         ],
     },
-    "2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)": {
+    "2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)": {
         "domain_overlap": [
             "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
     },
-    "2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)": {
+    "2D.5-自動漏洞利用生成 (Automated Exploit Generation - AEG)": {
         "shares_technique": [
             "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
             "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
         ],
     },
-    "2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)": {
+    "2C.3-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)": {
         "co_deployed": [
             "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
         ],
@@ -733,10 +733,10 @@ GENRE_RELATIONS = {
     },
 
     # ── AUTOMATED PROGRAM REPAIR (Group 3) ───────────────────────────────────────
-    "3.0-故障定位 (Fault Localization)": {
+    "3A.1-故障定位 (Fault Localization)": {
         # Dynamically populated for Group 3 genres > 3.0
     },
-    "3.1-生成與驗證流派 (Generate-and-Validate)": {
+    "3B.1-生成與驗證流派 (Generate-and-Validate)": {
         "same_problem_different_paradigm": [
             "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
@@ -744,22 +744,22 @@ GENRE_RELATIONS = {
             "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
-    "3.2-語意合成流派 (Semantics-based Synthesis)": {
+    "3B.2-語意合成流派 (Semantics-based Synthesis)": {
         "shares_technique": [
             "[[1.4-符號執行 (Symbolic Execution)]]",
         ],
     },
-    "3.3-範本與模式匹配流派 (Template-based)": {
+    "3B.3-範本與模式匹配流派 (Template-based)": {
         "extends": [
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
-    "3.4-深度學習修復流派 (DL & NMT)": {
+    "3C.1-深度學習修復流派 (DL & NMT)": {
         "extends": [
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
-    "3.5-LLM與Agent驅動修復 (LLM & Agentic)": {
+    "3C.2-LLM與Agent驅動修復 (LLM & Agentic)": {
         "extends": [
             "[[3.4-深度學習修復流派 (DL & NMT)]]",
         ],
@@ -767,10 +767,10 @@ GENRE_RELATIONS = {
             "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
-    "3.6-安全補丁驗證與PCA (Validation & PCA)": {
+    "3A.2-安全補丁驗證與PCA (Validation & PCA)": {
         # Back-edges will be automatically generated by symmetry
     },
-    "3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)": {
+    "3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)": {
         "shares_technique": [
             "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
             "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
@@ -795,10 +795,10 @@ def process_relations():
         if "3-自動修復" in main_cat:
             for sub in sub_list:
                 clean_name = os.path.splitext(sub["filename"])[0]
-                if clean_name != "3.0-故障定位 (Fault Localization)":
+                if clean_name != "3A.1-故障定位 (Fault Localization)":
                     group3_genres.append(clean_name)
                     
-    fl_genre = "3.0-故障定位 (Fault Localization)"
+    fl_genre = "3A.1-故障定位 (Fault Localization)"
     if fl_genre not in GENRE_RELATIONS:
         GENRE_RELATIONS[fl_genre] = {}
     if "precondition_of" not in GENRE_RELATIONS[fl_genre]:
@@ -1036,111 +1036,27 @@ categories:
         f.write(content)
     print("Generated Template file: Paper Template.md")
 
-def write_example_papers():
-    # Example Paper 1: A hybrid paper (IRIS)
-    paper1_path = os.path.join(VAULT_DIR, "papers", "example-paper-iris-2024.md")
-    content1 = """---
-title: "IRIS: LLM-Assisted Static Analysis for Detecting Taint-Style Vulnerabilities"
-authors: "Anonymous Authors"
-year: 2024
-venue: "arXiv"
-url: "https://arxiv.org/abs/2400.00000"
-code: ""
-categories:
-  - "[[1.2-資料流分析 (Data Flow Analysis)]]"
-  - "[[1.7-學習型靜態分析 (Learning-based Static)]]"
----
+def write_papers_dir_readme():
+    # Only create a README stub if the papers directory has no .md files yet
+    # (i.e. a fresh vault). Never overwrite existing notes.
+    papers_dir = os.path.join(VAULT_DIR, "papers")
+    existing_notes = [f for f in os.listdir(papers_dir) if f.endswith(".md")] if os.path.exists(papers_dir) else []
+    if existing_notes:
+        print(f"Skipped paper stub generation: {len(existing_notes)} existing note(s) found in papers/.")
+        return
 
-# IRIS: LLM-Assisted Static Analysis for Detecting Taint-Style Vulnerabilities
+    # Only runs on a truly empty vault — write a README stub so Dataview doesn't complain
+    stub_path = os.path.join(papers_dir, "README.md")
+    stub_content = """# Papers
 
-## 💡 核心創新點 (Core Contributions)
-- 提出 **LLM + Static Hybrid** 的混合分析模式。
-- 利用大語言模型自動推斷 CodeQL 等靜態分析工具所需的 **Taint Specification (Source, Sink, Sanitizer)**，解決了傳統靜態分析工具規格定義成本極高、容易漏報的問題。
+Add your paper notes here. Use the **Paper Template** (`templates/Paper Template.md`) as a starting point.
 
-## 🧠 技術架構 & 運作流程 (Methodology)
-1. **LLM 規格推斷**：先由 LLM 掃描程式碼，識別出可能被當作污點源或接收點的 API / 函式。
-2. **靜態驗證**：將 LLM推斷出來的 Spec 轉化成 CodeQL 查詢，交由 CodeQL 引擎執行嚴格的資料流分析，排除 LLM 的幻覺誤報。
-
-## 📊 實驗設計 & 數據集 (Evaluation & Benchmarks)
-- **使用的基準資料集**: 實際開源 GitHub 專案。
-- **對比的 Baseline**: 傳統純人工編寫 Spec 的 CodeQL 掃描。
-
-## 📝 個人筆記 / 啟發 (Notes & Insights)
-- 這篇論文是典型的「神經符號混合（Neuro-symbolic）」靜態分析，完美結合了 LLM 的語意理解與傳統 Static 分析的嚴謹性，對「跨流派」論文歸類是很好的範例。
+Each note must include a `categories` frontmatter list with links to the relevant genre files,
+e.g. `[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]`.
 """
-    with open(paper1_path, "w", encoding="utf-8") as f:
-        f.write(content1)
-
-    # Example Paper 2: An APR paper (RAVEN)
-    paper2_path = os.path.join(VAULT_DIR, "papers", "example-paper-raven-2026.md")
-    content2 = """---
-title: "RAVEN: Retrieval-Augmented Agentic Program Repair for Complex CVEs"
-authors: "Security Research Group"
-year: 2026
-venue: "USENIX Security 2026"
-url: "https://arxiv.org/abs/2600.00000"
-code: "https://github.com/example/raven"
-categories:
-  - "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]"
-  - "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]"
----
-
-# RAVEN: Retrieval-Augmented Agentic Program Repair for Complex CVEs
-
-## 💡 核心創新點 (Core Contributions)
-- 提出了一套 **RAG + Agentic 迭代修復系統**，顯著提升了真實複雜 CVE 的修復成功率。
-- 專門針對 **Patch Overfitting (補丁過擬合)** 設計了動態語意 PCA 模組。
-
-## 🧠 技術架構 & 運作流程 (Methodology)
-1. **RAG 檢索**：當收到一個漏洞報告（CWE）後，從歷史 NVD/CVE 數據庫中檢索相似的漏洞修復 Patch 模板。
-2. **Agent 迭代修復**：由 Multi-Agent 系統執行「故障定位 -> 生成 Patch -> 執行專案測試 -> 反饋錯誤訊息 -> 重新生成」。
-3. **補丁驗證 (PCA)**：利用動態測試案例增強，在補丁生成後自動生成變異測試，檢測是否引入了過擬合。
-
-## 📊 實驗設計 & 數據集 (Evaluation & Benchmarks)
-- **使用的基準資料集**: SWE-bench, CVE-Fix-Bench
-- **核心實驗結果**: 在真實 CVE 漏洞修復上達到了 83.13% 的成功率。
-
-## 📝 個人筆記 / 啟發 (Notes & Insights)
-- 該論文同時涵蓋了 LLM Agent 修復 (3.5) 與補丁驗證 (3.6) 流派，是現代自動化漏洞防禦的代表工作。
-"""
-    with open(paper2_path, "w", encoding="utf-8") as f:
-        f.write(content2)
-
-    # Example Paper 3: A black-box & grey-box hybrid dynamic analysis paper (e.g. stateful network fuzzing)
-    paper3_path = os.path.join(VAULT_DIR, "papers", "example-paper-aflnet-2020.md")
-    content3 = """---
-title: "AFLNet: A Greybox Fuzzer for Network Protocols"
-authors: "Van-Thuan Pham, et al."
-year: 2020
-venue: "ICSE 2020"
-url: "https://dl.acm.org/doi/10.1145/3377811.3380434"
-code: "https://github.com/aflnet/aflnet"
-categories:
-  - "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]"
-  - "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]"
----
-
-# AFLNet: A Greybox Fuzzer for Network Protocols
-
-## 💡 核心創新點 (Core Contributions)
-- 針對網路協定測試，提出了一種將 **Stateful Fuzzing (協定狀態機)** 與 **Greybox Fuzzing (覆蓋率反饋)** 結合的框架。
-- AFLNet 不僅依賴程式碼的分支覆蓋率，還會透過網絡回應碼（如 FTP 的 220, 331）來推斷目前的協定狀態，以狀態轉換圖導航變異。
-
-## 🧠 技術架構 & 運作流程 (Methodology)
-1. **握手與狀態追蹤**：發送封包給目標伺服器，並收集回應中的狀態碼以構建動態狀態圖。
-2. **覆蓋率引導**：利用 AFL 的輕量級代碼插樁，獲得基本塊覆蓋率。
-3. **反饋調度**：優先突變那些能觸發新代碼路徑或新協定狀態的訊息序列。
-
-## 📊 實驗設計 & 數據集 (Evaluation & Benchmarks)
-- **使用的基準資料集**: 實際的開源網路伺服器 (ProFTPD, Pure-FTPd, Live555)。
-- **對比的 Baseline**: 傳統黑箱協定 Fuzzer (Peach Fuzzer) 以及純 CGF。
-
-## 📝 個人筆記 / 啟發 (Notes & Insights)
-- 這篇論文是「黑箱協定分析（狀態碼推斷）」與「灰箱引導式測試（覆蓋率）」結合的典範，很好地驗證了我們拆分「黑箱」與「白/灰箱」動態分類的必要性與實用價值。
-"""
-    with open(paper3_path, "w", encoding="utf-8") as f:
-        f.write(content3)
-    print("Generated three example papers in papers/")
+    with open(stub_path, "w", encoding="utf-8") as f:
+        f.write(stub_content)
+    print("Generated papers/README.md stub (empty vault).")
 
 def write_relations_review_file():
     review_path = os.path.join(VAULT_DIR, "genre_relations_review.md")
@@ -1197,6 +1113,6 @@ if __name__ == "__main__":
     write_category_files()
     write_index_file()
     write_templates()
-    write_example_papers()
+    write_papers_dir_readme()
     write_relations_review_file()
     print("--- Setup Completed Successfully! ---")

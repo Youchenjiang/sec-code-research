@@ -6,8 +6,8 @@ venue: "ICSE-SEIP 2025"
 url: "https://doi.org/10.1109/ICSE-SEIP66354.2025.00042"
 code: "https://github.com/aster-test-generation/aster"
 categories:
-  - "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]"
-  - "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]"
+  - "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]"
+  - "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]"
 ---
 
 # 📖 ASTER: Natural and Multi-language Unit Test Generation with LLMs
