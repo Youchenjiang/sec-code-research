@@ -2,6 +2,7 @@
 import os
 import sys
 import shutil
+import re
 
 # Define base path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -485,250 +486,250 @@ GENRE_RELATIONS = {
     # ── DESIGN SECURITY (Group 0) ────────────────────────────────────────────────
     "0.1-威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis)": {
         "precondition_of": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-            "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
+            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            "[[1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
         ],
         "same_problem_different_paradigm": [
-            "[[1.13-網路協定形式化分析 (Protocol Formal Analysis)]]",
+            "[[1D.4-網路協定形式化分析 (Protocol Formal Analysis)]]",
         ],
     },
 
     # ── STATIC ANALYSIS (Group 1) ───────────────────────────────────────────────
     "1A.1-語法與結構分析 (Syntactic & AST)": {
         "precondition_of": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-            "[[1.5-圖結構分析 (Graph-based Analysis)]]",
-            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
+            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            "[[1A.2-圖結構分析 (Graph-based Analysis)]]",
+            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
         ],
     },
     "1B.1-資料流分析 (Data Flow Analysis)": {
         "dynamic_counterpart": [
-            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
         "shares_technique": [
-            "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
+            "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
         "same_problem_different_paradigm": [
-            "[[2.1-Web與API動態漏洞掃描 (DAST)]]",
+            "[[2A.1-Web與API動態漏洞掃描 (DAST)]]",
         ],
     },
     "1B.2-抽象解釋 (Abstract Interpretation)": {
         "same_problem_different_paradigm": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
-            "[[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
+            "[[1B.3-符號執行 (Symbolic Execution)]]",
+            "[[1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
         ],
         "precondition_of": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
     "1B.3-符號執行 (Symbolic Execution)": {
         "co_deployed": [
-            "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
+            "[[2B.3-混合與Concolic執行 (Concolic & Hybrid)]]",
         ],
         "shares_technique": [
-            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
-            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
+            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
     },
     "1A.2-圖結構分析 (Graph-based Analysis)": {
         "shares_technique": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
+            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
         ],
         "precondition_of": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
     "1A.3-型別系統與資訊流分析 (Type System & IFC)": {
         "domain_overlap": [
-            "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+            "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
         "shares_technique": [
-            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
+            "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
     },
     "1D.1-學習型靜態分析 (Learning-based Static)": {
         "extends": [
-            "[[1.1-語法與結構分析 (Syntactic & AST)]]",
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-            "[[1.5-圖結構分析 (Graph-based Analysis)]]",
+            "[[1A.1-語法與結構分析 (Syntactic & AST)]]",
+            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            "[[1A.2-圖結構分析 (Graph-based Analysis)]]",
         ],
         "shares_technique": [
-            "[[3.4-深度學習修復流派 (DL & NMT)]]",
-            "[[3.3-範本與模式匹配流派 (Template-based)]]",
+            "[[3C.1-深度學習修復流派 (DL & NMT)]]",
+            "[[3B.3-範本與模式匹配流派 (Template-based)]]",
         ],
         "precondition_of": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
     "1C.1-二進位與逆向分析 (Binary & Reverse Engineering)": {
         "shares_technique": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
-            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            "[[1B.3-符號執行 (Symbolic Execution)]]",
+            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
         ],
         "precondition_of": [
-            "[[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
+            "[[3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
         "co_deployed": [
-            "[[1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]]",
+            "[[1C.2-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]]",
         ],
     },
     "1C.2-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)": {
         "shares_technique": [
-            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
+            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
         ],
         "precondition_of": [
-            "[[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]]",
-            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
+            "[[2A.3-惡意程式沙盒與行為分析 (Malware Sandbox)]]",
+            "[[3C.2-LLM與Agent驅動修復 (LLM & Agentic)]]",
         ],
     },
     "1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security)": {
         "domain_overlap": [
-            "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+            "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
         "shares_technique": [
-            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
     },
     "1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking)": {
         "domain_overlap": [
-            "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
+            "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
     },
     "1B.4-靜態污點分析 (Static Taint Analysis)": {
         "extends": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
+            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
         ],
         "dynamic_counterpart": [
-            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
     },
     "1D.4-網路協定形式化分析 (Protocol Formal Analysis)": {
         "domain_overlap": [
-            "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
-            "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
+            "[[1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
+            "[[2A.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
         ],
         "shares_technique": [
-            "[[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
+            "[[1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
         ],
     },
     "1D.5-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)": {
         "precondition_of": [
-            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
-            "[[3.3-範本與模式匹配流派 (Template-based)]]",
-            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
+            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
+            "[[3B.3-範本與模式匹配流派 (Template-based)]]",
+            "[[3C.2-LLM與Agent驅動修復 (LLM & Agentic)]]",
         ],
     },
 
     # ── BLACK-BOX DYNAMIC (Group 2A) ────────────────────────────────────────────
     "2A.1-Web與API動態漏洞掃描 (DAST)": {
         "same_problem_different_paradigm": [
-            "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
+            "[[2A.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
         ],
     },
     "2A.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)": {
         "same_problem_different_paradigm": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
     "2A.3-惡意程式沙盒與行為分析 (Malware Sandbox)": {
         "shares_technique": [
-            "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
-            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
+            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
         "co_deployed": [
-            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
 
     # ── WHITE/GREY-BOX DYNAMIC (Group 2B) ────────────────────────────────────────
     "2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)": {
         "same_problem_different_paradigm": [
-            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
-            "[[2.9-變異測試 (Mutation Testing)]]",
+            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            "[[2B.4-變異測試 (Mutation Testing)]]",
         ],
         "domain_overlap": [
-            "[[2.8-語意差異與並發偵測 (Differential & Concurrency)]]",
+            "[[2C.2-語意差異與並發偵測 (Differential & Concurrency)]]",
         ],
         "precondition_of": [
-            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
+            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)": {
         "shares_technique": [
-            "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+            "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
         "precondition_of": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
     "2B.3-混合與Concolic執行 (Concolic & Hybrid)": {
         "co_deployed": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
         "shares_technique": [
-            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
         ],
     },
     "2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)": {
         "precondition_of": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
         "shares_technique": [
-            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
-            "[[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
+            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            "[[3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
     },
     "2C.2-語意差異與並發偵測 (Differential & Concurrency)": {
         "domain_overlap": [
-            "[[2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)]]",
+            "[[2D.3-智能合約與 Web3 安全 (Smart Contract & Web3 Security)]]",
         ],
     },
     "2B.4-變異測試 (Mutation Testing)": {
         "shares_technique": [
-            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
+            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "2D.1-微執行與模擬測試 (Micro-execution & Emulation)": {
         "domain_overlap": [
-            "[[2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]",
+            "[[2D.2-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]",
         ],
     },
     "2D.2-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)": {
         "extends": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
     "2D.3-智能合約與 Web3 安全 (Smart Contract & Web3 Security)": {
         "extends": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
         "shares_technique": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
+            "[[1B.3-符號執行 (Symbolic Execution)]]",
         ],
     },
     "2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)": {
         "domain_overlap": [
-            "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
+            "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
     },
     "2D.5-自動漏洞利用生成 (Automated Exploit Generation - AEG)": {
         "shares_technique": [
-            "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
-            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            "[[2B.3-混合與Concolic執行 (Concolic & Hybrid)]]",
+            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
         ],
     },
     "2C.3-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)": {
         "co_deployed": [
-            "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
+            "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
         ],
         "domain_overlap": [
-            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
-            "[[2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)]]",
+            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            "[[2D.5-自動漏洞利用生成 (Automated Exploit Generation - AEG)]]",
         ],
     },
 
@@ -738,33 +739,33 @@ GENRE_RELATIONS = {
     },
     "3B.1-生成與驗證流派 (Generate-and-Validate)": {
         "same_problem_different_paradigm": [
-            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
+            "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
         "co_deployed": [
-            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
+            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "3B.2-語意合成流派 (Semantics-based Synthesis)": {
         "shares_technique": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
+            "[[1B.3-符號執行 (Symbolic Execution)]]",
         ],
     },
     "3B.3-範本與模式匹配流派 (Template-based)": {
         "extends": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
     "3C.1-深度學習修復流派 (DL & NMT)": {
         "extends": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
     "3C.2-LLM與Agent驅動修復 (LLM & Agentic)": {
         "extends": [
-            "[[3.4-深度學習修復流派 (DL & NMT)]]",
+            "[[3C.1-深度學習修復流派 (DL & NMT)]]",
         ],
         "co_deployed": [
-            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
+            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "3A.2-安全補丁驗證與PCA (Validation & PCA)": {
@@ -772,13 +773,43 @@ GENRE_RELATIONS = {
     },
     "3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)": {
         "shares_technique": [
-            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
-            "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
+            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
         ],
     },
 }
 
+def get_all_genres():
+    valid_genres = set()
+    for main_cat, sub_list in CATEGORIES.items():
+        for sub in sub_list:
+            clean_name = os.path.splitext(sub["filename"])[0]
+            valid_genres.add(clean_name)
+    return valid_genres
+
+def validate_relations():
+    valid_genres = get_all_genres()
+    errors = []
+    
+    for source, rels in GENRE_RELATIONS.items():
+        if source not in valid_genres:
+            errors.append(f"Invalid relation source key: '{source}' is not defined in CATEGORIES.")
+            
+        for rel_type, targets in rels.items():
+            for target in targets:
+                clean_target = target.strip("[]")
+                if clean_target not in valid_genres:
+                    errors.append(f"Invalid relation target: '{target}' under source '{source}' -> '{rel_type}' is not defined in CATEGORIES.")
+                    
+    if errors:
+        print("\n=== Relations Validation Errors ===")
+        for err in errors:
+            print(f"Error: {err}")
+        print("===================================\n")
+        raise ValueError("GENRE_RELATIONS contains invalid source keys or targets. Please correct setup_vault.py.")
+
 def process_relations():
+    validate_relations()
     # Symmetric relationship types
     symmetric_types = {
         "dynamic_counterpart",
@@ -844,14 +875,18 @@ def cleanup_orphaned_genre_files():
         for sub in sub_list:
             valid_filenames.add(sub["filename"])
             
+    # Pattern to match both renumbered hierarchical (e.g. 1A.1-...) and old flat (e.g. 1.1-...) format files
+    category_pattern = re.compile(r"^[0-9A-Z]+\.[0-9A-Za-z]+-.*\.md$")
+    
     for main_cat in CATEGORIES.keys():
         dir_path = os.path.join(VAULT_DIR, main_cat)
         if os.path.exists(dir_path):
             for filename in os.listdir(dir_path):
                 if filename.endswith(".md") and filename not in valid_filenames:
-                    file_to_remove = os.path.join(dir_path, filename)
-                    print(f"Removing orphaned category file: {file_to_remove}")
-                    os.remove(file_to_remove)
+                    if category_pattern.match(filename):
+                        file_to_remove = os.path.join(dir_path, filename)
+                        print(f"Removing orphaned category file: {file_to_remove}")
+                        os.remove(file_to_remove)
 
 def create_directory_structure():
     print(f"Creating vault directory: {VAULT_DIR}")
