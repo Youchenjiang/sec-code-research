@@ -823,6 +823,21 @@ def cleanup_old_directories():
         print(f"Cleaning up old dynamic analysis directory: {old_dir}")
         shutil.rmtree(old_dir)
 
+def cleanup_orphaned_genre_files():
+    valid_filenames = set()
+    for sub_list in CATEGORIES.values():
+        for sub in sub_list:
+            valid_filenames.add(sub["filename"])
+            
+    for main_cat in CATEGORIES.keys():
+        dir_path = os.path.join(VAULT_DIR, main_cat)
+        if os.path.exists(dir_path):
+            for filename in os.listdir(dir_path):
+                if filename.endswith(".md") and filename not in valid_filenames:
+                    file_to_remove = os.path.join(dir_path, filename)
+                    print(f"Removing orphaned category file: {file_to_remove}")
+                    os.remove(file_to_remove)
+
 def create_directory_structure():
     print(f"Creating vault directory: {VAULT_DIR}")
     os.makedirs(os.path.join(VAULT_DIR, "templates"), exist_ok=True)
@@ -1161,6 +1176,7 @@ Below is the flat map of all active relationships defined in `setup_vault.py`.
 if __name__ == "__main__":
     print("--- Starting Obsidian Vault Setup (Restructured with 2.9) ---")
     cleanup_old_directories()
+    cleanup_orphaned_genre_files()
     process_relations()
     create_directory_structure()
     write_category_files()
