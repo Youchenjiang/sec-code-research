@@ -236,8 +236,8 @@ CATEGORIES = {
                 {"name": "結構與文法感知模糊測試 (Structure/Format-aware)", "desc": "理解複雜輸入格式（PDF/XML/AST），進行有語義的變異。代表工具：Nautilus、WEIZZ。"},
                 {"name": "LLM/ML 輔助模糊測試", "desc": "利用模型生成種子、引導變異或理解 API 規格。代表工具：LLaMAFuzz、MTFuzz。"}
             ],
-            "keywords": ["coverage-guided fuzzing", "edge coverage", "bitmap feedback", "directed fuzzing", "patch testing", "kernel fuzzing", "syscall fuzzing", "grammar-based fuzzing", "structured input generation", "LLM fuzzing"],
-            "tools": ["AFL", "AFL++", "libFuzzer", "syzkaller", "kAFL", "Nautilus", "AFLGo"]
+            "keywords": ["coverage-guided fuzzing", "edge coverage", "bitmap feedback", "directed fuzzing", "patch testing", "kernel fuzzing", "syscall fuzzing", "grammar-based fuzzing", "structured input generation", "LLM fuzzing", "intent fuzzing", "system service fuzzing"],
+            "tools": ["AFL", "AFL++", "libFuzzer", "syzkaller", "kAFL", "Nautilus", "AFLGo", "MALintent", "NASS", "FANS", "CovAgent", "GAPS"]
         },
         {
             "filename": "2.5-動態污點分析 (Dynamic Taint Analysis - DTA).md",
@@ -259,8 +259,8 @@ CATEGORIES = {
                 {"name": "並行符號執行 (Concolic Execution)", "desc": "用真實值引導符號追蹤，求解新分支。代表工具：SAGE、Mayhem、Triton、KLEE (偏靜態)。"},
                 {"name": "混合模糊測試 (Hybrid Fuzzing)", "desc": "模糊測試卡住時，動態調度 Concolic 引擎突破分支障礙。代表工具：QSYM、Driller、SymCC、SymFusion。"}
             ],
-            "keywords": ["concolic execution", "path constraint", "constraint solving", "whitebox fuzzing", "hybrid fuzzing", "concolic + fuzzing", "selective symbolic execution"],
-            "tools": ["SAGE", "Mayhem", "QSYM", "Driller", "SymCC"]
+            "keywords": ["concolic execution", "path constraint", "constraint solving", "whitebox fuzzing", "hybrid fuzzing", "concolic + fuzzing", "selective symbolic execution", "Dalvik symbolic execution"],
+            "tools": ["SAGE", "Mayhem", "QSYM", "Driller", "SymCC", "SymDroid", "SIG-Droid"]
         },
         {
             "filename": "2.7-執行期插樁與監控 (Instrumentation & Sanitizers).md",
@@ -320,8 +320,8 @@ CATEGORIES = {
                 {"name": "硬體輔助追蹤與狀態重置 (Hardware-assisted Trace)", "desc": "利用 Intel PT 等硬體技術收集覆蓋率，並在發生 crash 時快速重置系統狀態。代表工具：kAFL、Nyx。"},
                 {"name": "虛擬化與 Hypervisor 漏洞挖掘", "desc": "模擬虛擬設備或 PCI 請求，測試虛擬化逃逸與 Hypervisor 的邏輯漏洞。代表工作：QEMU Fuzzing。"}
             ],
-            "keywords": ["kernel fuzzing", "syscall generation", "hardware-assisted tracing", "Intel PT", "hypervisor escape", "state snapshot", "device emulation fuzzing"],
-            "tools": ["syzkaller", "kAFL", "Nyx", "QEMU Fuzzer"]
+            "keywords": ["kernel fuzzing", "syscall generation", "hardware-assisted tracing", "Intel PT", "hypervisor escape", "state snapshot", "device emulation fuzzing", "TEE fuzzing"],
+            "tools": ["syzkaller", "kAFL", "Nyx", "QEMU Fuzzer", "TEEzz"]
         },
         {
             "filename": "2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security).md",
