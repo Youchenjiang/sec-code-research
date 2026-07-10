@@ -16,8 +16,21 @@ if sys.platform.startswith("win"):
             import io
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# Restructured category definitions with 2.9 added and duplicates cleaned
+# Expanded category definitions with C.1 - C.7 added
 CATEGORIES = {
+    "0-設計安全與威脅分析 (Secure Design & Threat Analysis)": [
+        {
+            "filename": "0.1-威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis).md",
+            "title": "0.1 威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis)",
+            "concept": "在程式碼撰寫前的架構設計階段，系統性地分析潛在攻擊路徑、元件信任邊界與資料流，以識別安全威脅並指導安全測試策略。",
+            "sub_genres": [
+                {"name": "Threat Modeling Frameworks (威脅建模框架)", "desc": "結構化的設計期威脅識別。代表框架：STRIDE、PASTA、LINDDUN（隱私威脅）。"},
+                {"name": "Attack Tree Analysis (攻擊樹分析)", "desc": "以樹狀圖建模攻擊者達成目標的各種潛在路徑，估算攻擊機率與成本。"}
+            ],
+            "keywords": ["threat modeling", "STRIDE", "trust boundary", "attack tree", "PASTA framework", "data flow diagram security"],
+            "tools": ["Microsoft Threat Modeling Tool", "OWASP Threat Dragon", "pyTM", "IriusRisk"]
+        }
+    ],
     "1-靜態分析 (Static Analysis)": [
         {
             "filename": "1.1-語法與結構分析 (Syntactic & AST).md",
@@ -112,7 +125,7 @@ CATEGORIES = {
         {
             "filename": "1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA).md",
             "title": "1.9 軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)",
-            "concept": "分析軟體的第三方依賴與庫，生成與驗證軟體物料清單（SBOM），並檢測相依組件 of 已知安全漏洞與惡意供應鏈投毒。",
+            "concept": "分析軟體的第三方依賴與庫，生成與驗證軟體物料清單（SBOM），並檢測相依組件之已知安全漏洞與惡意供應鏈投毒。",
             "sub_genres": [
                 {"name": "依賴漏洞掃描 (Dependency Vulnerability Scanning)", "desc": "識別程式中引入的開源組件，比對已知漏洞庫（如 CVE/NVD）。代表工具：Snyk、OWASP Dependency-Check、Dependabot。"},
                 {"name": "軟體物料清單 (SBOM Analysis)", "desc": "分析與生成軟體清單（如 SPDX、CycloneDX 格式），驗證其許可證合規性。代表工具：Syft、Grype。"},
@@ -131,6 +144,50 @@ CATEGORIES = {
             ],
             "keywords": ["cryptographic API misuse", "weak key detection", "constant-time implementation", "timing leak verification", "protocol state machine", "SSL/TLS configuration audit"],
             "tools": ["CogniCrypt", "CrySL", "CryptoLint", "dudect", "CacheD"]
+        },
+        {
+            "filename": "1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking).md",
+            "title": "1.11 形式化驗證與模型檢查 (Formal Verification & Model Checking)",
+            "concept": "透過數學方法對軟體規格或程式碼的有限狀態空間進行窮舉檢索或定理證明，以在數學上確保程式完全符合特定安全屬性。",
+            "sub_genres": [
+                {"name": "Model Checking (模型檢查)", "desc": "窮舉有限狀態系統中的所有狀態以檢驗安全性質，失敗時提供反例。代表工具：SPIN、NuSMV、TLA⁺、CBMC。"},
+                {"name": "Theorem Proving (定理證明)", "desc": "利用邏輯推理輔助或自動證明程式正確性。代表工具：Coq、Isabelle、F*。"}
+            ],
+            "keywords": ["formal verification", "model checking", "theorem proving", "reachability analysis", "counterexample generation", "temporal logic", "bounded model checking"],
+            "tools": ["SPIN", "NuSMV", "TLA+", "CBMC", "Coq", "Isabelle", "F*"]
+        },
+        {
+            "filename": "1.12-靜態污點分析 (Static Taint Analysis).md",
+            "title": "1.12 靜態污點分析 (Static Taint Analysis)",
+            "concept": "專門追蹤外部輸入（Source）在不執行程式下，如何沿變數與函式呼叫路徑傳播至敏感接收點（Sink），著重於污點傳播規則與隱含流處理。",
+            "sub_genres": [
+                {"name": "Source-to-Sink Taint Tracking (源頭到接收點追蹤)", "desc": "在控制流與資料流圖上尋找未經過濾的污點傳播路徑。代表工具：FlowDroid、CodeQL、Joern Taint Engine。"},
+                {"name": "Implicit Flow Analysis (隱含流分析)", "desc": "檢測並分析透過條件分支與控制流隱含洩漏的資料流。"}
+            ],
+            "keywords": ["static taint analysis", "source-sink tracking", "explicit taint flow", "implicit information flow", "sanitization verification", "CodeQL taint queries"],
+            "tools": ["CodeQL", "FlowDroid", "Joern", "Fortify"]
+        },
+        {
+            "filename": "1.13-網路協定形式化分析 (Protocol Formal Analysis).md",
+            "title": "1.13 網路協定形式化分析 (Protocol Formal Analysis)",
+            "concept": "在協定規格與設計層面，使用代數或符號模型抽象化加密協定的訊息交換流程，在 Dolev-Yao 攻擊者模型下證明或尋找攻擊路徑。",
+            "sub_genres": [
+                {"name": "Symbolic Protocol Verification (符號協定驗證)", "desc": "將密碼協定抽象為代數項重寫系統以自動驗證。代表工具：ProVerif、Tamarin Prover。"},
+                {"name": "Computational Model Verification (計算模型驗證)", "desc": "在機率多項式時間內證明協定安全性。代表工具：CryptoVerif。"}
+            ],
+            "keywords": ["cryptographic protocol verification", "Dolev-Yao model", "Tamarin Prover", "ProVerif", "symbolic protocol analysis", "secrecy properties", "authentication logic"],
+            "tools": ["ProVerif", "Tamarin Prover", "Scyther", "CryptoVerif"]
+        },
+        {
+            "filename": "1.14-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining).md",
+            "title": "1.14 漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)",
+            "concept": "自動開採歷史 Git 提交記錄、漏洞資料庫（CVE/NVD）及漏洞修復補丁，分析漏洞引入規律與安全修復特徵，為機器學習與模板修復提供語料。",
+            "sub_genres": [
+                {"name": "Patch Locating & Tracing (補丁定位與追蹤)", "desc": "從代碼變更歷史中自動定位安全修復提交。代表算法：SZZ、PatchFinder。"},
+                {"name": "Vulnerability Feature Extraction (漏洞特徵開採)", "desc": "從公開 CVE 中開採漏洞模式與漏洞引入的特徵數據。代表數據集：MoreFixes、Big-Vul。"}
+            ],
+            "keywords": ["mining software repositories", "MSR for security", "SZZ algorithm", "patch tracing", "CVE metadata mining", "MoreFixes dataset", "vulnerability commit correlation"],
+            "tools": ["SZZ tool variants", "PatchFinder", "VCCFinder"]
         }
     ],
     "2A-黑箱動態分析 (Black-box Dynamic Analysis)": [
@@ -188,7 +245,7 @@ CATEGORIES = {
             "concept": "在程式執行時，對每個暫存器或記憶體位元組維護污染標籤（Taint Tag），精確追蹤污染源資料流向危險接收點（Sink）的實際執行路徑。精準度高但具有顯著的運行期開銷。",
             "sub_genres": [
                 {"name": "全系統動態污點追蹤 (Whole-System DIFT)", "desc": "在仿真器（如 QEMU）層插樁，追蹤跨程式、跨系統呼叫的資料流。代表工具：DECAF、DECAF++、TEMU。"},
-                {"name": "使用者空間動態污點分析", "desc": "利用動態二進位插樁（DBI）在使用者空間追蹤單一程序的資料流。代表工具：libdft、Minemu。"},
+                {"name": "使用者空間動態污點分析", "desc": "利用動態二進位插樁（DBI）在使用者空間追蹤單一程序的資料流.代表工具：libdft、Minemu。"},
                 {"name": "資訊流安全與側通道檢測", "desc": "追蹤機密資料是否在執行時洩漏至時間、分支等可觀測側通道。"}
             ],
             "keywords": ["whole-system taint", "QEMU instrumentation", "shadow memory", "DIFT", "taint propagation", "PIN taint analysis", "DynamoRIO taint", "constant-time verification", "timing side-channel"],
@@ -273,7 +330,7 @@ CATEGORIES = {
             "sub_genres": [
                 {"name": "智能合約模糊測試 (Smart Contract Fuzzing)", "desc": "針對合約狀態機與屬性（Invariants）進行自動化輸入變異。代表工具：Echidna、ItyFuzz、Foundry。"},
                 {"name": "智能合約符號執行 (Symbolic Execution)", "desc": "在合約位元組碼層探索執行路徑並求解约束。代表工具：Mythril、Manticore。"},
-                {"name": "形式化驗證與靜態審計 (Formal Verification)", "desc": "對合約業務邏輯屬性進行嚴謹數學證明或靜態約束檢查。代表工具：Certora Prover、Slither。"}
+                {"name": "形式化驗證與靜態審計 (Formal Verification)", "desc": "對合約業務邏輯屬性進行嚴記數學證明或靜態約束檢查。代表工具：Certora Prover、Slither。"}
             ],
             "keywords": ["smart contract fuzzing", "EVM symbolic execution", "contract formal verification", "invariant testing", "reentrancy vulnerability", "Web3 security audit"],
             "tools": ["Echidna", "ItyFuzz", "Mythril", "Manticore", "Certora Prover", "Slither"]
@@ -288,6 +345,28 @@ CATEGORIES = {
             ],
             "keywords": ["cache side-channel", "information leakage quantification", "transient execution vulnerability", "Spectre detection", "microarchitectural side-channel"],
             "tools": ["CACHEQL", "CacheAudit"]
+        },
+        {
+            "filename": "2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG).md",
+            "title": "2.14 自動漏洞利用生成 (Automated Exploit Generation - AEG)",
+            "concept": "動態分析漏洞觸發上下文，結合符號執行與約束求解，自動生成可運行的漏洞利用載荷（Exploit）以確定漏洞的實際危害性。",
+            "sub_genres": [
+                {"name": "AEG Execution Hijacking (控制流劫持生成)", "desc": "自動推算劫持程式執行流所需的輸入與緩衝區填充。代表工作：AEG (Avgerinos et al.)。"},
+                {"name": "ROP Chain Synthesis (ROP鏈合成)", "desc": "在二進位機器碼中自動搜尋 ROP gadgets 並編排成功能載荷。代表工具：ROPgadget、pwntools ROP。"}
+            ],
+            "keywords": ["automated exploit generation", "AEG", "ROP chain synthesis", "control flow hijacking", "exploitability confirmation", "gadget discovery", "shellcode generation"],
+            "tools": ["angr exploit engine", "ROPgadget", "pwntools", "CRAX"]
+        },
+        {
+            "filename": "2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI).md",
+            "title": "2.15 記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)",
+            "concept": "評估並測試部署在實際生產環境中的執行期硬體/軟體安全加固技術（如控制流完整性 CFI、堆疊金絲雀、隨機化佈局）的實用效能與繞過方法。",
+            "sub_genres": [
+                {"name": "Control-Flow Integrity (控制流完整性)", "desc": "在編譯或執行期驗證間接跳轉目標位址是否在合法 CFG 內。代表技術：LLVM CFI。"},
+                {"name": "Memory Safety Hardening (記憶體加固)", "desc": "使用 hardened allocator 或硬體能力（如 CHERI）防止過隨與釋放後使用漏洞。代表工具：hardened_malloc、mimalloc。"}
+            ],
+            "keywords": ["control-flow integrity", "CFI", "ASLR bypass", "runtime defense", "hardened malloc", "shadow stack", "CHERI capability", "memory safety protection"],
+            "tools": ["LLVM CFI", "hardened_malloc", "CHERI SDK", "mimalloc"]
         }
     ],
     "3-自動修復 (Automated Program Repair - APR)": [
@@ -352,7 +431,7 @@ CATEGORIES = {
             "title": "3.5 大語言模型與 Agent 驅動修復 (LLM-based & Agentic APR)",
             "concept": "LLM 在無需微調的情況下，通過 Zero/Few-shot Prompting 直接生成修復補丁；進一步整合工具呼叫、測試執行反饋、多輪迭代，形成自主 Agent 閉環，是目前前沿趨勢。",
             "sub_genres": [
-                {"name": "LLM Zero/Few-shot Prompting 修復", "desc": "直接以漏洞報告、錯誤訊息、程式碼上下文組成 Prompt 餵入 LLM。代表工具：ChatRepair、LLM4APR、SWE-bench 參賽模型。"},
+                {"name": "LLM Zero/Few-shot Prompting 修復", "desc": "直接以漏洞報告、錯誤訊息、程式碼上下文組成 Prompt 餵入 LLM。代表工具：ChatRepair", "LLM4APR": "SWE-bench 參賽模型。"},
                 {"name": "LLM 迭代反饋修復 (Iterative Feedback Loop)", "desc": "LLM 生成補丁 → 執行測試 → 將失敗資訊回饋給 LLM → 重新生成。代表工具：LLM4CVE、RAVEN。"},
                 {"name": "多 Agent 自動化修復系統 (Multi-Agent Agentic APR)", "desc": "建立多個專責 Agent（故障定位、補丁生成、測試驗證）協同解決複雜跨文件問題。代表工具：SWE-agent、AutoCodeRover、AutoPatch、AgenticVM、RAVEN。"},
                 {"name": "RAG 輔助修復 (Retrieval-Augmented Repair)", "desc": "以 RAG 從歷史 CVE 補丁庫、CWE 知識庫中檢索相關修復案例。代表工具：RAVEN、VulKey。"}
@@ -387,19 +466,28 @@ CATEGORIES = {
     ]
 }
 
-# Cross-genre semantic relationships for Graph Link Types plugin
-# Each key in a genre's dict becomes an edge label in Obsidian Graph View.
-# Requires: Dataview + Graph Link Types plugins.
-#
+# Cross-genre semantic relationships mapping (GENRE_RELATIONS)
 # Relationship types:
-#   extends           - this genre is a specialization / subtype of the target
-#   dynamic_counterpart - static vs dynamic version of the same analysis paradigm
-#   shares_technique  - use overlapping core algorithms or representations
-#   complementary     - different approach, same security problem space
-#   precondition_of   - this genre must exist/run before the target (pipeline)
-#   domain_overlap    - address the same vulnerability class, different technique
+#   extends           - specialization/subtype of target (directed)
+#   precondition_of   - A must execute before B (directed)
+#   dynamic_counterpart - static/dynamic variants (symmetric)
+#   shares_technique  - shared core representations/algorithms (symmetric)
+#   domain_overlap    - same vulnerability class targeted, different technology (symmetric)
+#   co_deployed       - commonly combined in the same pipeline (symmetric)
+#   same_problem_different_paradigm - different paradigms solving the same problem (symmetric)
 GENRE_RELATIONS = {
-    # ── STATIC ANALYSIS ────────────────────────────────────────────────────────
+    # ── DESIGN SECURITY (Group 0) ────────────────────────────────────────────────
+    "0.1-威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis)": {
+        "precondition_of": [
+            "[[1.2-資料流分析 (Data Flow Analysis)]]",
+            "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
+        ],
+        "same_problem_different_paradigm": [
+            "[[1.13-網路協定形式化分析 (Protocol Formal Analysis)]]",
+        ],
+    },
+
+    # ── STATIC ANALYSIS (Group 1) ───────────────────────────────────────────────
     "1.1-語法與結構分析 (Syntactic & AST)": {
         "precondition_of": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
@@ -412,24 +500,26 @@ GENRE_RELATIONS = {
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
         "shares_technique": [
-            "[[1.5-圖結構分析 (Graph-based Analysis)]]",
             "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
-        "complementary": [
+        "same_problem_different_paradigm": [
             "[[2.1-Web與API動態漏洞掃描 (DAST)]]",
-            "[[1.3-抽象解釋 (Abstract Interpretation)]]",
         ],
     },
     "1.3-抽象解釋 (Abstract Interpretation)": {
-        "complementary": [
+        "same_problem_different_paradigm": [
             "[[1.4-符號執行 (Symbolic Execution)]]",
+            "[[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
+        ],
+        "precondition_of": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
+            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
     "1.4-符號執行 (Symbolic Execution)": {
-        "complementary": [
+        "co_deployed": [
             "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
-            "[[1.3-抽象解釋 (Abstract Interpretation)]]",
         ],
         "shares_technique": [
             "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
@@ -437,19 +527,20 @@ GENRE_RELATIONS = {
         ],
     },
     "1.5-圖結構分析 (Graph-based Analysis)": {
-        "extends": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-        ],
         "shares_technique": [
+            "[[1.2-資料流分析 (Data Flow Analysis)]]",
             "[[1.7-學習型靜態分析 (Learning-based Static)]]",
+        ],
+        "precondition_of": [
+            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
     "1.6-型別系統與資訊流分析 (Type System & IFC)": {
-        "shares_technique": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-        ],
         "domain_overlap": [
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+        ],
+        "shares_technique": [
+            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
         ],
     },
     "1.7-學習型靜態分析 (Learning-based Static)": {
@@ -462,6 +553,9 @@ GENRE_RELATIONS = {
             "[[3.4-深度學習修復流派 (DL & NMT)]]",
             "[[3.3-範本與模式匹配流派 (Template-based)]]",
         ],
+        "precondition_of": [
+            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+        ],
     },
     "1.8-二進位與逆向分析 (Binary & Reverse Engineering)": {
         "shares_technique": [
@@ -471,13 +565,17 @@ GENRE_RELATIONS = {
         "precondition_of": [
             "[[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
-        "complementary": [
+        "co_deployed": [
             "[[1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)]]",
         ],
     },
     "1.9-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)": {
-        "complementary": [
-            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+        "shares_technique": [
+            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
+        ],
+        "precondition_of": [
+            "[[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]]",
+            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
         ],
     },
     "1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)": {
@@ -488,51 +586,81 @@ GENRE_RELATIONS = {
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
         ],
     },
-    # ── BLACK-BOX DYNAMIC ──────────────────────────────────────────────────────
-    "2.1-Web與API動態漏洞掃描 (DAST)": {
-        "complementary": [
-            "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
+    "1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)": {
+        "domain_overlap": [
+            "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
+        ],
+    },
+    "1.12-靜態污點分析 (Static Taint Analysis)": {
+        "extends": [
             "[[1.2-資料流分析 (Data Flow Analysis)]]",
+        ],
+        "dynamic_counterpart": [
+            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+        ],
+    },
+    "1.13-網路協定形式化分析 (Protocol Formal Analysis)": {
+        "domain_overlap": [
+            "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
+            "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
+        ],
+        "shares_technique": [
+            "[[1.11-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
+        ],
+    },
+    "1.14-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)": {
+        "precondition_of": [
+            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
+            "[[3.3-範本與模式匹配流派 (Template-based)]]",
+            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
+        ],
+    },
+
+    # ── BLACK-BOX DYNAMIC (Group 2A) ────────────────────────────────────────────
+    "2.1-Web與API動態漏洞掃描 (DAST)": {
+        "same_problem_different_paradigm": [
+            "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
         ],
     },
     "2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)": {
-        "complementary": [
+        "same_problem_different_paradigm": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-            "[[2.1-Web與API動態漏洞掃描 (DAST)]]",
         ],
     },
     "2.3-惡意程式沙盒與行為分析 (Malware Sandbox)": {
         "shares_technique": [
             "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
+            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+        ],
+        "co_deployed": [
+            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
     },
-    # ── WHITE/GREY-BOX DYNAMIC ─────────────────────────────────────────────────
+
+    # ── WHITE/GREY-BOX DYNAMIC (Group 2B) ────────────────────────────────────────
     "2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)": {
-        "complementary": [
-            "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
-            "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
+        "same_problem_different_paradigm": [
             "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
             "[[2.9-變異測試 (Mutation Testing)]]",
-        ],
-        "precondition_of": [
-            "[[2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]",
         ],
         "domain_overlap": [
             "[[2.8-語意差異與並發偵測 (Differential & Concurrency)]]",
         ],
+        "precondition_of": [
+            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
+        ],
     },
     "2.5-動態污點分析 (Dynamic Taint Analysis - DTA)": {
-        "dynamic_counterpart": [
-            "[[1.2-資料流分析 (Data Flow Analysis)]]",
-        ],
         "shares_technique": [
-            "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+        ],
+        "precondition_of": [
+            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
     },
     "2.6-混合與Concolic執行 (Concolic & Hybrid)": {
-        "complementary": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
+        "co_deployed": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
         ],
         "shares_technique": [
@@ -542,37 +670,24 @@ GENRE_RELATIONS = {
     "2.7-執行期插樁與監控 (Instrumentation & Sanitizers)": {
         "precondition_of": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
         "shares_technique": [
             "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
-            "[[2.3-惡意程式沙盒與行為分析 (Malware Sandbox)]]",
             "[[3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
     },
     "2.8-語意差異與並發偵測 (Differential & Concurrency)": {
         "domain_overlap": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
             "[[2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)]]",
         ],
     },
     "2.9-變異測試 (Mutation Testing)": {
-        "complementary": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
-        ],
         "shares_technique": [
             "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "2.10-微執行與模擬測試 (Micro-execution & Emulation)": {
-        "complementary": [
-            "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-        ],
-        "shares_technique": [
-            "[[1.4-符號執行 (Symbolic Execution)]]",
-            "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
-            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
-        ],
         "domain_overlap": [
             "[[2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]",
         ],
@@ -580,9 +695,6 @@ GENRE_RELATIONS = {
     "2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)": {
         "extends": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-        ],
-        "domain_overlap": [
-            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
         ],
     },
     "2.12-智能合約與 Web3 安全 (Smart Contract & Web3 Security)": {
@@ -592,84 +704,65 @@ GENRE_RELATIONS = {
         "shares_technique": [
             "[[1.4-符號執行 (Symbolic Execution)]]",
         ],
-        "domain_overlap": [
-            "[[2.8-語意差異與並發偵測 (Differential & Concurrency)]]",
-        ],
     },
     "2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)": {
-        "domain_overlap": [
-            "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
-        ],
-        "shares_technique": [
-            "[[2.5-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
-        ],
         "domain_overlap": [
             "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
     },
-    # ── AUTOMATED PROGRAM REPAIR ───────────────────────────────────────────────
-    "3.0-故障定位 (Fault Localization)": {
-        "precondition_of": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
-            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
-            "[[3.3-範本與模式匹配流派 (Template-based)]]",
-            "[[3.4-深度學習修復流派 (DL & NMT)]]",
-            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
+    "2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)": {
+        "shares_technique": [
+            "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
+            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
         ],
     },
-    "3.1-生成與驗證流派 (Generate-and-Validate)": {
-        "complementary": [
-            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
-            "[[2.9-變異測試 (Mutation Testing)]]",
-            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
+    "2.15-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)": {
+        "co_deployed": [
+            "[[2.7-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
         ],
-        "shares_technique": [
-            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
+        "domain_overlap": [
+            "[[1.8-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            "[[2.14-自動漏洞利用生成 (Automated Exploit Generation - AEG)]]",
+        ],
+    },
+
+    # ── AUTOMATED PROGRAM REPAIR (Group 3) ───────────────────────────────────────
+    "3.0-故障定位 (Fault Localization)": {
+        # Dynamically populated for Group 3 genres > 3.0
+    },
+    "3.1-生成與驗證流派 (Generate-and-Validate)": {
+        "same_problem_different_paradigm": [
+            "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
+        ],
+        "co_deployed": [
+            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "3.2-語意合成流派 (Semantics-based Synthesis)": {
         "shares_technique": [
             "[[1.4-符號執行 (Symbolic Execution)]]",
         ],
-        "complementary": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
-        ],
     },
     "3.3-範本與模式匹配流派 (Template-based)": {
         "extends": [
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
-        ],
-        "shares_technique": [
-            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
         ],
     },
     "3.4-深度學習修復流派 (DL & NMT)": {
         "extends": [
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
         ],
-        "shares_technique": [
-            "[[1.7-學習型靜態分析 (Learning-based Static)]]",
-        ],
     },
     "3.5-LLM與Agent驅動修復 (LLM & Agentic)": {
         "extends": [
             "[[3.4-深度學習修復流派 (DL & NMT)]]",
         ],
-        "shares_technique": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
-        ],
-        "complementary": [
+        "co_deployed": [
             "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "3.6-安全補丁驗證與PCA (Validation & PCA)": {
-        "complementary": [
-            "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
-            "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
-        ],
-        "shares_technique": [
-            "[[2.9-變異測試 (Mutation Testing)]]",
-        ],
+        # Back-edges will be automatically generated by symmetry
     },
     "3.7-二進位熱補丁與漏洞修復 (Binary & Hot Patching)": {
         "shares_technique": [
@@ -679,6 +772,50 @@ GENRE_RELATIONS = {
     },
 }
 
+def process_relations():
+    # Symmetric relationship types
+    symmetric_types = {
+        "dynamic_counterpart",
+        "shares_technique",
+        "domain_overlap",
+        "co_deployed",
+        "same_problem_different_paradigm"
+    }
+    
+    # 1. Group 3 automatic inheritance rule:
+    # All genres in Group 3 with index > 3.0 automatically inherit 3.0 as a precondition
+    group3_genres = []
+    for main_cat, sub_list in CATEGORIES.items():
+        if "3-自動修復" in main_cat:
+            for sub in sub_list:
+                clean_name = os.path.splitext(sub["filename"])[0]
+                if clean_name != "3.0-故障定位 (Fault Localization)":
+                    group3_genres.append(clean_name)
+                    
+    fl_genre = "3.0-故障定位 (Fault Localization)"
+    if fl_genre not in GENRE_RELATIONS:
+        GENRE_RELATIONS[fl_genre] = {}
+    if "precondition_of" not in GENRE_RELATIONS[fl_genre]:
+        GENRE_RELATIONS[fl_genre]["precondition_of"] = []
+        
+    for target in group3_genres:
+        target_link = f"[[{target}]]"
+        if target_link not in GENRE_RELATIONS[fl_genre]["precondition_of"]:
+            GENRE_RELATIONS[fl_genre]["precondition_of"].append(target_link)
+
+    # 2. Enforce symmetry constraint on symmetric types
+    for source, rels in list(GENRE_RELATIONS.items()):
+        for rel_type, targets in list(rels.items()):
+            if rel_type in symmetric_types:
+                for target in targets:
+                    clean_target = target.strip("[]")
+                    if clean_target not in GENRE_RELATIONS:
+                        GENRE_RELATIONS[clean_target] = {}
+                    if rel_type not in GENRE_RELATIONS[clean_target]:
+                        GENRE_RELATIONS[clean_target][rel_type] = []
+                    source_link = f"[[{source}]]"
+                    if source_link not in GENRE_RELATIONS[clean_target][rel_type]:
+                        GENRE_RELATIONS[clean_target][rel_type].append(source_link)
 
 def cleanup_old_directories():
     old_dir = os.path.join(VAULT_DIR, "2-動態分析 (Dynamic Analysis)")
@@ -716,10 +853,14 @@ def write_category_files():
             # Build typed relationship frontmatter for Graph Link Types plugin
             related_yaml = ""
             relations = GENRE_RELATIONS.get(clean_name, {})
-            for rel_type, targets in relations.items():
-                related_yaml += f"{rel_type}:\n"
-                for target in targets:
-                    related_yaml += f"  - \"{target}\"\n"
+            # Sort keys for deterministic output
+            for rel_type in sorted(relations.keys()):
+                targets = relations[rel_type]
+                if targets:
+                    related_yaml += f"{rel_type}:\n"
+                    # Sort targets for deterministic output
+                    for target in sorted(targets):
+                        related_yaml += f"  - \"{target}\"\n"
 
             content = f"""---
 title: "{sub['title']}"
@@ -971,12 +1112,60 @@ categories:
         f.write(content3)
     print("Generated three example papers in papers/")
 
+def write_relations_review_file():
+    review_path = os.path.join(VAULT_DIR, "genre_relations_review.md")
+    
+    desc = """# Code Security Research: Genre Relations Review Schema
+
+This document lists all defined semantic relationships between the 38 research genres in the Code Security Research Vault. It is formatted for direct ingestion and auditing by other AI systems.
+
+---
+
+## 1. Relationship Types & Definitions
+
+The relationship ontology uses 7 distinct typed directed edges:
+
+- **`extends`**: A is a specialization or direct subtype of B.
+- **`precondition_of`**: A must execute or exist prior to B in the program analysis pipeline.
+- **`dynamic_counterpart`**: A and B are the static and dynamic variants of the exact same analysis paradigm.
+- **`shares_technique`**: A and B share core algorithms, intermediate representations (IR), or formal solvers.
+- **`domain_overlap`**: A and B address the same class of vulnerabilities but use completely different analysis paradigms.
+- **`co_deployed`**: A and B are regularly combined in the same analysis pipeline or toolchain.
+- **`same_problem_different_paradigm`**: A and B address the same vulnerability class via incompatible analysis strategies.
+
+---
+
+## 2. Active Relationship Directory
+
+Below is the flat map of all active relationships defined in `setup_vault.py`.
+"""
+
+    for main_cat, sub_list in CATEGORIES.items():
+        desc += f"\n### {main_cat}\n\n"
+        for sub in sub_list:
+            clean_name = os.path.splitext(sub["filename"])[0]
+            desc += f"- **{clean_name}**\n"
+            relations = GENRE_RELATIONS.get(clean_name, {})
+            if not relations:
+                desc += "  - *No defined relations.*\n"
+            else:
+                for rel_type in sorted(relations.keys()):
+                    targets = relations[rel_type]
+                    if targets:
+                        desc += f"  - `{rel_type}` -> " + ", ".join(sorted(targets)) + "\n"
+                        
+    with open(review_path, "w", encoding="utf-8") as f:
+        f.write(desc)
+    print("Generated relations review schema file: genre_relations_review.md")
+
 if __name__ == "__main__":
     print("--- Starting Obsidian Vault Setup (Restructured with 2.9) ---")
     cleanup_old_directories()
+    process_relations()
     create_directory_structure()
     write_category_files()
     write_index_file()
     write_templates()
     write_example_papers()
+    write_relations_review_file()
     print("--- Setup Completed Successfully! ---")
