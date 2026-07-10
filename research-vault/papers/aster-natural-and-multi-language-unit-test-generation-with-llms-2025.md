@@ -42,7 +42,7 @@ categories:
 ## 🛡️ 安全研究關聯性 (Relevance to Code Security Research)
 雖然 ASTER 在發表時定位於通用軟體測試工程，但其技術機制在**資訊安全研究**中具有極高的應用價值：
 1. **漏洞觸發 PoC / Fuzzing Harness 自動生成**：安全分析人員常需要為閉源或複雜開源庫編寫 Harness 以便進行動態模糊測試（Fuzzing）。ASTER 透過靜態分析推導物件建構鏈與依賴 Stubbing 的做法，是自動化 Harness 生成（如 FuzzGen）在 LLM 時代的直接演進路徑。
-2. **自動化程式修復中的補丁正確性校驗 (Patch Overfitting Prevention)**：在大語言模型引導的自動修復（3.5 LLM & Agentic APR）中，補丁「過擬合」（即僅通過現有測試卻破壞了其他功能）是學術界最大痛點。利用 ASTER 自動化生成高覆蓋率、包含精密斷言的單元測試，能夠大幅強化驗證 Oracle（3.6 Validation & PCA），過濾無效補丁。
+2. **自動化程式修復中的補丁正確性校驗 (Patch Overfitting Prevention)**：在大語言模型引導的自動修復（[[3C.2-LLM與Agent驅動修復 (LLM & Agentic)]]）中，補丁「過擬合」（即僅通過現有測試卻破壞了其他功能）是學術界最大痛點。利用 ASTER 自動化生成高覆蓋率、包含精密斷言的單元測試，能夠大幅強化驗證 Oracle（[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]），過濾無效補丁。
 
 ---
 

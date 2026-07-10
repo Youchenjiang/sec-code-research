@@ -996,7 +996,7 @@ type: index
 ## 📝 如何開始整理您的論文？
 
 1. **套用範本**：在新建論文筆記時，複製並套用 `[[Paper Template]]`。
-2. **標註流派**：在論文筆記的 `categories` 屬性中，使用雙括號連結對應的流派（例如：`categories: ["[[1.2-資料流分析 (Data Flow Analysis)]]", "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]"]`）。
+2. **標註流派**：在論文筆記的 `categories` 屬性中，使用雙括號連結對應的流派（例如：`categories: ["[[1B.1-資料流分析 (Data Flow Analysis)]]", "[[3C.2-LLM與Agent驅動修復 (LLM & Agentic)]]"]`）。
 3. **自動匯整**：當您在論文中建立了連結後，點進各流派檔案，底部的 **Dataview 查詢區塊** 就會自動動態列出該流派的所有論文！
 
 ---
@@ -1016,7 +1016,7 @@ venue: "發表單位 (例如 USENIX Security, IEEE S&P, ACM CCS, NDSS, ICSE, FSE
 url: "官方下載或下載連結 / Official Link"
 code: "開源代碼連結 / Open Source Code Link (若無請填 '')"
 categories:
-  - "[[1.1-語法與結構分析 (Syntactic & AST)]]"  # 請替換為對應的流派連結，可多選
+  - "[[1A.1-語法與結構分析 (Syntactic & AST)]]"  # 請替換為對應的流派連結，可多選
 ---
 
 # 📖 {{title}}
