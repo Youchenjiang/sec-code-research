@@ -415,6 +415,10 @@ GENRE_RELATIONS = {
             "[[1.5-圖結構分析 (Graph-based Analysis)]]",
             "[[1.6-型別系統與資訊流分析 (Type System & IFC)]]",
         ],
+        "complementary": [
+            "[[2.1-Web與API動態漏洞掃描 (DAST)]]",
+            "[[1.3-抽象解釋 (Abstract Interpretation)]]",
+        ],
     },
     "1.3-抽象解釋 (Abstract Interpretation)": {
         "complementary": [
@@ -425,6 +429,7 @@ GENRE_RELATIONS = {
     "1.4-符號執行 (Symbolic Execution)": {
         "complementary": [
             "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
+            "[[1.3-抽象解釋 (Abstract Interpretation)]]",
         ],
         "shares_technique": [
             "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
@@ -455,6 +460,7 @@ GENRE_RELATIONS = {
         ],
         "shares_technique": [
             "[[3.4-深度學習修復流派 (DL & NMT)]]",
+            "[[3.3-範本與模式匹配流派 (Template-based)]]",
         ],
     },
     "1.8-二進位與逆向分析 (Binary & Reverse Engineering)": {
@@ -505,12 +511,14 @@ GENRE_RELATIONS = {
         "complementary": [
             "[[2.6-混合與Concolic執行 (Concolic & Hybrid)]]",
             "[[2.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)]]",
+            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            "[[2.9-變異測試 (Mutation Testing)]]",
         ],
         "precondition_of": [
             "[[2.11-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)]]",
         ],
-        "shares_technique": [
-            "[[2.10-微執行與模擬測試 (Micro-execution & Emulation)]]",
+        "domain_overlap": [
+            "[[2.8-語意差異與並發偵測 (Differential & Concurrency)]]",
         ],
     },
     "2.5-動態污點分析 (Dynamic Taint Analysis - DTA)": {
@@ -519,8 +527,6 @@ GENRE_RELATIONS = {
         ],
         "shares_technique": [
             "[[1.10-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
-        ],
-        "domain_overlap": [
             "[[2.13-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
     },
@@ -553,6 +559,9 @@ GENRE_RELATIONS = {
         "complementary": [
             "[[2.4-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+        ],
+        "shares_technique": [
+            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "2.10-微執行與模擬測試 (Micro-execution & Emulation)": {
@@ -612,6 +621,7 @@ GENRE_RELATIONS = {
         "complementary": [
             "[[3.2-語意合成流派 (Semantics-based Synthesis)]]",
             "[[2.9-變異測試 (Mutation Testing)]]",
+            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
         "shares_technique": [
             "[[3.5-LLM與Agent驅動修復 (LLM & Agentic)]]",
@@ -647,6 +657,9 @@ GENRE_RELATIONS = {
         ],
         "shares_technique": [
             "[[3.1-生成與驗證流派 (Generate-and-Validate)]]",
+        ],
+        "complementary": [
+            "[[3.6-安全補丁驗證與PCA (Validation & PCA)]]",
         ],
     },
     "3.6-安全補丁驗證與PCA (Validation & PCA)": {
