@@ -860,7 +860,7 @@ def add_symmetric_link(source, target, rel_type):
 
 def enforce_relations_symmetry(symmetric_types):
     # 2. Enforce symmetry constraint on symmetric types
-    for source, rels in list(GENRE_RELATIONS.items()):
+    for source, rels in GENRE_RELATIONS.copy().items():
         for rel_type, targets in rels.items():
             if rel_type in symmetric_types:
                 for target in targets:
