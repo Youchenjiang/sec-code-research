@@ -67,6 +67,7 @@ Use a new scope only when none of the above is accurate.
 - Do not end the subject with a period.
 - Do not use vague subjects like `update files`, `fix bug`, or `misc changes`.
 - Reference issues in the body, not the subject.
+- The commit message body is required and must detail the changes using numbered list items starting with `1. ` (e.g., `1. Add X.`, `2. Generate Y.`).
 
 ## Atomic Commit Rules
 
@@ -83,11 +84,8 @@ PR titles must also follow Conventional Commits:
 <type>(<scope>): <description>
 ```
 
-PR descriptions must include:
-- Summary
-- Key Changes
-- Verification
-- Data/Privacy Impact
+PR descriptions must strictly follow the template defined in [.github/pull_request_template.md](file:///.github/pull_request_template.md).
+You must explicitly verify and check (mark as `[x]`) all the items under the **Verification** and **Data/Privacy Impact** sections before requesting review.
 
 ## Verification Expectations
 
