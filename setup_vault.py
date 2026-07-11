@@ -482,11 +482,26 @@ CATEGORIES = {
     ]
 }
 
+LINK_1B1 = "[[1B.1-資料流分析 (Data Flow Analysis)]]"
+LINK_1D1 = "[[1D.1-學習型靜態分析 (Learning-based Static)]]"
+LINK_2B2 = "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]"
+LINK_1A3 = "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]"
+LINK_1B3 = "[[1B.3-符號執行 (Symbolic Execution)]]"
+LINK_2B1 = "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]"
+LINK_3B1 = "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]"
+LINK_2D1 = "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]"
+LINK_3B2 = "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]"
+LINK_2D4 = "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]"
+LINK_2C1 = "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]"
+LINK_1C1 = "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]"
+LINK_3A2 = "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]"
+KEY_3A1 = "3A.1-故障定位 (Fault Localization)"
+
 GENRE_RELATIONS = {
     # ── DESIGN SECURITY (Group 0) ────────────────────────────────────────────────
     "0.1-威脅建模與攻擊面分析 (Threat Modeling & Attack Surface Analysis)": {
         "precondition_of": [
-            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            LINK_1B1,
             "[[1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security)]]",
         ],
         "same_problem_different_paradigm": [
@@ -497,17 +512,17 @@ GENRE_RELATIONS = {
     # ── STATIC ANALYSIS (Group 1) ───────────────────────────────────────────────
     "1A.1-語法與結構分析 (Syntactic & AST)": {
         "precondition_of": [
-            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            LINK_1B1,
             "[[1A.2-圖結構分析 (Graph-based Analysis)]]",
-            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
+            LINK_1D1,
         ],
     },
     "1B.1-資料流分析 (Data Flow Analysis)": {
         "dynamic_counterpart": [
-            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            LINK_2B2,
         ],
         "shares_technique": [
-            "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]",
+            LINK_1A3,
         ],
         "same_problem_different_paradigm": [
             "[[2A.1-Web與API動態漏洞掃描 (DAST)]]",
@@ -515,13 +530,13 @@ GENRE_RELATIONS = {
     },
     "1B.2-抽象解釋 (Abstract Interpretation)": {
         "same_problem_different_paradigm": [
-            "[[1B.3-符號執行 (Symbolic Execution)]]",
+            LINK_1B3,
             "[[1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking)]]",
         ],
         "precondition_of": [
-            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
+            LINK_1B1,
+            LINK_2B1,
+            LINK_3B1,
         ],
     },
     "1B.3-符號執行 (Symbolic Execution)": {
@@ -529,31 +544,31 @@ GENRE_RELATIONS = {
             "[[2B.3-混合與Concolic執行 (Concolic & Hybrid)]]",
         ],
         "shares_technique": [
-            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
-            "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]",
+            LINK_2D1,
+            LINK_3B2,
         ],
     },
     "1A.2-圖結構分析 (Graph-based Analysis)": {
         "shares_technique": [
-            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
-            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
+            LINK_1B1,
+            LINK_1D1,
         ],
         "precondition_of": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_2B1,
         ],
     },
     "1A.3-型別系統與資訊流分析 (Type System & IFC)": {
         "domain_overlap": [
-            "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+            LINK_2D4,
         ],
         "shares_technique": [
-            "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]",
+            LINK_3B2,
         ],
     },
     "1D.1-學習型靜態分析 (Learning-based Static)": {
         "extends": [
             "[[1A.1-語法與結構分析 (Syntactic & AST)]]",
-            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            LINK_1B1,
             "[[1A.2-圖結構分析 (Graph-based Analysis)]]",
         ],
         "shares_technique": [
@@ -561,13 +576,13 @@ GENRE_RELATIONS = {
             "[[3B.3-範本與模式匹配流派 (Template-based)]]",
         ],
         "precondition_of": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_2B1,
         ],
     },
     "1C.1-二進位與逆向分析 (Binary & Reverse Engineering)": {
         "shares_technique": [
-            "[[1B.3-符號執行 (Symbolic Execution)]]",
-            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            LINK_1B3,
+            LINK_2D1,
         ],
         "precondition_of": [
             "[[3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
@@ -578,7 +593,7 @@ GENRE_RELATIONS = {
     },
     "1C.2-軟體組成與供應鏈安全 (Software Composition & Supply Chain SCA)": {
         "shares_technique": [
-            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
+            LINK_1D1,
         ],
         "precondition_of": [
             "[[2A.3-惡意程式沙盒與行為分析 (Malware Sandbox)]]",
@@ -587,23 +602,23 @@ GENRE_RELATIONS = {
     },
     "1D.2-密碼學與協議安全審計 (Cryptographic & Protocol Security)": {
         "domain_overlap": [
-            "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
+            LINK_2D4,
         ],
         "shares_technique": [
-            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            LINK_2B2,
         ],
     },
     "1D.3-形式化驗證與模型檢查 (Formal Verification & Model Checking)": {
         "domain_overlap": [
-            "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]",
+            LINK_1A3,
         ],
     },
     "1B.4-靜態污點分析 (Static Taint Analysis)": {
         "extends": [
-            "[[1B.1-資料流分析 (Data Flow Analysis)]]",
+            LINK_1B1,
         ],
         "dynamic_counterpart": [
-            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            LINK_2B2,
         ],
     },
     "1D.4-網路協定形式化分析 (Protocol Formal Analysis)": {
@@ -617,7 +632,7 @@ GENRE_RELATIONS = {
     },
     "1D.5-漏洞情報與軟體歷史庫挖掘 (Vulnerability Intelligence & Repository Mining)": {
         "precondition_of": [
-            "[[1D.1-學習型靜態分析 (Learning-based Static)]]",
+            LINK_1D1,
             "[[3B.3-範本與模式匹配流派 (Template-based)]]",
             "[[3C.2-LLM與Agent驅動修復 (LLM & Agentic)]]",
         ],
@@ -631,31 +646,31 @@ GENRE_RELATIONS = {
     },
     "2A.2-黑箱協定模糊測試 (Black-box Protocol Fuzzing)": {
         "same_problem_different_paradigm": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_2B1,
         ],
     },
     "2A.3-惡意程式沙盒與行為分析 (Malware Sandbox)": {
         "shares_technique": [
-            "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
-            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            LINK_2C1,
+            LINK_2B2,
         ],
         "co_deployed": [
-            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_1C1,
+            LINK_2B1,
         ],
     },
 
     # ── WHITE/GREY-BOX DYNAMIC (Group 2B) ────────────────────────────────────────
     "2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)": {
         "same_problem_different_paradigm": [
-            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            LINK_2D1,
             "[[2B.4-變異測試 (Mutation Testing)]]",
         ],
         "domain_overlap": [
             "[[2C.2-語意差異與並發偵測 (Differential & Concurrency)]]",
         ],
         "precondition_of": [
-            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
+            LINK_3A2,
         ],
     },
     "2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)": {
@@ -663,24 +678,24 @@ GENRE_RELATIONS = {
             "[[2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)]]",
         ],
         "precondition_of": [
-            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
+            LINK_3B1,
         ],
     },
     "2B.3-混合與Concolic執行 (Concolic & Hybrid)": {
         "co_deployed": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_2B1,
         ],
         "shares_technique": [
-            "[[2D.1-微執行與模擬測試 (Micro-execution & Emulation)]]",
+            LINK_2D1,
         ],
     },
     "2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)": {
         "precondition_of": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
-            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
+            LINK_2B1,
+            LINK_3B1,
         ],
         "shares_technique": [
-            "[[2B.2-動態污點分析 (Dynamic Taint Analysis - DTA)]]",
+            LINK_2B2,
             "[[3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)]]",
         ],
     },
@@ -691,7 +706,7 @@ GENRE_RELATIONS = {
     },
     "2B.4-變異測試 (Mutation Testing)": {
         "shares_technique": [
-            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
+            LINK_3A2,
         ],
     },
     "2D.1-微執行與模擬測試 (Micro-execution & Emulation)": {
@@ -701,63 +716,63 @@ GENRE_RELATIONS = {
     },
     "2D.2-作業系統內核與虛擬化模糊測試 (Kernel & Hypervisor Fuzzing)": {
         "extends": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_2B1,
         ],
     },
     "2D.3-智能合約與 Web3 安全 (Smart Contract & Web3 Security)": {
         "extends": [
-            "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]",
+            LINK_2B1,
         ],
         "shares_technique": [
-            "[[1B.3-符號執行 (Symbolic Execution)]]",
+            LINK_1B3,
         ],
     },
     "2D.4-微架構與側通道分析 (Microarchitectural & Side-Channel Analysis)": {
         "domain_overlap": [
-            "[[1A.3-型別系統與資訊流分析 (Type System & IFC)]]",
+            LINK_1A3,
         ],
     },
     "2D.5-自動漏洞利用生成 (Automated Exploit Generation - AEG)": {
         "shares_technique": [
             "[[2B.3-混合與Concolic執行 (Concolic & Hybrid)]]",
-            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            LINK_1C1,
         ],
     },
     "2C.3-記憶體安全與執行期防禦強化 (Runtime Hardening & CFI)": {
         "co_deployed": [
-            "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
+            LINK_2C1,
         ],
         "domain_overlap": [
-            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
+            LINK_1C1,
             "[[2D.5-自動漏洞利用生成 (Automated Exploit Generation - AEG)]]",
         ],
     },
 
     # ── AUTOMATED PROGRAM REPAIR (Group 3) ───────────────────────────────────────
-    "3A.1-故障定位 (Fault Localization)": {
+    KEY_3A1: {
         # Dynamically populated for Group 3 genres > 3.0
     },
     "3B.1-生成與驗證流派 (Generate-and-Validate)": {
         "same_problem_different_paradigm": [
-            "[[3B.2-語意合成流派 (Semantics-based Synthesis)]]",
+            LINK_3B2,
         ],
         "co_deployed": [
-            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
+            LINK_3A2,
         ],
     },
     "3B.2-語意合成流派 (Semantics-based Synthesis)": {
         "shares_technique": [
-            "[[1B.3-符號執行 (Symbolic Execution)]]",
+            LINK_1B3,
         ],
     },
     "3B.3-範本與模式匹配流派 (Template-based)": {
         "extends": [
-            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
+            LINK_3B1,
         ],
     },
     "3C.1-深度學習修復流派 (DL & NMT)": {
         "extends": [
-            "[[3B.1-生成與驗證流派 (Generate-and-Validate)]]",
+            LINK_3B1,
         ],
     },
     "3C.2-LLM與Agent驅動修復 (LLM & Agentic)": {
@@ -765,7 +780,7 @@ GENRE_RELATIONS = {
             "[[3C.1-深度學習修復流派 (DL & NMT)]]",
         ],
         "co_deployed": [
-            "[[3A.2-安全補丁驗證與PCA (Validation & PCA)]]",
+            LINK_3A2,
         ],
     },
     "3A.2-安全補丁驗證與PCA (Validation & PCA)": {
@@ -773,8 +788,8 @@ GENRE_RELATIONS = {
     },
     "3B.4-二進位熱補丁與漏洞修復 (Binary & Hot Patching)": {
         "shares_technique": [
-            "[[1C.1-二進位與逆向分析 (Binary & Reverse Engineering)]]",
-            "[[2C.1-執行期插樁與監控 (Instrumentation & Sanitizers)]]",
+            LINK_1C1,
+            LINK_2C1,
         ],
     },
 }
@@ -808,17 +823,7 @@ def validate_relations():
         print("===================================\n")
         raise ValueError("GENRE_RELATIONS contains invalid source keys or targets. Please correct setup_vault.py.")
 
-def process_relations():
-    validate_relations()
-    # Symmetric relationship types
-    symmetric_types = {
-        "dynamic_counterpart",
-        "shares_technique",
-        "domain_overlap",
-        "co_deployed",
-        "same_problem_different_paradigm"
-    }
-    
+def inherit_group3_preconditions():
     # 1. Group 3 automatic inheritance rule:
     # All genres in Group 3 with index > 3.0 automatically inherit 3.0 as a precondition
     group3_genres = []
@@ -826,23 +831,23 @@ def process_relations():
         if "3-自動修復" in main_cat:
             for sub in sub_list:
                 clean_name = os.path.splitext(sub["filename"])[0]
-                if clean_name != "3A.1-故障定位 (Fault Localization)":
+                if clean_name != KEY_3A1:
                     group3_genres.append(clean_name)
                     
-    fl_genre = "3A.1-故障定位 (Fault Localization)"
-    if fl_genre not in GENRE_RELATIONS:
-        GENRE_RELATIONS[fl_genre] = {}
-    if "precondition_of" not in GENRE_RELATIONS[fl_genre]:
-        GENRE_RELATIONS[fl_genre]["precondition_of"] = []
+    if KEY_3A1 not in GENRE_RELATIONS:
+        GENRE_RELATIONS[KEY_3A1] = {}
+    if "precondition_of" not in GENRE_RELATIONS[KEY_3A1]:
+        GENRE_RELATIONS[KEY_3A1]["precondition_of"] = []
         
     for target in group3_genres:
         target_link = f"[[{target}]]"
-        if target_link not in GENRE_RELATIONS[fl_genre]["precondition_of"]:
-            GENRE_RELATIONS[fl_genre]["precondition_of"].append(target_link)
+        if target_link not in GENRE_RELATIONS[KEY_3A1]["precondition_of"]:
+            GENRE_RELATIONS[KEY_3A1]["precondition_of"].append(target_link)
 
+def enforce_relations_symmetry(symmetric_types):
     # 2. Enforce symmetry constraint on symmetric types
     for source, rels in list(GENRE_RELATIONS.items()):
-        for rel_type, targets in list(rels.items()):
+        for rel_type, targets in rels.items():
             if rel_type in symmetric_types:
                 for target in targets:
                     clean_target = target.strip("[]")
@@ -853,6 +858,19 @@ def process_relations():
                     source_link = f"[[{source}]]"
                     if source_link not in GENRE_RELATIONS[clean_target][rel_type]:
                         GENRE_RELATIONS[clean_target][rel_type].append(source_link)
+
+def process_relations():
+    validate_relations()
+    # Symmetric relationship types
+    symmetric_types = {
+        "dynamic_counterpart",
+        "shares_technique",
+        "domain_overlap",
+        "co_deployed",
+        "same_problem_different_paradigm"
+    }
+    inherit_group3_preconditions()
+    enforce_relations_symmetry(symmetric_types)
 
 def cleanup_old_directories():
     old_paths = [
@@ -869,6 +887,14 @@ def cleanup_old_directories():
             print(f"Cleaning up old directory: {path}")
             shutil.rmtree(path)
 
+def cleanup_directory_orphans(dir_path, valid_filenames, category_pattern):
+    for filename in os.listdir(dir_path):
+        if filename.endswith(".md") and filename not in valid_filenames:
+            if category_pattern.match(filename):
+                file_to_remove = os.path.join(dir_path, filename)
+                print(f"Removing orphaned category file: {file_to_remove}")
+                os.remove(file_to_remove)
+
 def cleanup_orphaned_genre_files():
     valid_filenames = set()
     for sub_list in CATEGORIES.values():
@@ -881,12 +907,7 @@ def cleanup_orphaned_genre_files():
     for main_cat in CATEGORIES.keys():
         dir_path = os.path.join(VAULT_DIR, main_cat)
         if os.path.exists(dir_path):
-            for filename in os.listdir(dir_path):
-                if filename.endswith(".md") and filename not in valid_filenames:
-                    if category_pattern.match(filename):
-                        file_to_remove = os.path.join(dir_path, filename)
-                        print(f"Removing orphaned category file: {file_to_remove}")
-                        os.remove(file_to_remove)
+            cleanup_directory_orphans(dir_path, valid_filenames, category_pattern)
 
 def create_directory_structure():
     print(f"Creating vault directory: {VAULT_DIR}")
@@ -898,36 +919,19 @@ def create_directory_structure():
         os.makedirs(dir_path, exist_ok=True)
         print(f"Created category directory: {main_cat}")
 
-def write_category_files():
-    for main_cat, sub_list in CATEGORIES.items():
-        for sub in sub_list:
-            file_path = os.path.join(VAULT_DIR, main_cat, sub["filename"])
-            clean_name = os.path.splitext(sub["filename"])[0]
-            
-            # Format sub-genres section
-            sub_genres_md = ""
-            for sg in sub["sub_genres"]:
-                sub_genres_md += f"### {sg['name']}\n- **簡介**: {sg['desc']}\n\n"
-            
-            # Format keywords
-            keywords_md = ", ".join([f"`{kw}`" for kw in sub["keywords"]])
-            
-            # Format tools
-            tools_md = ", ".join([f"`{tool}`" for tool in sub["tools"]])
+def build_category_file_content(sub, clean_name, related_yaml):
+    # Format sub-genres section
+    sub_genres_md = ""
+    for sg in sub["sub_genres"]:
+        sub_genres_md += f"### {sg['name']}\n- **簡介**: {sg['desc']}\n\n"
+    
+    # Format keywords
+    keywords_md = ", ".join([f"`{kw}`" for kw in sub["keywords"]])
+    
+    # Format tools
+    tools_md = ", ".join([f"`{tool}`" for tool in sub["tools"]])
 
-            # Build typed relationship frontmatter for Graph Link Types plugin
-            related_yaml = ""
-            relations = GENRE_RELATIONS.get(clean_name, {})
-            # Sort keys for deterministic output
-            for rel_type in sorted(relations.keys()):
-                targets = relations[rel_type]
-                if targets:
-                    related_yaml += f"{rel_type}:\n"
-                    # Sort targets for deterministic output
-                    for target in sorted(targets):
-                        related_yaml += f"  - \"{target}\"\n"
-
-            content = f"""---
+    return f"""---
 title: "{sub['title']}"
 type: research-genre
 parent: "[[00-研究流派圖主目錄]]"
@@ -964,6 +968,26 @@ sort year desc
 ---
 返回 [[00-研究流派圖主目錄|研究流派圖主目錄]]
 """
+
+def write_category_files():
+    for main_cat, sub_list in CATEGORIES.items():
+        for sub in sub_list:
+            file_path = os.path.join(VAULT_DIR, main_cat, sub["filename"])
+            clean_name = os.path.splitext(sub["filename"])[0]
+            
+            # Build typed relationship frontmatter for Graph Link Types plugin
+            related_yaml = ""
+            relations = GENRE_RELATIONS.get(clean_name, {})
+            # Sort keys for deterministic output
+            for rel_type in sorted(relations.keys()):
+                targets = relations[rel_type]
+                if targets:
+                    related_yaml += f"{rel_type}:\n"
+                    # Sort targets for deterministic output
+                    for target in sorted(targets):
+                        related_yaml += f"  - \"{target}\"\n"
+
+            content = build_category_file_content(sub, clean_name, related_yaml)
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write(content)
             print(f"Generated category file: {sub['filename']}")
@@ -1093,6 +1117,18 @@ e.g. `[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]`.
         f.write(stub_content)
     print("Generated papers/README.md stub (empty vault).")
 
+def format_genre_relations_for_review(clean_name):
+    desc = f"- **{clean_name}**\n"
+    relations = GENRE_RELATIONS.get(clean_name, {})
+    if not relations:
+        desc += "  - *No defined relations.*\n"
+    else:
+        for rel_type in sorted(relations.keys()):
+            targets = relations[rel_type]
+            if targets:
+                desc += f"  - `{rel_type}` -> " + ", ".join(sorted(targets)) + "\n"
+    return desc
+
 def write_relations_review_file():
     review_path = os.path.join(VAULT_DIR, "genre_relations_review.md")
     
@@ -1125,15 +1161,7 @@ Below is the flat map of all active relationships defined in `setup_vault.py`.
         desc += f"\n### {main_cat}\n\n"
         for sub in sub_list:
             clean_name = os.path.splitext(sub["filename"])[0]
-            desc += f"- **{clean_name}**\n"
-            relations = GENRE_RELATIONS.get(clean_name, {})
-            if not relations:
-                desc += "  - *No defined relations.*\n"
-            else:
-                for rel_type in sorted(relations.keys()):
-                    targets = relations[rel_type]
-                    if targets:
-                        desc += f"  - `{rel_type}` -> " + ", ".join(sorted(targets)) + "\n"
+            desc += format_genre_relations_for_review(clean_name)
                         
     with open(review_path, "w", encoding="utf-8") as f:
         f.write(desc)
