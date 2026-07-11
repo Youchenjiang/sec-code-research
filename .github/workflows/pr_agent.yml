@@ -1,0 +1,27 @@
+name: PR Agent
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+  issue_comment:
+
+jobs:
+  pr_agent_job:
+    if: ${{ github.event.sender.type != 'Bot' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+      checks: write
+    name: Run pr agent on every pull request
+    steps:
+      - name: PR Agent action step
+        id: pragent
+        uses: the-pr-agent/pr-agent@main
+        env:
+          OPENAI__KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          OPENAI__API_BASE: "https://api.siliconflow.cn/v1"
+          CONFIG__MODEL: "Qwen/Qwen2.5-7B-Instruct"
+          CONFIG__FALLBACK_MODELS: '["Qwen/Qwen2.5-7B-Instruct"]'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
