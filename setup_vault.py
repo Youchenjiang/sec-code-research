@@ -823,9 +823,7 @@ def validate_relations():
         print("===================================\n")
         raise ValueError("GENRE_RELATIONS contains invalid source keys or targets. Please correct setup_vault.py.")
 
-def inherit_group3_preconditions():
-    # 1. Group 3 automatic inheritance rule:
-    # All genres in Group 3 with index > 3.0 automatically inherit 3.0 as a precondition
+def collect_group3_genres():
     group3_genres = []
     for main_cat, sub_list in CATEGORIES.items():
         if "3-自動修復" in main_cat:
@@ -833,6 +831,12 @@ def inherit_group3_preconditions():
                 clean_name = os.path.splitext(sub["filename"])[0]
                 if clean_name != KEY_3A1:
                     group3_genres.append(clean_name)
+    return group3_genres
+
+def inherit_group3_preconditions():
+    # 1. Group 3 automatic inheritance rule:
+    # All genres in Group 3 with index > 3.0 automatically inherit 3.0 as a precondition
+    group3_genres = collect_group3_genres()
                     
     if KEY_3A1 not in GENRE_RELATIONS:
         GENRE_RELATIONS[KEY_3A1] = {}
@@ -844,20 +848,23 @@ def inherit_group3_preconditions():
         if target_link not in GENRE_RELATIONS[KEY_3A1]["precondition_of"]:
             GENRE_RELATIONS[KEY_3A1]["precondition_of"].append(target_link)
 
+def add_symmetric_link(source, target, rel_type):
+    clean_target = target.strip("[]")
+    if clean_target not in GENRE_RELATIONS:
+        GENRE_RELATIONS[clean_target] = {}
+    if rel_type not in GENRE_RELATIONS[clean_target]:
+        GENRE_RELATIONS[clean_target][rel_type] = []
+    source_link = f"[[{source}]]"
+    if source_link not in GENRE_RELATIONS[clean_target][rel_type]:
+        GENRE_RELATIONS[clean_target][rel_type].append(source_link)
+
 def enforce_relations_symmetry(symmetric_types):
     # 2. Enforce symmetry constraint on symmetric types
     for source, rels in list(GENRE_RELATIONS.items()):
         for rel_type, targets in rels.items():
             if rel_type in symmetric_types:
                 for target in targets:
-                    clean_target = target.strip("[]")
-                    if clean_target not in GENRE_RELATIONS:
-                        GENRE_RELATIONS[clean_target] = {}
-                    if rel_type not in GENRE_RELATIONS[clean_target]:
-                        GENRE_RELATIONS[clean_target][rel_type] = []
-                    source_link = f"[[{source}]]"
-                    if source_link not in GENRE_RELATIONS[clean_target][rel_type]:
-                        GENRE_RELATIONS[clean_target][rel_type].append(source_link)
+                    add_symmetric_link(source, target, rel_type)
 
 def process_relations():
     validate_relations()
