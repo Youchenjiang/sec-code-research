@@ -84,11 +84,8 @@ PR titles must also follow Conventional Commits:
 <type>(<scope>): <description>
 ```
 
-PR descriptions must include:
-- Summary
-- Key Changes
-- Verification
-- Data/Privacy Impact
+PR descriptions must strictly follow the template defined in [.github/pull_request_template.md](file:///.github/pull_request_template.md).
+You must explicitly verify and check (mark as `[x]`) all the items under the **Verification** and **Data/Privacy Impact** sections before requesting review.
 
 ## Verification Expectations
 
