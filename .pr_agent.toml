@@ -1,0 +1,3 @@
+[config]
+# Run on all PR events including synchronize
+pr_actions = ["opened", "reopened", "ready_for_review", "synchronize"]
