@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: PR Agent action step
         id: pragent
-        uses: CodiumAI/pr-agent@v0.39.0
+        uses: the-pr-agent/pr-agent@v0.39.0
         env:
           OPENAI__KEY: ${{ secrets.SILICONFLOW_API_KEY }}
           OPENAI__API_BASE: "https://api.siliconflow.cn/v1"
