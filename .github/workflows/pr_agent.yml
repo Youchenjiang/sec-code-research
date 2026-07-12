@@ -21,7 +21,7 @@ jobs:
         env:
           OPENAI_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
           OPENAI_API_BASE: "https://api.siliconflow.com/v1"
-          CONFIG__MODEL: "openai/Qwen/Qwen2.5-7B-Instruct"
+          CONFIG__MODEL: "openai/Qwen/Qwen3-8B"
           CONFIG__CUSTOM_MODEL_MAX_TOKENS: "32768"
           CONFIG__PR_ACTIONS: '["opened", "reopened", "ready_for_review", "synchronize"]'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
