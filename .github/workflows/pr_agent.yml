@@ -19,7 +19,7 @@ jobs:
         id: pragent
         uses: the-pr-agent/pr-agent@8e4d32e5497defd43c023a404f73560c62728961
         env:
-          OPENAI__KEY: ${{ secrets.SILICONFLOW_API_KEY }}
-          OPENAI__API_BASE: "https://api.siliconflow.cn/v1"
-          CONFIG__MODEL: "Qwen/Qwen2.5-7B-Instruct"
+          OPENAI_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          OPENAI_API_BASE: "https://api.siliconflow.com/v1"
+          CONFIG_MODEL: "Qwen/Qwen2.5-7B-Instruct"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
