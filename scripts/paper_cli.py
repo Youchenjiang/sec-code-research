@@ -584,29 +584,35 @@ def _execute_orphan_archival(orphan_files: List[str], archive_dir: str):
         print(f"  📦 已移入封存區: {os.path.basename(op)}")
 
 
-def _archive_orphans(raw_dir: str, vault_bases: Set[str], do_archive: bool):
-    """檢驗並封存 raw-papers 孤兒檔案"""
+def _find_orphan_files(raw_dir: str, vault_bases: Set[str]) -> List[str]:
+    """遍歷 raw-papers 檢索未在 Vault 建檔之實體 PDF 與 Raw MD"""
     orphan_files = []
-    archive_dir = os.path.join(raw_dir, "legacy_archive", "unreferenced_leftovers")
     for root, _, files in os.walk(raw_dir):
         if "legacy_archive" in root:
             continue
         for f in files:
-            is_orphan = (
-                (f.endswith(".pdf") and f[:-4] not in vault_bases) or
-                (f.endswith(SUFFIX_RAW_MD) and f[:-len(SUFFIX_RAW_MD)] not in vault_bases)
-            )
-            if is_orphan:
+            is_pdf_orphan = f.endswith(".pdf") and (f[:-4] not in vault_bases)
+            is_raw_orphan = f.endswith(SUFFIX_RAW_MD) and (f[:-len(SUFFIX_RAW_MD)] not in vault_bases)
+            if is_pdf_orphan or is_raw_orphan:
                 orphan_files.append(os.path.join(root, f))
+    return orphan_files
 
-    if orphan_files:
-        print(f"\n⚠️ 發現 {len(orphan_files)} 個未在 Vault 中建檔之孤兒檔案:")
-        for op in orphan_files[:5]:
-            print(f"  • {os.path.relpath(op, raw_dir)}")
-        if do_archive:
-            _execute_orphan_archival(orphan_files, archive_dir)
-    else:
+
+def _archive_orphans(raw_dir: str, vault_bases: Set[str], do_archive: bool):
+    """檢驗並封存 raw-papers 孤兒檔案"""
+    orphan_files = _find_orphan_files(raw_dir, vault_bases)
+    archive_dir = os.path.join(raw_dir, "legacy_archive", "unreferenced_leftovers")
+
+    if not orphan_files:
         print("✅ raw-papers 無任何未對應的孤兒實體檔案！(Orphans: 0)")
+        return
+
+    print(f"\n⚠️ 發現 {len(orphan_files)} 個未在 Vault 中建檔之孤兒檔案:")
+    for op in orphan_files[:5]:
+        print(f"  • {os.path.relpath(op, raw_dir)}")
+    if do_archive:
+        _execute_orphan_archival(orphan_files, archive_dir)
+
 
 
 def cmd_dedup(args) -> int:
