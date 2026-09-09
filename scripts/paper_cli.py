@@ -74,12 +74,16 @@ def clean_tokens(text: str) -> Set[str]:
 # ==============================================================================
 
 def _collect_vault_notes(vault_dir: str) -> Dict[str, str]:
-    """蒐集 Vault 中所有 Markdown 筆記"""
+    """蒐集 Vault 中所有 Markdown 筆記 (偵測同名碰撞避免靜默覆蓋)"""
     notes: Dict[str, str] = {}
     for root, _, files in os.walk(vault_dir):
         for f in files:
             if f.endswith(".md"):
-                notes[f[:-3]] = os.path.join(root, f)
+                stem = f[:-3]
+                full_p = os.path.join(root, f)
+                if stem in notes:
+                    print(f"  ⚠️ 警告: 偵測到同名筆記跨目錄衝突: {stem}")
+                notes[stem] = full_p
     return notes
 
 
@@ -396,18 +400,25 @@ def cmd_audit(args) -> int:
 # ==============================================================================
 
 def _build_raw_index(raw_dir: str) -> Tuple[Dict[str, str], Dict[str, str]]:
-    """建立 raw-papers PDF 與 Markdown 索引"""
+    """建立 raw-papers PDF 與 Markdown 索引 (偵測跨目錄同名碰撞)"""
     raw_pdf_index, raw_md_index = {}, {}
     for r, _, files in os.walk(raw_dir):
         if "legacy_archive" in r:
             continue
         for f in files:
             if f.endswith(".pdf"):
-                raw_pdf_index[f[:-4]] = os.path.join(r, f)
+                stem = f[:-4]
+                if stem in raw_pdf_index:
+                    print(f"  ⚠️ 警告: 發現跨目錄同名 raw PDF: {stem}")
+                raw_pdf_index[stem] = os.path.join(r, f)
             elif f.endswith(SUFFIX_RAW_MD):
-                raw_md_index[f[:-len(SUFFIX_RAW_MD)]] = os.path.join(r, f)
+                stem = f[:-len(SUFFIX_RAW_MD)]
+                if stem in raw_md_index:
+                    print(f"  ⚠️ 警告: 發現跨目錄同名 raw Markdown: {stem}")
+                raw_md_index[stem] = os.path.join(r, f)
             elif f.endswith(".md"):
-                raw_md_index[f[:-3]] = os.path.join(r, f)
+                stem = f[:-3]
+                raw_md_index[stem] = os.path.join(r, f)
     return raw_pdf_index, raw_md_index
 
 
