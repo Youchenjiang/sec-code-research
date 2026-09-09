@@ -1055,8 +1055,12 @@ def _eval_sample_papers(sample_cnt: int, raw_dir: str, analyze_fn, convert_fn) -
         print("❌ 未在 raw-papers 目錄中找到任何 PDF 文獻。")
         return 1
 
-    rng = secrets.SystemRandom()
-    selected = rng.sample(available_pdfs, min(sample_cnt, len(available_pdfs)))
+    pool = list(available_pdfs)
+    k = min(sample_cnt, len(pool))
+    for i in range(k):
+        j = i + secrets.randbelow(len(pool) - i)
+        pool[i], pool[j] = pool[j], pool[i]
+    selected = pool[:k]
     eval_temp_dir = os.path.join(REPO_ROOT, "scratch", "cli_eval_temp")
     os.makedirs(win_path(eval_temp_dir), exist_ok=True)
 
