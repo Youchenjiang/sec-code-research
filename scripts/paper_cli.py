@@ -20,6 +20,7 @@ import sys
 import re
 import argparse
 import yaml
+from pathlib import Path
 from typing import Dict, List, Tuple, Set, Optional
 
 # 強制 Windows 終端輸出為 UTF-8
@@ -33,6 +34,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 DEFAULT_VAULT_DIR = os.path.join(REPO_ROOT, "research-vault")
 DEFAULT_RAW_DIR = os.path.join(REPO_ROOT, "raw-papers")
+PARSER_DIR = os.path.join(SCRIPT_DIR, "parser")
 
 # 統一常數定義 (消除 SonarCloud 重複字串異味)
 SUFFIX_RAW_MD = " (Raw).md"
@@ -899,7 +901,258 @@ def cmd_generate_notes(args) -> int:
 
 
 # ==============================================================================
-# 8. 主程式進入點 (CLI DISPATCHER)
+# 8. 文獻幾何佈局解析模組 (PARSE / CONVERT)
+# ==============================================================================
+
+def _import_parser():
+    """動態導入 lightweight_parser 模組"""
+    if PARSER_DIR not in sys.path:
+        sys.path.insert(0, PARSER_DIR)
+    try:
+        from lightweight_parser import convert_pdf_to_clean_markdown
+        return convert_pdf_to_clean_markdown
+    except ImportError as e:
+        print(f"❌ 無法導入 parser 模組: {e}")
+        return None
+
+
+def _parse_single_pdf(pdf_target: str, output_path: Optional[str], convert_fn) -> int:
+    """執行單一 PDF 之幾何版面解析"""
+    print("=" * 70)
+    print("🔬 Code Security Research — 輕量化學術文獻幾何版面解析器 (PDF -> MD)")
+    print(f"  • 輸入文獻: {pdf_target}")
+    print("=" * 70)
+
+    _, stats = convert_fn(pdf_target, output_path)
+    print("\n✅ 解析完成！")
+    print(f"  • 輸出路徑: {stats['output_path']}")
+    print(f"  • 總頁數  : {stats['pages']} 頁")
+    print(f"  • 智慧表格: {stats['tables']} 個")
+    print(f"  • 圖表資產: {stats['figures']} 張 (保存於 assets/ 目錄)")
+    return 0
+
+
+def _parse_batch_pdfs(raw_dir: str, convert_fn) -> int:
+    """批次掃描並解析 raw-papers 目錄下所有 PDF 文獻"""
+    print("=" * 70)
+    print("📚 Code Security Research — 批次文獻版面解析 (Batch Parser)")
+    print(f"  • 目標目錄: {raw_dir}")
+    print("=" * 70)
+
+    pdf_files = []
+    for root, _, files in os.walk(raw_dir):
+        if "legacy_archive" in root:
+            continue
+        for f in files:
+            if f.endswith(".pdf"):
+                pdf_files.append(os.path.join(root, f))
+
+    print(f"🔍 檢索到 {len(pdf_files)} 篇實體 PDF 文獻，準備執行解析...")
+    success_cnt, fail_cnt = 0, 0
+    for idx, pdf_p in enumerate(pdf_files, 1):
+        stem = os.path.splitext(os.path.basename(pdf_p))[0]
+        expected_md = os.path.join(os.path.dirname(pdf_p), f"{stem}{SUFFIX_RAW_MD}")
+        if os.path.exists(win_path(expected_md)):
+            continue
+        print(f"[{idx}/{len(pdf_files)}] 正在解析: {stem[:50]}...")
+        try:
+            convert_fn(pdf_p)
+            success_cnt += 1
+        except Exception as e:
+            print(f"  ❌ 解析失敗: {e}")
+            fail_cnt += 1
+
+    print(f"\n🎉 批次解析完成！成功新增: {success_cnt} 篇，失敗: {fail_cnt} 篇。")
+    return 1 if fail_cnt > 0 else 0
+
+
+def cmd_parse(args) -> int:
+    """使用純 Python / PyMuPDF 幾何版面解析器將 PDF 轉換為結構化高品質 Markdown"""
+    convert_fn = _import_parser()
+    if not convert_fn:
+        return 1
+
+    pdf_target = getattr(args, "pdf_path", None)
+    output_path = getattr(args, "output", None)
+    batch_all = getattr(args, "all", False)
+    raw_dir = getattr(args, "raw_dir", DEFAULT_RAW_DIR)
+
+    if not pdf_target and not batch_all:
+        print("❌ 請指定欲解析的 PDF 檔案路徑，或使用 --all 執行批次解析。")
+        print("   例如: python scripts/paper_cli.py parse \"raw-papers/2026/ZeroDayBench.pdf\"")
+        print("         python scripts/paper_cli.py parse --all")
+        return 1
+
+    if pdf_target:
+        if not os.path.isfile(win_path(pdf_target)):
+            cand = os.path.join(raw_dir, pdf_target)
+            if os.path.isfile(win_path(cand)):
+                pdf_target = cand
+            else:
+                print(f"❌ 找不到指定的 PDF 檔案: {pdf_target}")
+                return 1
+        return _parse_single_pdf(pdf_target, output_path, convert_fn)
+
+    return _parse_batch_pdfs(raw_dir, convert_fn)
+
+
+# ==============================================================================
+# 9. 排版解析品質驗收模組 (EVAL)
+# ==============================================================================
+
+def _import_evaluator():
+    """動態導入 evaluator 與 parser 模組"""
+    if PARSER_DIR not in sys.path:
+        sys.path.insert(0, PARSER_DIR)
+    try:
+        from evaluator import analyze_markdown_quality
+        from lightweight_parser import convert_pdf_to_clean_markdown
+        return analyze_markdown_quality, convert_pdf_to_clean_markdown
+    except ImportError as e:
+        print(f"❌ 無法導入 parser/evaluator 模組: {e}")
+        return None, None
+
+
+def _eval_sample_papers(sample_cnt: int, raw_dir: str, analyze_fn, convert_fn) -> int:
+    """隨機跨年份抽樣端到端基準測試"""
+    import random
+    import glob
+    print("=" * 75)
+    print(f"🔬 Code Security Research — 跨年份隨機抽樣解析品質基準測試 (Sample: {sample_cnt} 篇)")
+    print("=" * 75)
+
+    years = ['2010-2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026']
+    available_pdfs = []
+    for y in years:
+        ydir = os.path.join(raw_dir, y)
+        pdfs = glob.glob(os.path.join(win_path(ydir), "*.pdf"))
+        if pdfs:
+            available_pdfs.extend(pdfs)
+
+    if not available_pdfs:
+        print("❌ 未在 raw-papers 目錄中找到任何 PDF 文獻。")
+        return 1
+
+    selected = random.sample(available_pdfs, min(sample_cnt, len(available_pdfs)))
+    eval_temp_dir = os.path.join(REPO_ROOT, "scratch", "cli_eval_temp")
+    os.makedirs(win_path(eval_temp_dir), exist_ok=True)
+
+    total_flaws = 0
+    for s_idx, pdf_path in enumerate(selected, 1):
+        base_name = Path(pdf_path).stem
+        out_md = os.path.join(eval_temp_dir, f"{base_name}.md")
+        assets_out = os.path.join(eval_temp_dir, "assets", base_name)
+
+        print(f"\n[{s_idx}/{len(selected)}] 正在測試: {base_name[:60]}...")
+        try:
+            md_content, meta = convert_fn(pdf_path, output_md_path=out_md, assets_dir=assets_out)
+            stats, issues = analyze_fn(md_content, out_md)
+
+            print(f"  • 頁數: {meta['pages']} | 行數: {stats['total_lines']} | 字數: {stats['total_words']}")
+            print(f"  • 圖表: {stats['figures']} 張 | 表格: {stats['tables']} 個 | 程式碼: {stats['code_blocks']} 塊")
+            if issues:
+                print(f"  ⚠️ 檢測出 {len(issues)} 項排版待優化項目:")
+                for iss in issues[:5]:
+                    print(f"    - {iss}")
+                if len(issues) > 5:
+                    print(f"    - ... 其餘 {len(issues) - 5} 項已略過。")
+                total_flaws += len(issues)
+            else:
+                print("  ✅ 評估等級: PERFECT (0 缺陷，排版極佳！)")
+        except Exception as ex:
+            print(f"  ❌ 轉換或檢驗出錯: {ex}")
+            total_flaws += 1
+
+    print("\n" + "=" * 75)
+    if total_flaws == 0:
+        print("🎉 基準測試通過：所有抽樣論文排版皆達 100% 完美水準！")
+        return 0
+    print(f"⚠️ 基準測試完成：共發現 {total_flaws} 處待優化項目。")
+    return 1
+
+
+def _eval_single_file(target: str, analyze_fn) -> int:
+    """評估單一 Markdown 檔案"""
+    if not os.path.isfile(win_path(target)):
+        print(f"❌ 找不到目標檔案: {target}")
+        return 1
+
+    with open(win_path(target), "r", encoding="utf-8", errors="ignore") as f:
+        content = f.read()
+
+    print("=" * 70)
+    print(f"🔍 Markdown 版面解析品質檢驗報告: {os.path.basename(target)}")
+    print("=" * 70)
+
+    stats, issues = analyze_fn(content, target)
+    print(f"  • 總行數: {stats['total_lines']} | 總字數: {stats['total_words']}")
+    print(f"  • 表格數: {stats['tables']} | 圖表數: {stats['figures']} | 代碼區塊: {stats['code_blocks']}")
+
+    if issues:
+        print(f"\n⚠️ 發現 {len(issues)} 處版面缺陷:")
+        for iss in issues:
+            print(f"  * {iss}")
+        return 1
+    print("\n✅ 評估結果: 100% 完美 (無浮水印殘留、無表格外溢、圖片全部有效)！")
+    return 0
+
+
+def _eval_all_raw_files(raw_dir: str, analyze_fn) -> int:
+    """批次檢查全庫已生成的 Raw Markdown"""
+    print("=" * 70)
+    print("📚 全庫 Raw Markdown 解析品質普查")
+    print(f"  • 目標目錄: {raw_dir}")
+    print("=" * 70)
+
+    all_raw_mds = []
+    for root, _, files in os.walk(raw_dir):
+        for f in files:
+            if f.endswith(SUFFIX_RAW_MD):
+                all_raw_mds.append(os.path.join(root, f))
+
+    print(f"🔍 發現 {len(all_raw_mds)} 篇 Raw Markdown 檔案。")
+    flawed_files = 0
+    for r_md in all_raw_mds:
+        with open(win_path(r_md), "r", encoding="utf-8", errors="ignore") as f:
+            c = f.read()
+        _, issues = analyze_fn(c, r_md)
+        if issues:
+            print(f"⚠️ {os.path.basename(r_md)}: 發現 {len(issues)} 項缺陷")
+            flawed_files += 1
+
+    if flawed_files == 0:
+        print(f"\n🎉 普查完成：全庫 {len(all_raw_mds)} 篇 Raw Markdown 100% 通過品質檢查！")
+        return 0
+    print(f"\n⚠️ 普查完成：共 {flawed_files} 篇檔案存在微小排版瑕疵。")
+    return 1
+
+
+def cmd_eval(args) -> int:
+    """多維度評估 Markdown 解析品質"""
+    analyze_fn, convert_fn = _import_evaluator()
+    if not analyze_fn or not convert_fn:
+        return 1
+
+    target = getattr(args, "target", None)
+    sample_cnt = getattr(args, "sample", None)
+    eval_all = getattr(args, "all", False)
+    raw_dir = getattr(args, "raw_dir", DEFAULT_RAW_DIR)
+
+    if sample_cnt:
+        return _eval_sample_papers(sample_cnt, raw_dir, analyze_fn, convert_fn)
+    if target:
+        return _eval_single_file(target, analyze_fn)
+    if eval_all:
+        return _eval_all_raw_files(raw_dir, analyze_fn)
+
+    print("❌ 請指定欲檢驗的 Markdown 檔案路徑，或使用 --sample N / --all。")
+    print("   例如: python scripts/paper_cli.py eval \"test.md\"")
+    print("         python scripts/paper_cli.py eval --sample 5")
+    return 1
+
+
+# ==============================================================================
+# 10. 主程式進入點 (CLI DISPATCHER)
 # ==============================================================================
 
 def main():
@@ -909,6 +1162,9 @@ def main():
         epilog="""
 常用命令範例:
   python scripts/paper_cli.py audit                  # 執行全庫健康檢查
+  python scripts/paper_cli.py parse <file.pdf>       # 使用輕量幾何解析器將 PDF 轉為標準 Markdown
+  python scripts/paper_cli.py eval <file.md>         # 評估 Markdown 解析品質 (水文/表格/圖片/順序)
+  python scripts/paper_cli.py eval --sample 5        # 跨年份隨機抽樣 5 篇執行端到端品質基準測試
   python scripts/paper_cli.py stats                  # 顯示全庫資產統計與年份分佈
   python scripts/paper_cli.py sync                   # 自動同步雙向相對路徑鏈結
   python scripts/paper_cli.py normalize              # 批次重命名非標準檔名
@@ -919,6 +1175,20 @@ def main():
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True, help="可調用的子命令")
+
+    p_parse = subparsers.add_parser("parse", help="使用純 Python 幾何版面解析器將 PDF 轉為高品質 Markdown")
+    p_parse.add_argument("pdf_path", nargs="?", default=None, help="欲解析的 PDF 檔案路徑")
+    p_parse.add_argument("-o", "--output", default=None, help="輸出的 Markdown 檔案路徑 (預設為同目錄對應 (Raw).md)")
+    p_parse.add_argument("--all", action="store_true", help="批次解析 raw-papers 目錄下所有 PDF 檔案")
+    p_parse.add_argument("--raw-dir", default=DEFAULT_RAW_DIR, help="raw-papers 目錄路徑 (搭配 --all 使用)")
+    p_parse.set_defaults(func=cmd_parse)
+
+    p_eval = subparsers.add_parser("eval", help="多維度評估 Markdown 解析品質 (水文/表格/圖片/順序/斷字)")
+    p_eval.add_argument("target", nargs="?", default=None, help="欲檢驗的 Markdown 檔案路徑")
+    p_eval.add_argument("--sample", type=int, default=None, help="隨機抽樣 N 篇 PDF 執行端到端轉換與品質檢驗")
+    p_eval.add_argument("--all", action="store_true", help="批次檢查 raw-papers 目錄下所有已生成的 Raw Markdown")
+    p_eval.add_argument("--raw-dir", default=DEFAULT_RAW_DIR, help=HELP_RAW_DIR)
+    p_eval.set_defaults(func=cmd_eval)
 
     p_audit = subparsers.add_parser("audit", help="全面健康檢查 (雙鏈、PDF/Raw 鏈結、YAML、檔名規範)")
     p_audit.add_argument("--vault-dir", default=DEFAULT_VAULT_DIR, help=HELP_VAULT_DIR)
