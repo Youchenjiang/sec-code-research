@@ -29,6 +29,7 @@ if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8')
 
 # 重複字串與正則表達式常數定義 (消除 SonarCloud S1192 異味)
+KEYWORD_ARXIV = 'arXiv:'
 REGEX_SECTION_HEADING = r'^\d+(\.\d+)*\s+[A-Za-z]'
 REGEX_CVE_ID = r'^CVE-\d+-\d+'
 REGEX_TABLE_CAPTION = r'^(TABLE|Table)\s+([0-9IVXLCDM]+)'
@@ -207,7 +208,7 @@ def _is_content_noise(t_str: str) -> bool:
     )
     if any(k in t_str for k in noise_keywords):
         return True
-    if 'arXiv:' in t_str or '[cs.' in t_str:
+    if KEYWORD_ARXIV in t_str or '[cs.' in t_str:
         return True
     return False
 
@@ -225,9 +226,9 @@ def _filter_valid_blocks(page, page_w: float, page_h: float) -> List[Any]:
         t_str = text.strip()
         if not t_str or _is_header_footer_noise(t_str, y0, y1, page_h):
             continue
-        if (x1 < 30 or x0 > page_w - 30) and (y1 - y0 > 100 or 'IEEE' in t_str or 'arXiv:' in t_str):
+        if (x1 < 30 or x0 > page_w - 30) and (y1 - y0 > 100 or 'IEEE' in t_str or KEYWORD_ARXIV in t_str):
             continue
-        if (x1 < 55 or x0 > page_w - 55) and ('arXiv:' in t_str or 'cs.' in t_str):
+        if (x1 < 55 or x0 > page_w - 55) and (KEYWORD_ARXIV in t_str or 'cs.' in t_str):
             continue
         valid_blocks.append(b)
     return valid_blocks
@@ -496,6 +497,38 @@ def _render_figure(
     return fig_md, saved
 
 
+def _format_single_block(
+    b: Any, page, doc, idx: int, page_idx: int, clean_title: str,
+    assets_dir: str, rel_assets_dir: str,
+    fig_regions: Dict[int, float], fig_assocs: Dict[int, List[Any]]
+) -> Tuple[Optional[str], bool, bool]:
+    """格式化單一區塊為 Markdown 片段 (返回 md_text, figure_saved, is_consumed)"""
+    t_strip = b[4].strip()
+
+    if re.match(REGEX_ALGORITHM_CAPTION, t_strip, re.IGNORECASE):
+        return f"#### {t_strip}\n", False, True
+
+    if re.match(REGEX_FIGURE_CAPTION, t_strip, re.IGNORECASE):
+        f_md, saved = _render_figure(
+            page, doc, b, assets_dir, rel_assets_dir,
+            fig_regions.get(idx, b[1]), fig_assocs.get(idx, []),
+            page.rect.width, page.rect.height
+        )
+        return f_md, saved, True
+
+    is_h, h_lvl, h_title = _detect_heading(t_strip)
+    if is_h:
+        return f"{'#' * h_lvl} {h_title}\n", False, False
+
+    if page_idx == 0 and clean_title.lower() in t_strip.lower() and len(t_strip) < len(clean_title) + 50:
+        return None, False, False
+
+    cleaned_p = clean_paragraph_lines([l for l in b[4].split("\n") if l.strip()])
+    if cleaned_p:
+        return cleaned_p, False, False
+    return None, False, False
+
+
 def _process_page_blocks(
     page, doc, page_idx: int, clean_title: str,
     assets_dir: str, rel_assets_dir: str
@@ -518,36 +551,16 @@ def _process_page_blocks(
     for idx, b in enumerate(ordered_blocks):
         if idx in consumed:
             continue
-        t_strip = b[4].strip()
-
-        if re.match(REGEX_ALGORITHM_CAPTION, t_strip, re.IGNORECASE):
-            page_md.append(f"#### {t_strip}\n")
+        snippet, fig_saved, is_con = _format_single_block(
+            b, page, doc, idx, page_idx, clean_title,
+            assets_dir, rel_assets_dir, fig_regions, fig_assocs
+        )
+        if is_con:
             consumed.add(idx)
-            continue
-
-        if re.match(REGEX_FIGURE_CAPTION, t_strip, re.IGNORECASE):
-            f_md, saved = _render_figure(
-                page, doc, b, assets_dir, rel_assets_dir,
-                fig_regions.get(idx, b[1]), fig_assocs.get(idx, []),
-                page.rect.width, page.rect.height
-            )
-            page_md.append(f_md)
-            if saved:
-                figures_count += 1
-            consumed.add(idx)
-            continue
-
-        is_h, h_lvl, h_title = _detect_heading(t_strip)
-        if is_h:
-            page_md.append(f"{'#' * h_lvl} {h_title}\n")
-            continue
-
-        if page_idx == 0 and clean_title.lower() in t_strip.lower() and len(t_strip) < len(clean_title) + 50:
-            continue
-
-        cleaned_p = clean_paragraph_lines([l for l in b[4].split("\n") if l.strip()])
-        if cleaned_p:
-            page_md.extend([cleaned_p, ""])
+        if fig_saved:
+            figures_count += 1
+        if snippet:
+            page_md.extend([snippet, ""])
 
     return page_md, tables_count, figures_count
 
