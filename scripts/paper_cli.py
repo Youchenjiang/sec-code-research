@@ -53,10 +53,13 @@ def win_path(p: str) -> str:
     try:
         ap = os.path.abspath(p)
         if os.name == 'nt' and not ap.startswith('\\\\?\\'):
+            if ap.startswith('\\\\'):
+                return '\\\\?\\UNC' + ap[1:]
             return '\\\\?\\' + ap
         return ap
     except Exception:
         return p
+
 
 
 def clean_tokens(text: str) -> Set[str]:
