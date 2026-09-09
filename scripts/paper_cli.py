@@ -1013,9 +1013,31 @@ def _import_evaluator():
         return None, None
 
 
+def _evaluate_single_sample(pdf_path: str, eval_temp_dir: str, analyze_fn, convert_fn) -> int:
+    """轉換並評估單篇抽樣 PDF 之排版品質"""
+    base_name = Path(pdf_path).stem
+    out_md = os.path.join(eval_temp_dir, f"{base_name}.md")
+    assets_out = os.path.join(eval_temp_dir, "assets", base_name)
+    try:
+        md_content, meta = convert_fn(pdf_path, output_md_path=out_md, assets_dir=assets_out)
+        stats, issues = analyze_fn(md_content, out_md)
+        print(f"  • 頁數: {meta['pages']} | 行數: {stats['total_lines']} | 字數: {stats['total_words']}")
+        print(f"  • 圖表: {stats['figures']} 張 | 表格: {stats['tables']} 個 | 程式碼: {stats['code_blocks']} 塊")
+        if issues:
+            print(f"  ⚠️ 檢測出 {len(issues)} 項排版待優化項目:")
+            for iss in issues[:5]:
+                print(f"    - {iss}")
+            return len(issues)
+        print("  ✅ 評估等級: PERFECT (0 缺陷，排版極佳！)")
+        return 0
+    except Exception as ex:
+        print(f"  ❌ 轉換或檢驗出錯: {ex}")
+        return 1
+
+
 def _eval_sample_papers(sample_cnt: int, raw_dir: str, analyze_fn, convert_fn) -> int:
     """隨機跨年份抽樣端到端基準測試"""
-    import random
+    import secrets
     import glob
     print("=" * 75)
     print(f"🔬 Code Security Research — 跨年份隨機抽樣解析品質基準測試 (Sample: {sample_cnt} 篇)")
@@ -1033,35 +1055,15 @@ def _eval_sample_papers(sample_cnt: int, raw_dir: str, analyze_fn, convert_fn) -
         print("❌ 未在 raw-papers 目錄中找到任何 PDF 文獻。")
         return 1
 
-    selected = random.sample(available_pdfs, min(sample_cnt, len(available_pdfs)))
+    rng = secrets.SystemRandom()
+    selected = rng.sample(available_pdfs, min(sample_cnt, len(available_pdfs)))
     eval_temp_dir = os.path.join(REPO_ROOT, "scratch", "cli_eval_temp")
     os.makedirs(win_path(eval_temp_dir), exist_ok=True)
 
     total_flaws = 0
     for s_idx, pdf_path in enumerate(selected, 1):
-        base_name = Path(pdf_path).stem
-        out_md = os.path.join(eval_temp_dir, f"{base_name}.md")
-        assets_out = os.path.join(eval_temp_dir, "assets", base_name)
-
-        print(f"\n[{s_idx}/{len(selected)}] 正在測試: {base_name[:60]}...")
-        try:
-            md_content, meta = convert_fn(pdf_path, output_md_path=out_md, assets_dir=assets_out)
-            stats, issues = analyze_fn(md_content, out_md)
-
-            print(f"  • 頁數: {meta['pages']} | 行數: {stats['total_lines']} | 字數: {stats['total_words']}")
-            print(f"  • 圖表: {stats['figures']} 張 | 表格: {stats['tables']} 個 | 程式碼: {stats['code_blocks']} 塊")
-            if issues:
-                print(f"  ⚠️ 檢測出 {len(issues)} 項排版待優化項目:")
-                for iss in issues[:5]:
-                    print(f"    - {iss}")
-                if len(issues) > 5:
-                    print(f"    - ... 其餘 {len(issues) - 5} 項已略過。")
-                total_flaws += len(issues)
-            else:
-                print("  ✅ 評估等級: PERFECT (0 缺陷，排版極佳！)")
-        except Exception as ex:
-            print(f"  ❌ 轉換或檢驗出錯: {ex}")
-            total_flaws += 1
+        print(f"\n[{s_idx}/{len(selected)}] 正在測試: {Path(pdf_path).stem[:60]}...")
+        total_flaws += _evaluate_single_sample(pdf_path, eval_temp_dir, analyze_fn, convert_fn)
 
     print("\n" + "=" * 75)
     if total_flaws == 0:
