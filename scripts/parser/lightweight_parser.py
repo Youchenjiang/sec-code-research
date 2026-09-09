@@ -99,16 +99,22 @@ def _detect_list_item(l_str: str, current: str) -> Optional[str]:
 
 
 def _merge_hyphenated_words(current: str, l_str: str) -> str:
-    """處理行尾連字號拼接或常規單字空格連接 (無回溯模式)"""
-    hyphen_match = re.search(r'([a-zA-Z]+)-[ \t]*$', current)
-    next_word_match = re.match(r'^([a-zA-Z]+)(.*)', l_str)
-    if hyphen_match and next_word_match:
-        w1 = hyphen_match.group(1)
-        w2 = next_word_match.group(1)
-        rest = next_word_match.group(2)
-        prefix = current[:hyphen_match.start(1)]
-        merged = fix_hyphenation(w1, w2)
-        return f"{prefix}{merged}{rest}"
+    """處理行尾連字號拼接或常規單字空格連接 (無正則回溯)"""
+    curr_rstrip = current.rstrip(" \t")
+    if curr_rstrip.endswith("-"):
+        base = curr_rstrip[:-1]
+        idx = len(base)
+        while idx > 0 and base[idx - 1].isalpha():
+            idx -= 1
+        w1 = base[idx:]
+        j = 0
+        while j < len(l_str) and l_str[j].isalpha():
+            j += 1
+        w2 = l_str[:j]
+        if w1 and w2:
+            prefix = base[:idx]
+            merged = fix_hyphenation(w1, w2)
+            return f"{prefix}{merged}{l_str[j:]}"
     return current + " " + l_str
 
 
@@ -181,29 +187,34 @@ def _extract_native_tables(page) -> List[Dict[str, Any]]:
     return native_tables
 
 
-def _is_header_footer_noise(t_str: str, y0: float, y1: float, page_h: float) -> bool:
-    """判定區塊是否為頁眉、頁腳或全域出版雜訊"""
-    if y1 < 55 and any(k in t_str for k in ('USENIX', 'Proceedings', 'Symposium', 'IEEE', 'ACM', 'Published')):
-        return True
+def _is_margin_noise(t_str: str, y0: float, y1: float, page_h: float) -> bool:
+    """檢查頁頂與頁底之頁碼及邊界文字雜訊"""
     if y1 < 55 and (t_str.isdigit() or len(t_str) < 50):
-        return True
-    if y0 > page_h - 70 and any(k in t_str for k in ('USENIX Association', 'IEEE', 'ACM', 'DOI', 'doi.org', 'Page ')):
         return True
     if y0 > page_h - 70 and (t_str.isdigit() or len(t_str) < 35):
         return True
-    if re.match(r'^\d{1,4}$', t_str):
+    return False
+
+
+def _is_content_noise(t_str: str) -> bool:
+    """檢查版權與出版宣告等全域雜訊"""
+    if t_str.isdigit() and len(t_str) <= 4:
         return True
-    if re.search(r'arXiv:\d+\.\d+', t_str) or re.search(r'\[cs\.[A-Za-z\-]+\]', t_str):
+    noise_keywords = (
+        'USENIX', 'Proceedings', 'Symposium', 'IEEE', 'ACM', 'Published',
+        'DOI', 'doi.org', 'Page ', 'Authorized licensed use', 'ACM ISBN',
+        'Digital Threats: Research and Practice', 'TechRxiv', '$15.00'
+    )
+    if any(k in t_str for k in noise_keywords):
         return True
-    if 'Authorized licensed use limited to:' in t_str or 'from IEEE Xplore' in t_str:
-        return True
-    if 'Permission to make digital or hard copies' in t_str or 'ACM ISBN' in t_str:
-        return True
-    if 'Digital Threats: Research and Practice' in t_str or 'TechRxiv' in t_str:
-        return True
-    if 'USENIX Association' in t_str or '$15.00' in t_str:
+    if 'arXiv:' in t_str or '[cs.' in t_str:
         return True
     return False
+
+
+def _is_header_footer_noise(t_str: str, y0: float, y1: float, page_h: float) -> bool:
+    """判定區塊是否為頁眉、頁腳或全域出版雜訊"""
+    return _is_margin_noise(t_str, y0, y1, page_h) or _is_content_noise(t_str)
 
 
 def _filter_valid_blocks(page, page_w: float, page_h: float) -> List[Any]:
@@ -222,28 +233,37 @@ def _filter_valid_blocks(page, page_w: float, page_h: float) -> List[Any]:
     return valid_blocks
 
 
+def _is_block_in_table(b: Any, ntab: Dict[str, Any]) -> Tuple[bool, bool]:
+    """檢驗區塊是否屬於表格標題或落在表格區域內部 (返回 is_consumed, is_caption)"""
+    bx0, by0, bx1, by1, btext, _, _ = b
+    bt_strip = btext.strip()
+    t_rect = ntab['bbox']
+    if re.match(REGEX_TABLE_CAPTION, bt_strip) and ((abs(by1 - t_rect.y0) < 60) or (abs(by0 - t_rect.y1) < 60)):
+        if not ntab['caption']:
+            return True, True
+    center_pt = fitz.Point((bx0 + bx1) / 2.0, (by0 + by1) / 2.0)
+    if t_rect.contains(center_pt):
+        return True, False
+    intersect = t_rect.intersect(fitz.Rect(bx0, by0, bx1, by1))
+    if intersect.is_valid and not intersect.is_empty:
+        b_area = max(1.0, (bx1 - bx0) * (by1 - by0))
+        if abs(intersect.width * intersect.height) / b_area > 0.2:
+            return True, False
+    return False, False
+
+
 def _filter_table_overlap(valid_blocks: List[Any], native_tables: List[Dict[str, Any]]) -> List[Any]:
     """標記並過濾落在原生表格內部的區塊與表頭標題"""
     consumed_indices = set()
     for ntab in native_tables:
-        t_rect = ntab['bbox']
         for b_i, b in enumerate(valid_blocks):
-            bx0, by0, bx1, by1, btext, _, _ = b
-            bt_strip = btext.strip()
-            if re.match(REGEX_TABLE_CAPTION, bt_strip) and ((abs(by1 - t_rect.y0) < 60) or (abs(by0 - t_rect.y1) < 60)):
-                if not ntab['caption']:
-                    ntab['caption'] = bt_strip
-                    consumed_indices.add(b_i)
-                    continue
-            center_pt = fitz.Point((bx0 + bx1) / 2.0, (by0 + by1) / 2.0)
-            if t_rect.contains(center_pt):
+            if b_i in consumed_indices:
+                continue
+            is_consumed, is_caption = _is_block_in_table(b, ntab)
+            if is_consumed:
                 consumed_indices.add(b_i)
-            else:
-                intersect = t_rect.intersect(fitz.Rect(bx0, by0, bx1, by1))
-                if intersect.is_valid and not intersect.is_empty:
-                    b_area = max(1.0, (bx1 - bx0) * (by1 - by0))
-                    if abs(intersect.width * intersect.height) / b_area > 0.2:
-                        consumed_indices.add(b_i)
+                if is_caption and not ntab['caption']:
+                    ntab['caption'] = b[4].strip()
     return [b for i, b in enumerate(valid_blocks) if i not in consumed_indices]
 
 
@@ -277,6 +297,32 @@ def _reorder_reading_flow(blocks: List[Any], page_w: float, page_h: float, mid_x
     return top_b + left_b + right_b + bottom_b
 
 
+def _scan_figure_axis_blocks(
+    ordered_blocks: List[Any],
+    f_idx: int,
+    caption_y0: float
+) -> Tuple[float, List[Any], List[int]]:
+    """向上回溯掃描與圖表 Caption 緊鄰之軸標籤與座標刻度"""
+    chart_y0 = caption_y0
+    assoc_blocks = []
+    consumed = []
+    p_scan = f_idx - 1
+    while p_scan >= 0:
+        prev_b = ordered_blocks[p_scan]
+        pt = prev_b[4].strip()
+        if (caption_y0 - prev_b[1]) > 250 or any(pt.startswith(h) for h in ('#', 'Table', 'TABLE', 'Figure', 'Fig.')):
+            break
+        is_axis = len(pt) < 50 or re.match(r'^[\d\.\%\s\-\,\/\(\)]+$', pt)
+        if is_axis and len(pt) < 100:
+            chart_y0 = min(chart_y0, prev_b[1])
+            consumed.append(p_scan)
+            assoc_blocks.append(prev_b)
+            p_scan -= 1
+        else:
+            break
+    return chart_y0, assoc_blocks, consumed
+
+
 def _pre_scan_figures(ordered_blocks: List[Any]) -> Tuple[Dict[int, float], Dict[int, List[Any]], Set[int]]:
     """預先掃描圖表 Caption 與關聯軸標籤"""
     figure_chart_regions: Dict[int, float] = {}
@@ -286,24 +332,10 @@ def _pre_scan_figures(ordered_blocks: List[Any]) -> Tuple[Dict[int, float], Dict
     for f_idx, fb in enumerate(ordered_blocks):
         ft = fb[4].strip()
         if re.match(REGEX_FIGURE_CAPTION, ft, re.IGNORECASE):
-            chart_y0 = fb[1]
-            assoc_blocks = []
-            p_scan = f_idx - 1
-            while p_scan >= 0:
-                prev_b = ordered_blocks[p_scan]
-                pt = prev_b[4].strip()
-                if (fb[1] - prev_b[1]) > 250 or any(pt.startswith(h) for h in ('#', 'Table', 'TABLE', 'Figure', 'Fig.')):
-                    break
-                is_axis = len(pt) < 50 or re.match(r'^[\d\.\%\s\-\,\/\(\)]+$', pt)
-                if is_axis and len(pt) < 100:
-                    chart_y0 = min(chart_y0, prev_b[1])
-                    consumed_indices.add(p_scan)
-                    assoc_blocks.append(prev_b)
-                    p_scan -= 1
-                else:
-                    break
+            chart_y0, assoc_blocks, newly_consumed = _scan_figure_axis_blocks(ordered_blocks, f_idx, fb[1])
             figure_chart_regions[f_idx] = chart_y0
             figure_associated_blocks[f_idx] = assoc_blocks
+            consumed_indices.update(newly_consumed)
     return figure_chart_regions, figure_associated_blocks, consumed_indices
 
 
@@ -317,24 +349,36 @@ def _parse_heading_level(sec_num: str) -> int:
     return 2
 
 
+def _is_section_number(token: str) -> bool:
+    """檢查是否為章節編號格式 (如 1 或 1.2 或 2.1.3)"""
+    parts = token.split('.')
+    return bool(parts) and all(p.isdigit() for p in parts if p)
+
+
 def _detect_heading(t_strip: str) -> Tuple[bool, int, str]:
-    """偵測文字是否為學術標題"""
+    """偵測文字是否為學術標題 (消除正則回溯)"""
     normalized_h = re.sub(r'^(\d+)\.\s+(\d+)', r'\1.\2', t_strip)
     if normalized_h.upper() in ("ABSTRACT", "A BSTRACT"):
         return True, 2, "Abstract"
-    m_h = re.match(r'^(\d+(?:\.\d+){0,5})[ \t]+([A-Za-z ]{3,})$', normalized_h)
-    if m_h:
-        sec_num = m_h.group(1)
-        sec_name = m_h.group(2).strip().title()
-        return True, _parse_heading_level(sec_num), f"{sec_num} {sec_name}"
+    tokens = normalized_h.split(maxsplit=1)
+    if len(tokens) == 2 and _is_section_number(tokens[0]):
+        title_body = tokens[1].strip()
+        if len(title_body) >= 3 and all(c.isalpha() or c.isspace() for c in title_body):
+            sec_num = tokens[0]
+            sec_name = title_body.title()
+            return True, _parse_heading_level(sec_num), f"{sec_num} {sec_name}"
     standard_sections = ("REFERENCES", "ACKNOWLEDGMENTS", "APPENDIX", "CONCLUSION", "RELATED WORK", "DISCUSSION")
     if normalized_h.upper() in standard_sections:
         return True, 2, normalized_h.title()
     return False, 2, ""
 
 
-def _extract_cve_table_rows(ordered_blocks: List[Any], start_data_idx: int, consumed_indices: Set[int]) -> List[List[str]]:
-    """解析安全論文 CVE 對照表格列"""
+def _collect_table_lines(
+    ordered_blocks: List[Any],
+    start_data_idx: int,
+    consumed_indices: Set[int]
+) -> List[str]:
+    """收集連續的表格文字行直到遇到標題或下一個章節"""
     all_tbl_lines = []
     curr_scan = start_data_idx
     while curr_scan < len(ordered_blocks):
@@ -343,30 +387,90 @@ def _extract_cve_table_rows(ordered_blocks: List[Any], start_data_idx: int, cons
         if any(ct.startswith(h) for h in ('Table', 'TABLE', 'Figure', 'Fig.', '#')) or re.match(REGEX_SECTION_HEADING, ct):
             break
         for cl in cand_b[4].split('\n'):
-            if cl.strip():
-                all_tbl_lines.append(cl.strip())
+            cl_str = cl.strip()
+            if cl_str:
+                all_tbl_lines.append(cl_str)
         consumed_indices.add(curr_scan)
         curr_scan += 1
+    return all_tbl_lines
 
+
+def _parse_cve_rows_from_lines(all_tbl_lines: List[str]) -> List[List[str]]:
+    """從表格行序列中解析 CVE ID 與關聯描述"""
     rows = []
     i_l = 0
     while i_l < len(all_tbl_lines):
-        if re.match(REGEX_CVE_ID, all_tbl_lines[i_l]):
-            soft = all_tbl_lines[i_l - 1] if i_l > 0 else ""
-            cve_str = all_tbl_lines[i_l]
-            vtype = all_tbl_lines[i_l + 1] if i_l + 1 < len(all_tbl_lines) else ""
-            desc_tokens = []
-            j_l = i_l + 2
-            while j_l < len(all_tbl_lines) and not re.match(REGEX_CVE_ID, all_tbl_lines[j_l]):
-                if j_l + 1 < len(all_tbl_lines) and re.match(REGEX_CVE_ID, all_tbl_lines[j_l + 1]):
-                    break
-                desc_tokens.append(all_tbl_lines[j_l])
-                j_l += 1
-            rows.append([soft, cve_str, vtype, " ".join(desc_tokens)])
-            i_l = j_l
-        else:
+        if not re.match(REGEX_CVE_ID, all_tbl_lines[i_l]):
             i_l += 1
+            continue
+        soft = all_tbl_lines[i_l - 1] if i_l > 0 else ""
+        cve_str = all_tbl_lines[i_l]
+        vtype = all_tbl_lines[i_l + 1] if i_l + 1 < len(all_tbl_lines) else ""
+        desc_tokens = []
+        j_l = i_l + 2
+        while j_l < len(all_tbl_lines) and not re.match(REGEX_CVE_ID, all_tbl_lines[j_l]):
+            if j_l + 1 < len(all_tbl_lines) and re.match(REGEX_CVE_ID, all_tbl_lines[j_l + 1]):
+                break
+            desc_tokens.append(all_tbl_lines[j_l])
+            j_l += 1
+        rows.append([soft, cve_str, vtype, " ".join(desc_tokens)])
+        i_l = j_l
     return rows
+
+
+def _extract_cve_table_rows(ordered_blocks: List[Any], start_data_idx: int, consumed_indices: Set[int]) -> List[List[str]]:
+    """解析安全論文 CVE 對照表格列"""
+    all_tbl_lines = _collect_table_lines(ordered_blocks, start_data_idx, consumed_indices)
+    return _parse_cve_rows_from_lines(all_tbl_lines)
+
+
+def _try_extract_embedded_image(page, doc, y0: float, fig_out_path: str) -> bool:
+    """嘗試從 PDF 提取原生內嵌光柵影像"""
+    try:
+        for info in page.get_image_info(xrefs=True):
+            ibbox = fitz.Rect(info['bbox'])
+            if ibbox.y1 <= y0 + 35 and ibbox.y0 < y0 - 30 and ibbox.width > 50 and ibbox.height > 40:
+                xref = info.get('xref')
+                if xref:
+                    base_img = doc.extract_image(xref)
+                    if base_img and len(base_img["image"]) > 1024:
+                        with open(win_path(fig_out_path), "wb") as f_r:
+                            f_r.write(base_img["image"])
+                        return True
+    except Exception:
+        pass
+    return False
+
+
+def _compute_figure_clip_rect(
+    page, y0: float, chart_y0: float, assoc_b: List[Any], page_w: float, page_h: float
+) -> fitz.Rect:
+    """計算向量線條圖表的剪裁邊界"""
+    page_drawings = [d['rect'] for d in page.get_drawings() if 55 < d['rect'].y0 and d['rect'].y1 < page_h - 50]
+    chart_drawings = [r for r in page_drawings if r.y1 <= y0 + 10 and r.y0 >= chart_y0 - 25]
+    all_x0 = [r.x0 for r in chart_drawings] + [b[0] for b in assoc_b]
+    all_x1 = [r.x1 for r in chart_drawings] + [b[2] for b in assoc_b]
+    all_y0 = [r.y0 for r in chart_drawings] + [b[1] for b in assoc_b]
+    all_y1 = [r.y1 for r in chart_drawings] + [b[3] for b in assoc_b]
+    if all_x0 and all_y0:
+        c_y0 = max(50, min(min(all_y0) - 12, chart_y0 - 10))
+        c_y1 = min(page_h - 5, min(y0 - 2, max(all_y1) + 6))
+        return fitz.Rect(max(5, min(all_x0) - 12), c_y0, min(page_w - 5, max(all_x1) + 12), c_y1)
+    return fitz.Rect(max(10, page_w * 0.08), max(10, min(chart_y0 - 15, y0 - 180)), min(page_w - 10, page_w * 0.92), min(page_h - 10, y0 - 2))
+
+
+def _try_render_vector_drawing(
+    page, y0: float, chart_y0: float, assoc_b: List[Any],
+    page_w: float, page_h: float, fig_out_path: str
+) -> bool:
+    """依據幾何繪圖邊界剪裁並渲染向量圖表"""
+    try:
+        clip_rect = _compute_figure_clip_rect(page, y0, chart_y0, assoc_b, page_w, page_h)
+        pix = page.get_pixmap(clip=clip_rect, dpi=180)
+        pix.save(win_path(fig_out_path))
+        return True
+    except Exception:
+        return False
 
 
 def _render_figure(
@@ -381,47 +485,82 @@ def _render_figure(
     fig_filename = f"figure_{fig_num}.png"
     fig_out_path = validate_safe_path(os.path.join(assets_dir, fig_filename))
 
-    saved = False
-    try:
-        for info in page.get_image_info(xrefs=True):
-            ibbox = fitz.Rect(info['bbox'])
-            if ibbox.y1 <= y0 + 35 and ibbox.y0 < y0 - 30 and ibbox.width > 50 and ibbox.height > 40:
-                xref = info.get('xref')
-                if xref:
-                    base_img = doc.extract_image(xref)
-                    if base_img and len(base_img["image"]) > 1024:
-                        with open(win_path(fig_out_path), "wb") as f_r:
-                            f_r.write(base_img["image"])
-                        saved = True
-                        break
-    except Exception:
-        pass
-
+    saved = _try_extract_embedded_image(page, doc, y0, fig_out_path)
     if not saved:
-        try:
-            page_drawings = [d['rect'] for d in page.get_drawings() if 55 < d['rect'].y0 and d['rect'].y1 < page_h - 50]
-            chart_drawings = [r for r in page_drawings if r.y1 <= y0 + 10 and r.y0 >= chart_y0 - 25]
-            all_x0 = [r.x0 for r in chart_drawings] + [b[0] for b in assoc_b]
-            all_x1 = [r.x1 for r in chart_drawings] + [b[2] for b in assoc_b]
-            all_y0 = [r.y0 for r in chart_drawings] + [b[1] for b in assoc_b]
-            all_y1 = [r.y1 for r in chart_drawings] + [b[3] for b in assoc_b]
-            if all_x0 and all_y0:
-                c_y0 = max(50, min(min(all_y0) - 12, chart_y0 - 10))
-                c_y1 = min(page_h - 5, min(y0 - 2, max(all_y1) + 6))
-                clip_rect = fitz.Rect(max(5, min(all_x0) - 12), c_y0, min(page_w - 5, max(all_x1) + 12), c_y1)
-            else:
-                clip_rect = fitz.Rect(max(10, page_w * 0.08), max(10, min(chart_y0 - 15, y0 - 180)), min(page_w - 10, page_w * 0.92), min(page_h - 10, y0 - 2))
-            pix = page.get_pixmap(clip=clip_rect, dpi=180)
-            pix.save(win_path(fig_out_path))
-            saved = True
-        except Exception:
-            pass
+        saved = _try_render_vector_drawing(page, y0, chart_y0, assoc_b, page_w, page_h, fig_out_path)
 
     clean_caption = re.sub(r'\s+', ' ', fig_caption).strip()
     short_alt = clean_caption.split('.')[0] if '.' in clean_caption[:80] else clean_caption[:60]
     short_alt = re.sub(r'^(Figure\s+\d+:?|Fig\.\s*\d+:?)[ \t]*', '', short_alt, flags=re.IGNORECASE).strip() or "Figure"
     fig_md = f"![{short_alt}](<{rel_assets_dir}/{fig_filename}>)\n\n*{clean_caption}*\n"
     return fig_md, saved
+
+
+def _process_page_blocks(
+    page, doc, page_idx: int, clean_title: str,
+    assets_dir: str, rel_assets_dir: str
+) -> Tuple[List[str], int, int]:
+    """解析單一頁面的區塊內容，處理表格、圖表、標題與常規段落"""
+    page_md: List[str] = []
+    tables_count, figures_count = 0, 0
+
+    native_tables = _extract_native_tables(page)
+    for ntab in native_tables:
+        cap = ntab['caption'] or "Table"
+        page_md.extend([f"#### {cap}\n", format_matrix_to_markdown_table(ntab['headers'], ntab['rows']), ""])
+        tables_count += 1
+
+    v_blocks = _filter_valid_blocks(page, page.rect.width, page.rect.height)
+    rem_blocks = _filter_table_overlap(v_blocks, native_tables)
+    ordered_blocks = _reorder_reading_flow(rem_blocks, page.rect.width, page.rect.height, page.rect.width / 2.0)
+    fig_regions, fig_assocs, consumed = _pre_scan_figures(ordered_blocks)
+
+    for idx, b in enumerate(ordered_blocks):
+        if idx in consumed:
+            continue
+        t_strip = b[4].strip()
+
+        if re.match(REGEX_ALGORITHM_CAPTION, t_strip, re.IGNORECASE):
+            page_md.append(f"#### {t_strip}\n")
+            consumed.add(idx)
+            continue
+
+        if re.match(REGEX_FIGURE_CAPTION, t_strip, re.IGNORECASE):
+            f_md, saved = _render_figure(
+                page, doc, b, assets_dir, rel_assets_dir,
+                fig_regions.get(idx, b[1]), fig_assocs.get(idx, []),
+                page.rect.width, page.rect.height
+            )
+            page_md.append(f_md)
+            if saved:
+                figures_count += 1
+            consumed.add(idx)
+            continue
+
+        is_h, h_lvl, h_title = _detect_heading(t_strip)
+        if is_h:
+            page_md.append(f"{'#' * h_lvl} {h_title}\n")
+            continue
+
+        if page_idx == 0 and clean_title.lower() in t_strip.lower() and len(t_strip) < len(clean_title) + 50:
+            continue
+
+        cleaned_p = clean_paragraph_lines([l for l in b[4].split("\n") if l.strip()])
+        if cleaned_p:
+            page_md.extend([cleaned_p, ""])
+
+    return page_md, tables_count, figures_count
+
+
+def _safe_write_text_file(target_file_path: str, content: str) -> None:
+    """安全校驗目標路徑並寫入文字檔案，防範路徑遍歷 (SonarCloud S8707)"""
+    safe_path = Path(validate_safe_path(target_file_path)).resolve()
+    if '\0' in str(safe_path) or '..' in str(safe_path).split(os.sep):
+        raise ValueError(f"Unsafe path detected: {target_file_path}")
+    out_dir = safe_path.parent
+    os.makedirs(win_path(str(out_dir)), exist_ok=True)
+    with open(win_path(str(safe_path)), "w", encoding="utf-8") as fp:
+        fp.write(content)
 
 
 def convert_pdf_to_clean_markdown(
@@ -476,61 +615,15 @@ def convert_pdf_to_clean_markdown(
         page = doc[page_idx]
         if page_idx == 0 and "Proceedings of the" in page.get_text():
             continue
-
-        native_tables = _extract_native_tables(page)
-        for ntab in native_tables:
-            cap = ntab['caption'] or "Table"
-            md_lines.extend([f"#### {cap}\n", format_matrix_to_markdown_table(ntab['headers'], ntab['rows']), ""])
-            total_tables += 1
-
-        v_blocks = _filter_valid_blocks(page, page.rect.width, page.rect.height)
-        rem_blocks = _filter_table_overlap(v_blocks, native_tables)
-        ordered_blocks = _reorder_reading_flow(rem_blocks, page.rect.width, page.rect.height, page.rect.width / 2.0)
-        fig_regions, fig_assocs, consumed = _pre_scan_figures(ordered_blocks)
-
-        for idx, b in enumerate(ordered_blocks):
-            if idx in consumed:
-                continue
-            t_strip = b[4].strip()
-
-            # 演算法區塊
-            if re.match(REGEX_ALGORITHM_CAPTION, t_strip, re.IGNORECASE):
-                md_lines.append(f"#### {t_strip}\n")
-                consumed.add(idx)
-                continue
-
-            # 圖表區塊
-            if re.match(REGEX_FIGURE_CAPTION, t_strip, re.IGNORECASE):
-                f_md, saved = _render_figure(
-                    page, doc, b, assets_dir, rel_assets_dir,
-                    fig_regions.get(idx, b[1]), fig_assocs.get(idx, []),
-                    page.rect.width, page.rect.height
-                )
-                md_lines.append(f_md)
-                if saved:
-                    total_figures += 1
-                consumed.add(idx)
-                continue
-
-            # 標題判斷
-            is_h, h_lvl, h_title = _detect_heading(t_strip)
-            if is_h:
-                md_lines.append(f"{'#' * h_lvl} {h_title}\n")
-                continue
-
-            if page_idx == 0 and clean_title.lower() in t_strip.lower() and len(t_strip) < len(clean_title) + 50:
-                continue
-
-            cleaned_p = clean_paragraph_lines([l for l in b[4].split("\n") if l.strip()])
-            if cleaned_p:
-                md_lines.extend([cleaned_p, ""])
+        p_md, p_tbl, p_fig = _process_page_blocks(
+            page, doc, page_idx, clean_title, assets_dir, rel_assets_dir
+        )
+        md_lines.extend(p_md)
+        total_tables += p_tbl
+        total_figures += p_fig
 
     full_markdown = "\n".join(md_lines)
-    out_dir = os.path.dirname(output_md_path)
-    if out_dir:
-        os.makedirs(win_path(out_dir), exist_ok=True)
-    with open(win_path(output_md_path), "w", encoding="utf-8") as fp:
-        fp.write(full_markdown)
+    _safe_write_text_file(output_md_path, full_markdown)
 
     return full_markdown, {
         "pages": len(doc),
