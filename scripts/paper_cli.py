@@ -399,6 +399,23 @@ def cmd_audit(args) -> int:
 # 2. 雙向鏈結同步模組 (SYNC) 輔助函數
 # ==============================================================================
 
+def _record_raw_entry(index: Dict[str, str], stem: str, path: str, label: str):
+    """記錄索引並在同名碰撞時輸出警告"""
+    if stem in index:
+        print(f"  ⚠️ 警告: 發現跨目錄同名 raw {label}: {stem}")
+    index[stem] = path
+
+
+def _index_raw_file(f: str, full_p: str, pdf_index: Dict[str, str], md_index: Dict[str, str]):
+    """解析單一 raw 檔案並分類記錄至索引"""
+    if f.endswith(".pdf"):
+        _record_raw_entry(pdf_index, f[:-4], full_p, "PDF")
+    elif f.endswith(SUFFIX_RAW_MD):
+        _record_raw_entry(md_index, f[:-len(SUFFIX_RAW_MD)], full_p, "Markdown")
+    elif f.endswith(".md"):
+        _record_raw_entry(md_index, f[:-3], full_p, "Markdown")
+
+
 def _build_raw_index(raw_dir: str) -> Tuple[Dict[str, str], Dict[str, str]]:
     """建立 raw-papers PDF 與 Markdown 索引 (偵測跨目錄同名碰撞)"""
     raw_pdf_index, raw_md_index = {}, {}
@@ -406,19 +423,7 @@ def _build_raw_index(raw_dir: str) -> Tuple[Dict[str, str], Dict[str, str]]:
         if "legacy_archive" in r:
             continue
         for f in files:
-            if f.endswith(".pdf"):
-                stem = f[:-4]
-                if stem in raw_pdf_index:
-                    print(f"  ⚠️ 警告: 發現跨目錄同名 raw PDF: {stem}")
-                raw_pdf_index[stem] = os.path.join(r, f)
-            elif f.endswith(SUFFIX_RAW_MD):
-                stem = f[:-len(SUFFIX_RAW_MD)]
-                if stem in raw_md_index:
-                    print(f"  ⚠️ 警告: 發現跨目錄同名 raw Markdown: {stem}")
-                raw_md_index[stem] = os.path.join(r, f)
-            elif f.endswith(".md"):
-                stem = f[:-3]
-                raw_md_index[stem] = os.path.join(r, f)
+            _index_raw_file(f, os.path.join(r, f), raw_pdf_index, raw_md_index)
     return raw_pdf_index, raw_md_index
 
 
