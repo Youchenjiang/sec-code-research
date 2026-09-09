@@ -101,10 +101,16 @@ def _check_figures(md_text: str, md_path: str) -> Tuple[int, List[str]]:
 
 
 def _check_hyphenation(md_text: str) -> List[str]:
-    """檢查行尾連字號修復 (無回溯空格模式)"""
-    hyphen_breaks = re.findall(r'[a-zA-Z]{3,}-[ \t]*\n[ \t]*[a-zA-Z]{3,}', md_text)
-    if len(hyphen_breaks) > 10:
-        return [f"[HYPHEN] 發現 {len(hyphen_breaks)} 處跨行未接合之連字號。"]
+    """檢查行尾連字號修復 (無回溯模式)"""
+    lines = md_text.splitlines()
+    count = 0
+    for i in range(len(lines) - 1):
+        prev = lines[i].rstrip()
+        nxt = lines[i + 1].lstrip()
+        if prev.endswith("-") and len(prev) >= 4 and prev[-2].isalpha() and nxt and nxt[0].isalpha():
+            count += 1
+    if count > 10:
+        return [f"[HYPHEN] 發現 {count} 處跨行未接合之連字號。"]
     return []
 
 
