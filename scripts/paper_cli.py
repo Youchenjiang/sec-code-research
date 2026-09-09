@@ -513,9 +513,9 @@ def _process_normalize_file(root: str, f: str, dry_run: bool) -> int:
         old_p = os.path.join(root, f)
         new_p = os.path.join(root, new_name)
         print(f"  • 重命名: {f} -> {new_name}")
-        if not dry_run:
-            if os.path.exists(win_path(new_p)):
-                os.remove(win_path(new_p))
+        if os.path.exists(win_path(new_p)):
+            print(f"  ⚠️ 目標檔案已存在，略過重命名: {f} -> {new_name}")
+        elif not dry_run:
             os.rename(win_path(old_p), win_path(new_p))
         return 1
     return 0
@@ -576,15 +576,16 @@ def _check_vault_duplicates(vault_dir: str, auto_prune: bool) -> Set[str]:
     return {f[:-3] for f in locations.keys()}
 
 
-def _execute_orphan_archival(orphan_files: List[str], archive_dir: str):
-    """將孤兒檔案實際移動至封存目錄"""
-    os.makedirs(win_path(archive_dir), exist_ok=True)
+def _execute_orphan_archival(orphan_files: List[str], raw_dir: str, archive_dir: str):
+    """將孤兒檔案保留相對目錄層級移動至封存目錄"""
     for op in orphan_files:
-        dest = os.path.join(archive_dir, os.path.basename(op))
+        rel_path = os.path.relpath(op, raw_dir)
+        dest = os.path.join(archive_dir, rel_path)
+        os.makedirs(win_path(os.path.dirname(dest)), exist_ok=True)
         if os.path.exists(win_path(dest)):
             os.remove(win_path(dest))
         os.rename(win_path(op), win_path(dest))
-        print(f"  📦 已移入封存區: {os.path.basename(op)}")
+        print(f"  📦 已移入封存區: {rel_path}")
 
 
 def _find_orphan_files(raw_dir: str, vault_bases: Set[str]) -> List[str]:
@@ -614,7 +615,8 @@ def _archive_orphans(raw_dir: str, vault_bases: Set[str], do_archive: bool):
     for op in orphan_files[:5]:
         print(f"  • {os.path.relpath(op, raw_dir)}")
     if do_archive:
-        _execute_orphan_archival(orphan_files, archive_dir)
+        _execute_orphan_archival(orphan_files, raw_dir, archive_dir)
+
 
 
 
@@ -771,18 +773,19 @@ def cmd_clean_watermarks(args) -> int:
 # 7. 卡片草稿自動生成模組 (GENERATE-NOTES) 輔助函數
 # ==============================================================================
 
-def _collect_raw_bases(raw_dir: str) -> Dict[str, Dict[str, str]]:
-    """蒐集 raw-papers 中全部實體 PDF 與 Raw MD 資訊"""
+def _collect_raw_bases(raw_dir: str, notes_dir: str) -> Dict[str, Dict[str, str]]:
+    """蒐集 raw-papers 中全部實體 PDF 與 Raw MD 資訊並計算相對路徑"""
     raw_bases: Dict[str, Dict[str, str]] = {}
     for root, _, files in os.walk(raw_dir):
         if "legacy_archive" in root:
             continue
-        rel_root = os.path.relpath(root, raw_dir).replace(os.sep, '/')
         for f in files:
+            actual_file = os.path.join(root, f)
+            rel_path = os.path.relpath(actual_file, notes_dir).replace(os.sep, '/')
             if f.endswith(".pdf"):
-                raw_bases.setdefault(f[:-4], {})['pdf'] = f"../../raw-papers/{rel_root}/{f}"
+                raw_bases.setdefault(f[:-4], {})['pdf'] = rel_path
             elif f.endswith(SUFFIX_RAW_MD):
-                raw_bases.setdefault(f[:-len(SUFFIX_RAW_MD)], {})['raw'] = f"../../raw-papers/{rel_root}/{f}"
+                raw_bases.setdefault(f[:-len(SUFFIX_RAW_MD)], {})['raw'] = rel_path
     return raw_bases
 
 
@@ -795,24 +798,28 @@ def _parse_paper_stem(base: str) -> Tuple[str, str, str]:
         year = base[start + 1:end]
         title = base[end + 1:].strip()
         return authors or "Unknown", year, title or base
-    return "Unknown", "2026", base
+    return "Unknown", "Unknown", base
 
 
 def _render_note_template(base: str, paths: Dict[str, str]) -> str:
-    """渲染標準 Obsidian 卡片草稿範本"""
+    """渲染標準 Obsidian 卡片草稿範本 (安全 YAML 序列化)"""
     authors, year, title = _parse_paper_stem(base)
     pdf_link = paths.get('pdf', '')
     raw_link = paths.get('raw', '')
     pdf_md = f"- [PDF 原文](<{pdf_link}>)\n" if pdf_link else ""
     raw_md = f"- [Markdown 原文](<{raw_link}>)\n" if raw_link else ""
 
+    metadata = {
+        "title": title,
+        "authors": authors,
+        "year": year,
+        "venue": "Unspecified",
+        "categories": ["[[00-研究流派圖主目錄]]"],
+    }
+    fm_block = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False).rstrip()
+
     return f"""---
-title: "{title}"
-authors: "{authors}"
-year: {year}
-venue: "Unspecified"
-categories:
-  - "[[00-研究流派圖主目錄]]"
+{fm_block}
 ---
 
 # 📖 {title}
@@ -852,7 +859,7 @@ def cmd_generate_notes(args) -> int:
 
     os.makedirs(win_path(notes_dir), exist_ok=True)
     existing_notes = {f[:-3] for f in os.listdir(notes_dir) if f.endswith(".md")}
-    raw_bases = _collect_raw_bases(raw_dir)
+    raw_bases = _collect_raw_bases(raw_dir, notes_dir)
     missing_bases = {b: paths for b, paths in raw_bases.items() if b not in existing_notes}
 
     if not missing_bases:
@@ -872,6 +879,7 @@ def cmd_generate_notes(args) -> int:
 
     print(f"\n生成完成: 共建立 {created_count} 篇標準 Obsidian 卡片草稿。")
     return 1 if created_count > 0 else 0
+
 
 
 # ==============================================================================
