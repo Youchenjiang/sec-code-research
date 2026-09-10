@@ -491,10 +491,12 @@ def _render_figure(
         saved = _try_render_vector_drawing(page, y0, chart_y0, assoc_b, page_w, page_h, fig_out_path)
 
     clean_caption = re.sub(r'\s+', ' ', fig_caption).strip()
-    short_alt = clean_caption.split('.')[0] if '.' in clean_caption[:80] else clean_caption[:60]
-    short_alt = re.sub(r'^(Figure\s+\d+:?|Fig\.\s*\d+:?)[ \t]*', '', short_alt, flags=re.IGNORECASE).strip() or "Figure"
-    fig_md = f"![{short_alt}](<{rel_assets_dir}/{fig_filename}>)\n\n*{clean_caption}*\n"
-    return fig_md, saved
+    if saved and os.path.isfile(win_path(fig_out_path)):
+        short_alt = clean_caption.split('.')[0] if '.' in clean_caption[:80] else clean_caption[:60]
+        short_alt = re.sub(r'^(Figure\s+\d+:?|Fig\.\s*\d+:?)[ \t]*', '', short_alt, flags=re.IGNORECASE).strip() or "Figure"
+        fig_md = f"![{short_alt}](<{rel_assets_dir}/{fig_filename}>)\n\n*{clean_caption}*\n"
+        return fig_md, True
+    return f"*{clean_caption}*\n", False
 
 
 def _format_single_block(
@@ -503,6 +505,9 @@ def _format_single_block(
     fig_regions: Dict[int, float], fig_assocs: Dict[int, List[Any]]
 ) -> Tuple[Optional[str], bool, bool]:
     """格式化單一區塊為 Markdown 片段 (返回 md_text, figure_saved, is_consumed)"""
+    if b[4].startswith("__NATIVE_TABLE__"):
+        return b[5], False, False
+
     t_strip = b[4].strip()
 
     if re.match(REGEX_ALGORITHM_CAPTION, t_strip, re.IGNORECASE):
@@ -538,14 +543,17 @@ def _process_page_blocks(
     tables_count, figures_count = 0, 0
 
     native_tables = _extract_native_tables(page)
-    for ntab in native_tables:
-        cap = ntab['caption'] or "Table"
-        page_md.extend([f"#### {cap}\n", format_matrix_to_markdown_table(ntab['headers'], ntab['rows']), ""])
-        tables_count += 1
-
     v_blocks = _filter_valid_blocks(page, page.rect.width, page.rect.height)
     rem_blocks = _filter_table_overlap(v_blocks, native_tables)
-    ordered_blocks = _reorder_reading_flow(rem_blocks, page.rect.width, page.rect.height, page.rect.width / 2.0)
+
+    mixed_blocks = list(rem_blocks)
+    for t_idx, ntab in enumerate(native_tables):
+        r = ntab['bbox']
+        cap = ntab['caption'] or "Table"
+        tbl_md = f"#### {cap}\n\n" + format_matrix_to_markdown_table(ntab['headers'], ntab['rows'])
+        mixed_blocks.append((r.x0, r.y0, r.x1, r.y1, f"__NATIVE_TABLE__{t_idx}", tbl_md))
+
+    ordered_blocks = _reorder_reading_flow(mixed_blocks, page.rect.width, page.rect.height, page.rect.width / 2.0)
     fig_regions, fig_assocs, consumed = _pre_scan_figures(ordered_blocks)
 
     for idx, b in enumerate(ordered_blocks):
@@ -559,6 +567,8 @@ def _process_page_blocks(
             consumed.add(idx)
         if fig_saved:
             figures_count += 1
+        if b[4].startswith("__NATIVE_TABLE__"):
+            tables_count += 1
         if snippet:
             page_md.extend([snippet, ""])
 
