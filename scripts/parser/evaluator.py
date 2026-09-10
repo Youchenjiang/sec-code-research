@@ -76,8 +76,10 @@ def _check_table_quality(lines: List[str]) -> Tuple[int, List[str]]:
 
 
 def _extract_img_matches(md_text: str) -> List[Tuple[str, str]]:
-    """提取 Markdown 圖片鏈結，同時支援標準與尖括號路徑語法"""
-    return re.findall(r'!\[([^\]]*)\]\((?:<)?([^)>]+)(?:>)?\)', md_text)
+    """提取 Markdown 圖片鏈結，支援尖括號包裹 (含括號路徑) 與標準括號語法"""
+    angle_matches = re.findall(r'!\[([^\]]*)\]\(<([^>]+)>\)', md_text)
+    standard_matches = re.findall(r'!\[([^\]]*)\]\(([^<>)]+)\)', md_text)
+    return angle_matches + standard_matches
 
 
 def _check_figures(md_text: str, md_path: str) -> Tuple[int, List[str]]:
