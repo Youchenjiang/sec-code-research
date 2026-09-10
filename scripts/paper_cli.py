@@ -940,7 +940,7 @@ def _parse_batch_pdfs(raw_dir: str, convert_fn) -> int:
     print("=" * 70)
 
     pdf_files = []
-    for root, _, files in os.walk(raw_dir):
+    for root, _, files in os.walk(win_path(raw_dir)):
         if "legacy_archive" in root:
             continue
         for f in files:
@@ -1037,6 +1037,10 @@ def _evaluate_single_sample(pdf_path: str, eval_temp_dir: str, analyze_fn, conve
 
 def _eval_sample_papers(sample_cnt: int, raw_dir: str, analyze_fn, convert_fn) -> int:
     """隨機跨年份抽樣端到端基準測試"""
+    if sample_cnt < 1:
+        print("❌ --sample 抽樣篇數必須為正整數 (>= 1)。")
+        return 1
+
     import secrets
     import glob
     print("=" * 75)
@@ -1111,7 +1115,7 @@ def _eval_all_raw_files(raw_dir: str, analyze_fn) -> int:
     print("=" * 70)
 
     all_raw_mds = []
-    for root, _, files in os.walk(raw_dir):
+    for root, _, files in os.walk(win_path(raw_dir)):
         for f in files:
             if f.endswith(SUFFIX_RAW_MD):
                 all_raw_mds.append(os.path.join(root, f))
