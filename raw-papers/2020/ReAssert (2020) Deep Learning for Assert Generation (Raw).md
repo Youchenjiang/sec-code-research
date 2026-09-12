@@ -1,8 +1,8 @@
-# 24 ReAssert2020 ReAssert  Learning to Repair Broken Test
-
-- **Source File**: [`24_ReAssert2020_ReAssert__Learning_to_Repair_Broken_Test.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/24_ReAssert2020_ReAssert__Learning_to_Repair_Broken_Test.pdf)
-- **Total Pages**: 12
-
+---
+title: "REASSERT: Deep Learning for Assert Generation"
+year: 2020
+author: "Research Team"
+source_pdf: "ReAssert (2020) Deep Learning for Assert Generation.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1362,4 +1362,3 @@ Explicit Path Model-Checking Tools,” in Lecture Notes in Computer
 Science (including subseries Lecture Notes in Artiﬁcial Intelligence and
 Lecture Notes in Bioinformatics) , 2006, vol. 4144 LNCS, pp. 419–423.
 [Online]. Available: http://link.springer.com/10.1007/11817963{ }38
-

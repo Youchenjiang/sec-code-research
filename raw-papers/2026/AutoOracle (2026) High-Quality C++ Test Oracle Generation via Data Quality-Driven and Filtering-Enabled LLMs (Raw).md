@@ -1,8 +1,8 @@
-# 09 AutoOracle2026 AutoOracle High Quality C Test Oracle
-
-- **Source File**: [`09_AutoOracle2026_AutoOracle_High_Quality_C_Test_Oracle.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/09_AutoOracle2026_AutoOracle_High_Quality_C_Test_Oracle.pdf)
-- **Total Pages**: 12
-
+---
+title: "AutoOracle: High-Quality C++ Test Oracle Generation via Data Quality-Driven and Filtering-Enabled LLMs"
+year: 2026
+author: "Research Team"
+source_pdf: "AutoOracle (2026) High-Quality C++ Test Oracle Generation via Data Quality-Driven and Filtering-Enabled LLMs.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1192,4 +1192,3 @@ Ltd, 85–111. https://doi.org/10.1002/9781119202486.ch5
 [29] 2024. Google Test Framework. Retrieved from https://github.com/google/
 googletest
 247
-

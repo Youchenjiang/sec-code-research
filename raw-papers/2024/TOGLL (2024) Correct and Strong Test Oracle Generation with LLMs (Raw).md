@@ -1,8 +1,8 @@
-# 06 TOGLL2024 Correct and Strong Test Oracle Generatio
-
-- **Source File**: [`06_TOGLL2024_Correct_and_Strong_Test_Oracle_Generatio.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/06_TOGLL2024_Correct_and_Strong_Test_Oracle_Generatio.pdf)
-- **Total Pages**: 13
-
+---
+title: "TOGLL: Correct and Strong Test Oracle Generation with LLMs"
+year: 2024
+author: "Research Team"
+source_pdf: "TOGLL (2024) Correct and Strong Test Oracle Generation with LLMs.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1470,4 +1470,3 @@ Proceedings, ser. ICSE-Companion’24. New York, NY , USA:
 Association for Computing Machinery, 2024, p. 176–180. [Online].
 Available: https://doi.org/10.1145/3639478.3639791
 13
-

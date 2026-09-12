@@ -4,7 +4,7 @@ secverify_category: "Category A"
 categories:
   - "[[2A.1-Web與API動態漏洞掃描 (DAST)]]"
   - "[[2B.1-反饋引導式模糊測試 (Feedback-directed Fuzzing)]]"
-title: "30_Mao_et_al.,_Sapienz_Multi-objective_Automated_Testing"
+title: "Sapienz: Multi-objective Automated Testing for Android Applications"
 creator: "TeX"
 pages: 12
 source: "Sapienz (2016) Multi-Objective Automated Testing for Android Applications.pdf"

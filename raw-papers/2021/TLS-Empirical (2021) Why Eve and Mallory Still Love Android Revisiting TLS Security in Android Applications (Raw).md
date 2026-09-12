@@ -7,9 +7,9 @@ pages: 19
 
 ## Page 1
 
-![Figure 1](../assets/SSLTLS (2020) Certificate Verification Vulnerabilities/fig_p1_1.png)
+![Figure 1](../assets/TLS-Empirical (2021) Why Eve and Mallory Still Love Android Revisiting TLS Security in Android Applications/fig_p1_1.png)
 
-![Figure 2](../assets/SSLTLS (2020) Certificate Verification Vulnerabilities/fig_p1_2.png)
+![Figure 2](../assets/TLS-Empirical (2021) Why Eve and Mallory Still Love Android Revisiting TLS Security in Android Applications/fig_p1_2.png)
 
 Leibniz University Hannover
 
@@ -303,9 +303,9 @@ android:usesCleartextTraffic attribute [6]. Since An-
 
 ## Page 4
 
-![Figure 3](../assets/SSLTLS (2020) Certificate Verification Vulnerabilities/fig_p4_3.png)
+![Figure 3](../assets/TLS-Empirical (2021) Why Eve and Mallory Still Love Android Revisiting TLS Security in Android Applications/fig_p4_3.png)
 
-![Figure 4](../assets/SSLTLS (2020) Certificate Verification Vulnerabilities/fig_p4_4.png)
+![Figure 4](../assets/TLS-Empirical (2021) Why Eve and Mallory Still Love Android Revisiting TLS Security in Android Applications/fig_p4_4.png)
 
 Table 1: Chronological overview of TLS-related events in the history of Android:
 

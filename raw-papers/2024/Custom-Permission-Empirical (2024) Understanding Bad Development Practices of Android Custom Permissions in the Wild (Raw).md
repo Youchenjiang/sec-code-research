@@ -8,7 +8,7 @@ pages: 18
 
 ## Page 1
 
-![Figure 1](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p1_1.png)
+![Figure 1](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p1_1.png)
 
 Singapore Management University 
 Singapore Management University 
@@ -78,7 +78,7 @@ https://ink.library.smu.edu.sg/sis_research/10452
 
 ## Page 3
 
-![Figure 2](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p3_2.jpeg)
+![Figure 2](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p3_2.jpeg)
 
 IEEE TRANSACTIONS ON DEPENDABLE AND SECURE COMPUTING, VOL. 22, NO. 4, JULY/AUGUST 2025, pp. 3208-3223. DOI: 10.1109/TDSC.2024.3525049
 
@@ -1891,19 +1891,19 @@ and identifying misexposed activities in Android applications,” in Proc.
 
 ## Page 18
 
-![Figure 3](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_3.jpeg)
+![Figure 3](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_3.jpeg)
 
-![Figure 4](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_4.jpeg)
+![Figure 4](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_4.jpeg)
 
-![Figure 5](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_5.jpeg)
+![Figure 5](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_5.jpeg)
 
-![Figure 6](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_6.jpeg)
+![Figure 6](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_6.jpeg)
 
-![Figure 7](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_7.jpeg)
+![Figure 7](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_7.jpeg)
 
-![Figure 8](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_8.jpeg)
+![Figure 8](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_8.jpeg)
 
-![Figure 9](../assets/CustomROMPractices (2024) Bad Development Practices of Custom Android OS/fig_p18_9.jpeg)
+![Figure 9](../assets/Custom-Permission-Empirical (2024) Understanding Bad Development Practices of Android Custom Permissions in the Wild/fig_p18_9.jpeg)
 
 ZHANG et al.: UNDERSTANDING THE BAD DEVELOPMENT PRACTICES OF ANDROID CUSTOM PERMISSIONS IN THE WILD
 

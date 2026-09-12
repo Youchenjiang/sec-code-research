@@ -1,5 +1,5 @@
 ---
-title: "X_M_Mao_Sapienz"
+title: "Sapienz: Multi-objective Automated Testing for Android Applications"
 creator: "TeX"
 pages: 12
 ---

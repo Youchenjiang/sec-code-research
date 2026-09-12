@@ -1,4 +1,4 @@
----year: 2024
+---year: 2025
 
 secverify_category: "Category A"
 categories:
@@ -8,12 +8,12 @@ title: "Evolution of DevSecOps and Its Influence on Application Security: A Syst
 author: "Khwaja Imran Mohammed, Bharanidharan Shanmugam and Jamal El-Den"
 creator: "LaTeX with hyperref"
 pages: 33
-source: "DevSecOpsEvolution (2024) Evolution of DevSecOps in Industry.pdf"
+source: "DevSecOpsEvolution (2025) Evolution of DevSecOps in Industry.pdf"
 ---
 
 # Evolution of DevSecOps and Its Influence on Application Security: A Systematic Literature Review
 
-> **文獻存檔**：[PDF 原文](<../../raw-papers/2024/DevSecOpsEvolution (2024) Evolution of DevSecOps in Industry.pdf>) | [Markdown 原文](<../../raw-papers/2024/DevSecOpsEvolution (2024) Evolution of DevSecOps in Industry (Raw).md>)
+> **文獻存檔**：[PDF 原文](<../../raw-papers/2025/DevSecOpsEvolution (2025) Evolution of DevSecOps in Industry.pdf>) | [Markdown 原文](<../../raw-papers/2025/DevSecOpsEvolution (2025) Evolution of DevSecOps in Industry (Raw).md>)
 
 > **作者**：Khwaja Imran Mohammed, Bharanidharan Shanmugam and Jamal El-Den
 > **總頁數**：33 頁

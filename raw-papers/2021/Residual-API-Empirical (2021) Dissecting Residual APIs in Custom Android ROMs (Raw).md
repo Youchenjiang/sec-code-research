@@ -267,7 +267,7 @@ the safeguards fall into the following two categories:
 
 ## Page 3
 
-![Figure 1](../assets/El-Rewini (2021) & Aafer Residual APIs/fig_p3_1.png)
+![Figure 1](../assets/Residual-API-Empirical (2021) Dissecting Residual APIs in Custom Android ROMs/fig_p3_1.png)
 
 1
 boolean startATTEntitleforTethering(...){
@@ -390,7 +390,7 @@ as screen tap coordinates and key presses. Given the sensitivity
 
 ## Page 4
 
-![Figure 2](../assets/El-Rewini (2021) & Aafer Residual APIs/fig_p4_2.png)
+![Figure 2](../assets/Residual-API-Empirical (2021) Dissecting Residual APIs in Custom Android ROMs/fig_p4_2.png)
 
 of the operation, Samsung enforces high-privilege requirements.
 The caller must belong to the system process (enforced through
@@ -516,7 +516,7 @@ AOSP’s ConnectivityManager class. The disableMdo() method
 
 ## Page 5
 
-![Figure 3](../assets/El-Rewini (2021) & Aafer Residual APIs/fig_p5_3.png)
+![Figure 3](../assets/Residual-API-Empirical (2021) Dissecting Residual APIs in Custom Android ROMs/fig_p5_3.png)
 
 Figure 4: Multiple framework entry points leading to the
 custom API IUrspManager.setUrspBlackListUidRule(...)

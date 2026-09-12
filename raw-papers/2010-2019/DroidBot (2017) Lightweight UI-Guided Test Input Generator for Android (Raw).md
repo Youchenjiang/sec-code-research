@@ -1,5 +1,5 @@
 ---
-title: "X_M_Li_DroidBot"
+title: "DroidBot: A Lightweight UI-Guided Test Input Generator for Android"
 creator: "TeX"
 pages: 4
 ---

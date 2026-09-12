@@ -1,8 +1,8 @@
-# 20 LLMOracleRoadmap2025 Test Oracle Automation in the Era of LLM
-
-- **Source File**: [`20_LLMOracleRoadmap2025_Test_Oracle_Automation_in_the_Era_of_LLM.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/20_LLMOracleRoadmap2025_Test_Oracle_Automation_in_the_Era_of_LLM.pdf)
-- **Total Pages**: 26
-
+---
+title: "LLMSecCode: Evaluating Large Language Models for Secure Coding"
+year: 2025
+author: "Research Team"
+source_pdf: "LLMSecCode (2025) Evaluating Large Language Models for Secure Coding.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1325,4 +1325,3 @@ International Symposium on Software Testing and Analysis, ISSTA 2023, pages 1282
 3597926.3598135. event-place: Seattle, W A, USA.
 CWE - About CWE, 2024. URL https://cwe.mitre.org/about/index.html.
 26
-

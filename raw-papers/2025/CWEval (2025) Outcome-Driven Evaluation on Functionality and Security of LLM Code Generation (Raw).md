@@ -1,8 +1,8 @@
-# 11 AutoSUIT2026 AutoSUIT Dual track vulnerability vs fix
-
-- **Source File**: [`11_AutoSUIT2026_AutoSUIT_Dual_track_vulnerability_vs_fix.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/11_AutoSUIT2026_AutoSUIT_Dual_track_vulnerability_vs_fix.pdf)
-- **Total Pages**: 8
-
+---
+title: "CWEVAL: Outcome-driven Evaluation on Functionality and Security of LLM Code Generation"
+year: 2025
+author: "Research Team"
+source_pdf: "CWEval (2025) Outcome-Driven Evaluation on Functionality and Security of LLM Code Generation.pdf"
 ---
 
 <!-- Page 1 -->
@@ -862,4 +862,3 @@ tion into qr codes,” Journal of Network and Computer Applications, vol.
 on 11/18/2024).
 [25] “Codeql documentation,” https://codeql.github.com/docs/, (Accessed on
 11/18/2024).
-

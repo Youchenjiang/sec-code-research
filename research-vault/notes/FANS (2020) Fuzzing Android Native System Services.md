@@ -1,7 +1,7 @@
 ---year: 2020
 
 secverify_category: "Category B"
-title: "sec20-liu"
+title: "FANS: Fuzzing Android Native System Services via Automated Interface Analysis"
 pages: 18
 source: "FANS (2020) Fuzzing Android Native System Services.pdf"
 ---

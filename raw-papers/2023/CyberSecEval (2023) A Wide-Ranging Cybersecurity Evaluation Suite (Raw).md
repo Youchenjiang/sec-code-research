@@ -1,8 +1,8 @@
-# 33 CyberSecEval2023 CyberSecEval  A Wide Ranging Cybersecuri
-
-- **Source File**: [`33_CyberSecEval2023_CyberSecEval__A_Wide_Ranging_Cybersecuri.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/33_CyberSecEval2023_CyberSecEval__A_Wide_Ranging_Cybersecuri.pdf)
-- **Total Pages**: 13
-
+---
+title: "CyberSecEval: A Wide-Ranging Cybersecurity Evaluation Suite"
+year: 2023
+author: "Research Team"
+source_pdf: "CyberSecEval (2023) A Wide-Ranging Cybersecurity Evaluation Suite.pdf"
 ---
 
 <!-- Page 1 -->
@@ -475,4 +475,3 @@ empirical study on github copilot, amazon codewhisperer, and chatgpt. arXiv prep
 Li Zhong and Zilong Wang. A study on robustness and reliability of large language model code generation. arXiv preprint
 arXiv:2308.10335, 2023.
 13
-

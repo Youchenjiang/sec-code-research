@@ -1,8 +1,8 @@
-# 27 Circe2013 Grammar Based Oracle for Web Application
-
-- **Source File**: [`27_Circe2013_Grammar_Based_Oracle_for_Web_Application.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/27_Circe2013_Grammar_Based_Oracle_for_Web_Application.pdf)
-- **Total Pages**: 10
-
+---
+title: "Grammar-Based Oracle for Web Application Security Testing"
+year: 2013
+author: "Research Team"
+source_pdf: "GrammarWebOracle (2013) Grammar-Based Oracle for Web Security Testing.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1149,4 +1149,3 @@ Proceedings, pp. 29 – 38 (2005). DOI 10.1109/ADC.2005.11
 bilities. In: ICSE ’08: Proceedings of the 30th international conference
 on Software engineering, pp. 171–180. ACM, New York, NY , USA
 (2008). DOI http://doi.acm.org/10.1145/1368088.1368112
-

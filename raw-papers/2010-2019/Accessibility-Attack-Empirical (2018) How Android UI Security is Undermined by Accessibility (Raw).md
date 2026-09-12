@@ -280,9 +280,9 @@ user only.
 
 ## Page 3
 
-![Figure 1](../assets/Meli (2018) How Android UI Security Undermined by Accessibility/fig_p3_1.png)
+![Figure 1](../assets/Accessibility-Attack-Empirical (2018) How Android UI Security is Undermined by Accessibility/fig_p3_1.png)
 
-![Figure 2](../assets/Meli (2018) How Android UI Security Undermined by Accessibility/fig_p3_2.png)
+![Figure 2](../assets/Accessibility-Attack-Empirical (2018) How Android UI Security is Undermined by Accessibility/fig_p3_2.png)
 
 How Android’s UI Security is Undermined by Accessibility
 ROOTS ’18, November 29–30, 2018, Vienna, Austria
@@ -399,11 +399,11 @@ to users, even when actively checking the settings menu.
 
 ## Page 4
 
-![Figure 3](../assets/Meli (2018) How Android UI Security Undermined by Accessibility/fig_p4_3.png)
+![Figure 3](../assets/Accessibility-Attack-Empirical (2018) How Android UI Security is Undermined by Accessibility/fig_p4_3.png)
 
-![Figure 4](../assets/Meli (2018) How Android UI Security Undermined by Accessibility/fig_p4_4.png)
+![Figure 4](../assets/Accessibility-Attack-Empirical (2018) How Android UI Security is Undermined by Accessibility/fig_p4_4.png)
 
-![Figure 5](../assets/Meli (2018) How Android UI Security Undermined by Accessibility/fig_p4_5.png)
+![Figure 5](../assets/Accessibility-Attack-Empirical (2018) How Android UI Security is Undermined by Accessibility/fig_p4_5.png)
 
 ROOTS ’18, November 29–30, 2018, Vienna, Austria
 Anatoli Kalysch, Davide Bove, and Tilo Müller
@@ -512,7 +512,7 @@ wide overlays to hide the malicious behavior behind a facade.
 
 ## Page 5
 
-![Figure 6](../assets/Meli (2018) How Android UI Security Undermined by Accessibility/fig_p5_6.png)
+![Figure 6](../assets/Accessibility-Attack-Empirical (2018) How Android UI Security is Undermined by Accessibility/fig_p5_6.png)
 
 How Android’s UI Security is Undermined by Accessibility
 ROOTS ’18, November 29–30, 2018, Vienna, Austria

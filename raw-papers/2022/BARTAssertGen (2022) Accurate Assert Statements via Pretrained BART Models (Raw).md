@@ -1,7 +1,8 @@
-# 34_Tufano2022 Generating Accurate Assert Statements
-
-- **Source File**: [`34_Tufano2022_Generating_Accurate_Assert_Statements.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/34_Tufano2022_Generating_Accurate_Assert_Statements.pdf)
-
+---
+title: "Generating Accurate Assert Statements via Pretrained BART Models"
+year: 2022
+author: "Research Team"
+source_pdf: "BARTAssertGen (2022) Accurate Assert Statements via Pretrained BART Models.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1001,4 +1002,3 @@ language-models.pdf
 L. Zettlemoyer, and V . Stoyanov, “Roberta: A robustly optimized BERT
 pretraining approach,” CoRR, vol. abs/1907.11692, 2019. [Online].
 Available: http://arxiv.org/abs/1907.11692
-

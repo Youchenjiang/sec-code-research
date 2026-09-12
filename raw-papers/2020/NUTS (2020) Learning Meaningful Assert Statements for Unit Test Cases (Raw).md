@@ -1,8 +1,8 @@
-# 22 Atlas2020 Learning to Generate Correct Assertions
-
-- **Source File**: [`22_Atlas2020_Learning_to_Generate_Correct_Assertions.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/22_Atlas2020_Learning_to_Generate_Correct_Assertions.pdf)
-- **Total Pages**: 12
-
+---
+title: "On Learning Meaningful Assert Statements for Unit Test Cases"
+year: 2020
+author: "Research Team"
+source_pdf: "NUTS (2020) Learning Meaningful Assert Statements for Unit Test Cases.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1427,4 +1427,3 @@ New York, NY, USA, 683–693. https://doi.org/10.1145/3106237.3106289
 [39] Pengcheng Yin, Bowen Deng, Edgar Chen, Bogdan Vasilescu, and Graham Neubig.
 2018. Learning to mine parallel natural language/source code corpora from stack
 overflow. 388–389. https://doi.org/10.1145/3183440.3195021
-

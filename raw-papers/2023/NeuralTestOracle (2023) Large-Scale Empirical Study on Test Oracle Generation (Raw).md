@@ -1,8 +1,8 @@
-# 18 NeuralOracleEval2023 Neural Based Test Oracle Generation  A L
-
-- **Source File**: [`18_NeuralOracleEval2023_Neural_Based_Test_Oracle_Generation__A_L.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/18_NeuralOracleEval2023_Neural_Based_Test_Oracle_Generation__A_L.pdf)
-- **Total Pages**: 13
-
+---
+title: "Neural-Based Test Oracle Generation: A Large-Scale Empirical Study"
+year: 2023
+author: "Research Team"
+source_pdf: "NeuralTestOracle (2023) Large-Scale Empirical Study on Test Oracle Generation.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1449,4 +1449,3 @@ cx/afl (2017).
 [62] Yucheng Zhang and Ali Mesbah. 2015. Assertions are strongly correlated with test
 suite effectiveness. In Proceedings of the 2015 10th Joint Meeting on Foundations
 of Software Engineering. 214–224.
-

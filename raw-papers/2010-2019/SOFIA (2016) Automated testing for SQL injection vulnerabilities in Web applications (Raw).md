@@ -1,8 +1,8 @@
-# 03 SOFIA2016 Automated testing for SQL injection
-
-- **Source File**: [`03_SOFIA2016_Automated_testing_for_SQL_injection.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/03_SOFIA2016_Automated_testing_for_SQL_injection.pdf)
-- **Total Pages**: 11
-
+---
+title: "SOFIA: Automated testing for SQL injection vulnerabilities in Web applications"
+year: 2016
+author: "Research Team"
+source_pdf: "SOFIA (2016) Automated testing for SQL injection vulnerabilities in Web applications.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1323,4 +1323,3 @@ vulnerabilities in scripting languages. In Proceedings of the
 Volume 15, USENIX-SS’06, Berkeley, CA, USA, 2006.
 USENIX Association.
 269
-

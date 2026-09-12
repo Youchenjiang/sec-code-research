@@ -1,8 +1,8 @@
-# 30 Rigger2022 A New Approach to the Test Oracle Pro
-
-- **Source File**: [`30_Rigger2022_A_New_Approach_to_the_Test_Oracle_Pro.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/30_Rigger2022_A_New_Approach_to_the_Test_Oracle_Pro.pdf)
-- **Total Pages**: 9
-
+---
+title: "The Oracle Problem in Software Testing: A Survey"
+year: 2022
+author: "Research Team"
+source_pdf: "Intramorphic-Testing (2022) A New Approach to the Test Oracle Problem.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1019,4 +1019,3 @@ Conference on Automated Software Engineering (Vasteras, Sweden)
 701ś712. https://doi.org/10.1145/2642937.2642994
 Received 2022-07-12; accepted 2022-10-02
 136
-

@@ -1,8 +1,8 @@
-# 31 Daikon2007 The Daikon system for dynamic detection
-
-- **Source File**: [`31_Daikon2007_The_Daikon_system_for_dynamic_detection.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/31_Daikon2007_The_Daikon_system_for_dynamic_detection.pdf)
-- **Total Pages**: 11
-
+---
+title: "The Daikon System for Dynamic Detection of Likely Invariants"
+year: 2007
+author: "Research Team"
+source_pdf: "Daikon (2007) Dynamic Detection of Likely Invariants.pdf"
 ---
 
 <!-- Page 1 -->
@@ -514,4 +514,3 @@ ISSTA (2006) 169–179.
 [38] G. Ammons, R. Bod ´ık, J.R. Larus, Mining speciﬁcations, POPL (2002) 4–16.
 [39] J. Whaley, M. Martin, M. Lam, Automatic extraction of object-oriented component interfaces, ISSTA (2002) 218–228.
 [40] J. Y ang, D. Evans, D. Bhardwaj, T. Bhat, M. Das, Perracotta: Mining temporal API rules from imperfect traces, ICSE (2006) 282–291.
-

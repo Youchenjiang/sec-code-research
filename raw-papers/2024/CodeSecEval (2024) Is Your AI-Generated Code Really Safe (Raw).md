@@ -1,8 +1,8 @@
-# 29 CodeSecEval2024 Is Your AI Generated Code Really Safe  E
-
-- **Source File**: [`29_CodeSecEval2024_Is_Your_AI_Generated_Code_Really_Safe__E.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/29_CodeSecEval2024_Is_Your_AI_Generated_Code_Really_Safe__E.pdf)
-- **Total Pages**: 12
-
+---
+title: "CodeSecEval: Is Your AI-Generated Code Really Safe?"
+year: 2024
+author: "Research Team"
+source_pdf: "CodeSecEval (2024) Is Your AI-Generated Code Really Safe.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1116,4 +1116,3 @@ Journal of Systems and Software 171 (2021), 110825.
 Wang, Weizhu Chen, and Jian-Guang Lou. 2022. CERT: Continual Pre-training
 on Sketches for Library-oriented Code Generation. InThe 2022 International Joint
 Conference on Artificial Intelligence.
-

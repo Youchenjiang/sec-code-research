@@ -1,8 +1,8 @@
-# 26 EDITAS2023 Retrieve and Edit Assertion Generation
-
-- **Source File**: [`26_EDITAS2023_Retrieve_and_Edit_Assertion_Generation.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/26_EDITAS2023_Retrieve_and_Edit_Assertion_Generation.pdf)
-- **Total Pages**: 13
-
+---
+title: "Revisiting and Improving Retrieval-Augmented Deep Assertion Generation"
+year: 2025
+author: "Research Team"
+source_pdf: "Assert-Generation-Method (2025) Revisiting and Improving Retrieval-Augmented Deep Assertion Generation.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1597,4 +1597,3 @@ Event, USA, November 8-13, 2020 , P. Devanbu, M. B. Cohen, and
 T. Zimmermann, Eds. ACM, 2020, pp. 617–628. [Online]. Available:
 https://doi.org/10.1145/3368089.3409760
 1135
-

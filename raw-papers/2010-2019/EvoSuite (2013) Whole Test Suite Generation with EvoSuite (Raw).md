@@ -1,8 +1,8 @@
-# 32 EvoSuite2013 Whole Test Suite Generation
-
-- **Source File**: [`32_EvoSuite2013_Whole_Test_Suite_Generation.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/32_EvoSuite2013_Whole_Test_Suite_Generation.pdf)
-- **Total Pages**: 16
-
+---
+title: "Whole Test Suite Generation with EvoSuite"
+year: 2013
+author: "Research Team"
+source_pdf: "EvoSuite (2013) Whole Test Suite Generation with EvoSuite.pdf"
 ---
 
 <!-- Page 1 -->
@@ -2001,4 +2001,3 @@ Since then, he has been a research scientist
 at Simula Research Laboratory, Norway. His re-
 search interests include search based software
 testing and analyses of randomized algorithms.
-

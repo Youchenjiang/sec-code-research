@@ -8,9 +8,9 @@ pages: 14
 
 ## Page 1
 
-![Figure 1](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p1_1.jpeg)
+![Figure 1](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p1_1.jpeg)
 
-![Figure 2](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p1_2.jpeg)
+![Figure 2](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p1_2.jpeg)
 
 World Journal of Advanced Research and Reviews, 2024, 23(02), 2585–2598
 
@@ -70,7 +70,7 @@ Copyright © 2024 Author(s) retain the copyright of this article. This article i
 
 ## Page 2
 
-![Figure 3](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p2_3.png)
+![Figure 3](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p2_3.png)
 
 The specific objectives of this research are as follows:
 
@@ -130,7 +130,7 @@ the Android security testing process, which might help save security testing tim
 
 ## Page 3
 
-![Figure 4](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p3_4.png)
+![Figure 4](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p3_4.png)
 
 2. Material and methods
 
@@ -198,9 +198,9 @@ performed using the Mobile-Security-Framework (MobSF), generating detailed secur
 
 ## Page 4
 
-![Figure 5](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p4_5.png)
+![Figure 5](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p4_5.png)
 
-![Figure 6](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p4_6.jpeg)
+![Figure 6](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p4_6.jpeg)
 
 2.6. Implementation of the Automation Tool
 
@@ -230,7 +230,7 @@ improvement.
 
 ## Page 5
 
-![Figure 7](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p5_7.png)
+![Figure 7](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p5_7.png)
 
 3. Results and discussion
 
@@ -263,7 +263,7 @@ Figure 5 shows an emulated Google Pixel 7 while Figure 6 shows an emulated Googl
 
 ## Page 6
 
-![Figure 8](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p6_8.jpeg)
+![Figure 8](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p6_8.jpeg)
 
 3.2.2. Android Debug Bridge (adb)
 
@@ -300,7 +300,7 @@ successfully intercepted traffic from the emulator's browser.
 
 ## Page 7
 
-![Figure 9](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p7_9.png)
+![Figure 9](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p7_9.png)
 
 3.3. Reverse Engineering and Application Analysis
 
@@ -343,7 +343,7 @@ dynamic analysis tested the app in real-time on an emulator.
 
 ## Page 8
 
-![Figure 10](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p8_10.png)
+![Figure 10](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p8_10.png)
 
 3.3.4. Dynamic Analysis Using Drozer
 
@@ -397,9 +397,9 @@ jadx.
 
 ## Page 9
 
-![Figure 11](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p9_11.png)
+![Figure 11](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p9_11.png)
 
-![Figure 12](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p9_12.jpeg)
+![Figure 12](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p9_12.jpeg)
 
 World Journal of Advanced Research and Reviews, 2024, 23(02), 2585–2598
 
@@ -424,7 +424,7 @@ circumstances.
 
 ## Page 10
 
-![Figure 13](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p10_13.jpeg)
+![Figure 13](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p10_13.jpeg)
 
 3.3.7. Fuzz Testing
 
@@ -474,7 +474,7 @@ are described here.
 
 ## Page 11
 
-![Figure 14](../assets/AndroidSecurityTesting (2013) Framework for Enhancing Security Testing/fig_p11_14.png)
+![Figure 14](../assets/AndroidSecurityTesting (2024) Framework for Enhancing Security Testing/fig_p11_14.png)
 
 3.4.1. SSL (Secure Socket Layer) Certificate Validation and Pinning
 

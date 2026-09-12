@@ -1,8 +1,8 @@
-# 16 TECO: Learning Deep Semantics for Test Completion
-
-- **Source File**: [`16_TECO.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/16_TECO.pdf)
-- **Total Pages**: 16
-
+---
+title: "TECO: Deep Semantics Test Completion with Pretrained Code Models"
+year: 2023
+author: "Research Team"
+source_pdf: "TECO (2023) Deep Semantics Test Completion with Pretrained Code Models.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1539,4 +1539,3 @@ ATLAS 3.62 1.45 α0.23 0.68 21.81 13.56 54.19 50.87
 TOGA 25.61 9.37 9.10 9.10 26.51 25.74 31.00 29.38
 TECO 67.93 30.29 17.37 27.39 44.27 36.98 68.43 69.35
 16
-

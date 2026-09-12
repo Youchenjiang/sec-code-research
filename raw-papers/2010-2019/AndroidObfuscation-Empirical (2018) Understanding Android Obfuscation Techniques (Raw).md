@@ -426,19 +426,19 @@ APK file packaging. For example, ProGuard [19] and Allatori [3]
 
 ## Page 4
 
-![Figure 1](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_1.jpeg)
+![Figure 1](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_1.jpeg)
 
-![Figure 2](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_2.jpeg)
+![Figure 2](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_2.jpeg)
 
-![Figure 3](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_3.png)
+![Figure 3](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_3.png)
 
-![Figure 4](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_4.jpeg)
+![Figure 4](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_4.jpeg)
 
-![Figure 5](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_5.png)
+![Figure 5](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_5.png)
 
-![Figure 6](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_6.png)
+![Figure 6](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_6.png)
 
-![Figure 7](../assets/AndroidObfuscation (2018) Understanding Android Obfuscation Techniques/fig_p4_7.png)
+![Figure 7](../assets/AndroidObfuscation-Empirical (2018) Understanding Android Obfuscation Techniques/fig_p4_7.png)
 
 Official Market
 

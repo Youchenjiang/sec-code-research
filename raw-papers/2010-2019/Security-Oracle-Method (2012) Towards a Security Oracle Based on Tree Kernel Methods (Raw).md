@@ -1,8 +1,8 @@
-# 02 Avancini2012 Security testing of Web applications  a
-
-- **Source File**: [`02_Avancini2012_Security_testing_of_Web_applications__a.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/02_Avancini2012_Security_testing_of_Web_applications__a.pdf)
-- **Total Pages**: 4
-
+---
+title: "Towards a Security Oracle Based on Tree Kernel Methods"
+year: 2012
+author: "Research Team"
+source_pdf: "Security-Oracle-Method (2012) Towards a Security Oracle Based on Tree Kernel Methods.pdf"
 ---
 
 <!-- Page 1 -->
@@ -473,4 +473,3 @@ trees’, in In proceedings of Neural Information Processing Systems ,
 vector machines’, in Proceedings of the 26th annual international
 ACM SIGIR conference on Research and development in informaion
 retrieval, SIGIR ’03, pp. 26–32, New York, NY , USA, (2003). ACM.
-

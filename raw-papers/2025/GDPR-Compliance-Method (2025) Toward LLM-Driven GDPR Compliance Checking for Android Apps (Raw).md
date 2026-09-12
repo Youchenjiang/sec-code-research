@@ -1,8 +1,8 @@
-# GDPR-Compliance-Method (2025) Toward LLM-Driven GDPR Compliance Checking for Android Apps
-
-- **Source File**: `GDPR-Compliance-Method (2025) Toward LLM-Driven GDPR Compliance Checking for Android Apps.pdf`
-- **Total Pages**: 5
-
+---
+title: "Toward LLM-Driven GDPR Compliance Checking for Android Apps"
+year: 2025
+author: "Research Team"
+source_pdf: "GDPR-Compliance-Method (2025) Toward LLM-Driven GDPR Compliance Checking for Android Apps.pdf"
 ---
 
 <!-- Page 1 -->

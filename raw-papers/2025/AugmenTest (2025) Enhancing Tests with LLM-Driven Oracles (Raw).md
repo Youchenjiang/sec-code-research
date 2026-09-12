@@ -1,8 +1,8 @@
-# 08 AugmenTest2025 AugmenTest Enhancing Tests with LLM Driv
-
-- **Source File**: [`08_AugmenTest2025_AugmenTest_Enhancing_Tests_with_LLM_Driv.pdf`](file:///c:/Users/g1014/Documents/GitHub/Youchen/code-security-research/papers/08_AugmenTest2025_AugmenTest_Enhancing_Tests_with_LLM_Driv.pdf)
-- **Total Pages**: 11
-
+---
+title: "AugmenTest: Enhancing Tests with LLM-Driven Oracles"
+year: 2025
+author: "Research Team"
+source_pdf: "AugmenTest (2025) Enhancing Tests with LLM-Driven Oracles.pdf"
 ---
 
 <!-- Page 1 -->
@@ -1178,4 +1178,3 @@ Interpretability, Robustness, and Benchmarking in Neural Software
 Engineering, ser. InteNSE ’24. New York, NY , USA: Association
 for Computing Machinery, 2024, p. 7–12. [Online]. Available:
 https://doi.org/10.1145/3643661.3643953
-
