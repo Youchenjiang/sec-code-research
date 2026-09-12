@@ -11,8 +11,9 @@ categories:
 
 # 📖 {{title}}
 
-## 📄 本地 PDF 連結
-- [[請替換為你的論文檔案名稱.pdf]] <!-- 建議將下載好的 PDF 放入 research-vault/pdfs/ 資料夾即可在此點選並行閱讀 -->
+## 📄 本地文獻存檔
+- [PDF 原文](<../../raw-papers/YYYY/請替換為論文檔案名稱.pdf>)
+- [Markdown 原文](<../../raw-papers/YYYY/請替換為論文檔案名稱 (Raw).md>)
 
 ## 📝 論文摘要 (Abstract)
 > [!NOTE]
