@@ -90,13 +90,19 @@ categories:                                             # 流派歸類 (雙引�
 
 ---
 
-## 📄 本地 PDF 管理方案 (Option C)
+## 📄 學術論文 PDF 隨需拉取與管理方案
 
-為了保持 Git 倉庫輕量並避免版權爭議，本專案實施 **PDF 本地化管理**：
+為了保持 Git 倉庫極速輕量（避免倉庫體積被二進制檔案塞爆），本專案採用**「文字筆記與圖表開箱即用 + 原始論文 PDF 隨需拉取」**的分離架構：
 
-1. **存放路徑**：請將下載的 PDF 丟入 `research-vault/pdfs/` 資料夾中。
-2. **Git 忽略**：`.gitignore` 已經被配置為忽略 `research-vault/pdfs/`，您的 PDF 檔案不會被上傳至 GitHub。
-3. **Obsidian 連結**：在論文 Markdown 內文的第一板塊中，使用 `[[your-file.pdf]]` 建立雙向連結，便可在 Obsidian 中進行雙螢幕並排閱讀與標註。
+1. **開箱即用**：直接 `git clone` 即可使用 Obsidian 開啟 `research-vault/`，瀏覽 38 個流派圖譜、座標矩陣與 182 篇筆記（含高解析結構圖與表格）。
+2. **一鍵拉取 PDF 原文（可選）**：若需對照原著深度閱讀，在專案根目錄執行：
+   ```bash
+   python scripts/paper_cli.py fetch-papers
+   ```
+   * 該指令會自動自 [GitHub Releases](https://github.com/Youchenjiang/code-security-research/releases) 下載最新版的 `raw-papers-archive.zip`（179 篇標準化 PDF）。
+   * 自動解壓至 `raw-papers/` 年份目錄，並校驗全庫筆記鏈結。
+   * 完成後，全庫 182 篇筆記內的 `[PDF 原文]` 超連結將**瞬間全部生效點亮**，支援 Obsidian 雙螢幕對照閱讀。
+3. **Git 忽略保護**：專案 [`.gitignore`](.gitignore) 已全面忽略 `*.pdf`，本地下載或新增的 PDF 不會被提交回 Git 歷史中。
 
 ---
 

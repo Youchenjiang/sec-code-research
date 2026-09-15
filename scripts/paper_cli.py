@@ -1162,7 +1162,137 @@ def cmd_eval(args) -> int:
 
 
 # ==============================================================================
-# 10. 主程式進入點 (CLI DISPATCHER)
+# 10. 論文資源拉取模組 (FETCH PAPERS FROM GITHUB RELEASE)
+# ==============================================================================
+
+def cmd_fetch_papers(args) -> int:
+    """從 GitHub Release 下載全量論文 PDF 壓縮包並解壓至 raw-papers 目錄"""
+    import subprocess
+    import urllib.request
+    import json
+    import zipfile
+
+    tag = getattr(args, "tag", "v1.0.0-papers")
+    repo = getattr(args, "repo", "Youchenjiang/code-security-research")
+    raw_dir = getattr(args, "raw_dir", DEFAULT_RAW_DIR)
+    force = getattr(args, "force", False)
+    asset_name = getattr(args, "asset", "raw-papers-archive.zip")
+
+    print("\n=======================================================")
+    print(f"📦 開始拉取學術論文 PDF 資源包 (Release: {tag})")
+    print("=======================================================\n")
+    print(f"目標倉庫: {repo}")
+    print(f"目標版本: {tag}")
+    print(f"解壓目錄: {raw_dir}")
+
+    temp_zip = os.path.join(REPO_ROOT, "temp_download_papers.zip")
+    download_success = False
+
+    # 1. 優先嘗試使用 gh CLI
+    try:
+        res = subprocess.run(["gh", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if res.returncode == 0:
+            print("🔍 檢測到本機 GitHub CLI (gh)，正在透過 gh release download 拉取資源...")
+            dl_cmd = ["gh", "release", "download", tag, "-R", repo, "-p", asset_name, "-O", temp_zip, "--clobber"]
+            dl_res = subprocess.run(dl_cmd)
+            if dl_res.returncode == 0 and os.path.exists(temp_zip):
+                download_success = True
+                print("✅ 透過 gh CLI 下載完成！")
+    except Exception as e:
+        print(f"⚠️ 呼叫 gh CLI 時遭遇異常: {e}，將切換至 Python 原生 HTTP 串流下載。")
+
+    # 2. 若 gh 不可用，使用 Python 原生 urllib 連接 GitHub Release API
+    if not download_success:
+        print("🌐 正在連接 GitHub Release API 獲取下載鏈結...")
+        api_url = f"https://api.github.com/repos/{repo}/releases/tags/{tag}"
+        req = urllib.request.Request(api_url, headers={"User-Agent": "Code-Security-Research-PaperCLI"})
+        try:
+            with urllib.request.urlopen(req) as resp:
+                rel_data = json.loads(resp.read().decode("utf-8"))
+            download_url = None
+            for asset in rel_data.get("assets", []):
+                if asset.get("name") == asset_name:
+                    download_url = asset.get("browser_download_url")
+                    break
+
+            if not download_url:
+                print(f"❌ 在 Release {tag} 中找不到名為 {asset_name} 的資源包！")
+                return 1
+
+            print(f"⬇️ 正在自 GitHub 下載: {download_url}")
+            def _progress(count, block_size, total_size):
+                if total_size > 0:
+                    percent = min(100.0, count * block_size * 100 / total_size)
+                    mb = count * block_size / (1024 * 1024)
+                    total_mb = total_size / (1024 * 1024)
+                    sys.stdout.write(f"\r   下載進度: {percent:.1f}% ({mb:.1f} MB / {total_mb:.1f} MB)")
+                    sys.stdout.flush()
+
+            urllib.request.urlretrieve(download_url, temp_zip, reporthook=_progress)
+            print("\n✅ HTTP 下載完成！")
+            download_success = True
+        except Exception as e:
+            print(f"\n❌ 下載失敗: {e}")
+            if os.path.exists(temp_zip):
+                try:
+                    os.remove(temp_zip)
+                except OSError:
+                    pass
+            return 1
+
+    # 3. 解壓縮至 raw-papers/
+    print(f"\n📂 正在解壓縮至 {raw_dir}...")
+    extracted_count = 0
+    skipped_count = 0
+    try:
+        with zipfile.ZipFile(temp_zip, 'r') as zf:
+            for item in zf.namelist():
+                target_path = os.path.join(raw_dir, item)
+                if not force and os.path.exists(target_path):
+                    skipped_count += 1
+                    continue
+                zf.extract(item, raw_dir)
+                extracted_count += 1
+        print(f"✅ 解壓縮完成！新增/更新: {extracted_count} 個檔案，已跳過 (已存在): {skipped_count} 個檔案。")
+    except Exception as e:
+        print(f"❌ 解壓縮失敗: {e}")
+        return 1
+    finally:
+        # 清理暫存 zip
+        if os.path.exists(temp_zip) and getattr(args, "clean", True):
+            try:
+                os.remove(temp_zip)
+                print("🧹 已自動清理暫存下載包。")
+            except OSError:
+                pass
+
+    # 4. 自動對齊驗證 (計算 Vault 筆記對齊率)
+    print("\n🔍 正在驗證全庫筆記與實體 PDF 對齊狀況...")
+    vault_dir = getattr(args, "vault_dir", DEFAULT_VAULT_DIR)
+    notes_map = _collect_vault_notes(vault_dir)
+    total_paper_notes = 0
+    matched_pdfs = 0
+
+    for note_path in notes_map.values():
+        if "templates" in note_path.lower() or "template" in os.path.basename(note_path).lower():
+            continue
+        with open(win_path(note_path), 'r', encoding='utf-8', errors='ignore') as f:
+            content = f.read()
+        pdf_match = re.search(r'\[PDF 原文\]\(<([^>]+)>\)', content)
+        if pdf_match:
+            total_paper_notes += 1
+            pdf_rel = pdf_match.group(1).replace('/', os.sep)
+            target_pdf = os.path.normpath(os.path.join(os.path.dirname(note_path), pdf_rel))
+            if os.path.exists(win_path(target_pdf)):
+                matched_pdfs += 1
+
+    ratio = (matched_pdfs / total_paper_notes * 100) if total_paper_notes > 0 else 0
+    print(f"\n🎉 驗收結果：{matched_pdfs}/{total_paper_notes} ({ratio:.1f}%) 篇論文筆記之 [PDF 原文] 實體檔案與雙向鏈結已完全點亮就緒！")
+    return 0
+
+
+# ==============================================================================
+# 11. 主程式進入點 (CLI DISPATCHER)
 # ==============================================================================
 
 def main():
@@ -1181,10 +1311,21 @@ def main():
   python scripts/paper_cli.py dedup --auto-prune     # 自動修剪跨目錄重複筆記
   python scripts/paper_cli.py clean-watermarks       # 清除 IEEE Xplore 等浮水印干擾字串
   python scripts/paper_cli.py generate-notes         # 自動為未建檔之 raw-papers 生成卡片草稿
+  python scripts/paper_cli.py fetch-papers           # 自 GitHub Releases 下載論文 PDF 原檔包並驗收鏈結
 """
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True, help="可調用的子命令")
+
+    p_fetch = subparsers.add_parser("fetch-papers", help="自 GitHub Releases 下載 179 篇學術論文 PDF 原檔包並自動校驗雙向鏈結")
+    p_fetch.add_argument("--tag", default="v1.0.0-papers", help="GitHub Release 版本標籤 (預設: v1.0.0-papers)")
+    p_fetch.add_argument("--repo", default="Youchenjiang/code-security-research", help="GitHub 倉庫名稱 (格式: owner/repo)")
+    p_fetch.add_argument("--asset", default="raw-papers-archive.zip", help="Release 附件資源檔名")
+    p_fetch.add_argument("--raw-dir", default=DEFAULT_RAW_DIR, help=HELP_RAW_DIR)
+    p_fetch.add_argument("--vault-dir", default=DEFAULT_VAULT_DIR, help=HELP_VAULT_DIR)
+    p_fetch.add_argument("--force", action="store_true", help="強制覆蓋本地已存在的 PDF 檔案")
+    p_fetch.add_argument("--no-clean", dest="clean", action="store_false", help="保留下載之暫存 zip 壓縮檔")
+    p_fetch.set_defaults(func=cmd_fetch_papers)
 
     p_parse = subparsers.add_parser("parse", help="使用純 Python 幾何版面解析器將 PDF 轉為高品質 Markdown")
     p_parse.add_argument("pdf_path", nargs="?", default=None, help="欲解析的 PDF 檔案路徑")

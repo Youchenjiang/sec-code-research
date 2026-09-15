@@ -62,6 +62,9 @@ python scripts/paper_cli.py clean-watermarks
 
 # 9. 自動補齊缺失之卡片筆記草稿 (為 raw-papers 中尚未在 notes/ 建檔之文獻建立標準卡片)
 python scripts/paper_cli.py generate-notes
+
+# 10. 自 GitHub Releases 一鍵拉取全量論文 PDF 原檔包並驗收雙向鏈結
+python scripts/paper_cli.py fetch-papers
 ```
 
 ---

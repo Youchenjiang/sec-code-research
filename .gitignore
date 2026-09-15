@@ -229,3 +229,6 @@ research-vault/pdfs/
 # Local penetration test case studies & temporary scratch
 case-studies/
 scratch/
+
+# Archives & Temporary Download Packages
+*.zip
