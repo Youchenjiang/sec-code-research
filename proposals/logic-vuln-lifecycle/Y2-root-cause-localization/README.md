@@ -115,6 +115,8 @@ $$\text{Behavioral Violation} \longrightarrow \text{Implementation Mechanism} \l
     1. [ANOTA_論文核心技術解讀.md](./ANOTA_論文核心技術解讀.md)：客觀解構 Sanitizer 框架、4 大異常行為註解體系、Policy Monitor 機制與 43 已知/22 零日漏洞成果。
     2. [ANOTA_論文價值與參考借鑑.md](./ANOTA_論文價值與參考借鑑.md)：提煉對 Y1 測試 Oracle、Y2 斷言探針語法標準、Y3 補丁不變量驗證之參考資產。
     3. [ANOTA_對標局限與Y2核心創新點.md](./ANOTA_對標局限與Y2核心創新點.md)：鎖定 ANOTA 依賴人工標註的痛點，以 Y2「軌跡導向自動化反推、全域路徑風險矩陣、失效模式雙軌診斷與雙向探針驗證」完美攻克其留下的學術空白。
+* 📚 **全景擴展文獻檢索**：
+  * [Y2_擴展文獻全景檢索指南.md](./Y2_擴展文獻全景檢索指南.md)：涵蓋三大維度（技術管線、推理引擎、領域實證）與十大專題矩陣（A.1~A.5, B.1~B.3, C.1~C.2），收錄經 ICSE/USENIX/CCS/NDSS 嚴格核實之 15+ 篇標竿論文與檢索詞庫。
 
 ### 3.2 不可宣稱的無效 Novelty（已被做過）
 * ❌ 不能宣稱「沒有人研究 Workflow」。
