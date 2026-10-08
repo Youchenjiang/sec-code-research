@@ -56,6 +56,44 @@ $$\text{Behavioral Violation} \longrightarrow \text{Implementation Mechanism} \l
 
 ---
 
+### 2.4 目標弱點分類界定（9 個核心 CWE 與 4 大分類）
+依據計畫綱要，本研究以 **CWE-840 (Business Logic Errors)** 為核心，依攻擊者破壞的物件將業務邏輯弱點劃分為四大類別：
+
+| 弱點類別 | 目標 CWE | 弱點定義與破壞行為 | 對應 OWASP API 2023 |
+| :--- | :--- | :--- | :--- |
+| **流程型 (Workflow)** | **CWE-841**<br>**CWE-837**<br>**CWE-799** | • 未正確執行行為流程限制（跳步、亂序）<br>• 未正確限制單次且唯一的操作（重複送出）<br>• 未適當限制操作互動頻率（高頻濫用） | API6 (Unrestricted Access to Sensitive Business Flows)<br>API4 (Unrestricted Resource Consumption) |
+| **授權型 (Authorization)** | **CWE-639**<br>**CWE-862**<br>**CWE-863** | • 透過使用者可控識別碼繞過授權 (BOLA/IDOR)<br>• 缺少授權檢查<br>• 授權檢查不正確（碰到不該碰的資源） | API1 (Broken Object Level Authorization)<br>API5 (Broken Function Level Authorization) |
+| **參數／商業規則型 (Parameter / Business Rules)** | **CWE-1284**<br>**CWE-472** | • 未正確驗證輸入數量是否符合業務規則<br>• 外部可控制假定不可變的 Web 參數（竄改價格/金額） | API3 (Broken Object Property Level Authorization) |
+| **前後端信任 (Client-Server Trust)** | **CWE-602** | • 安全檢查放錯位置（僅在客戶端/App 檢查，後端放行） | 跨類別架構缺陷 |
+
+---
+
+### 2.5 不變量形式化界定與失效雙型態（Invariants & Failure Modes）
+業務邏輯漏洞本質上發生在 **「功能不變量」與「安全不變量」之間的落差**：
+
+```
+【功能不變量 Functional Invariant】（必須成功）
+合法 Actor · 合法 Evidence · 合法路徑  ==>  Action 必須成功、Business State 正確轉移
+（現況：App/前端的正常業務流程自然滿足）
+
+【安全不變量 Security Invariant】（不得生效）
+任何 Actor · 任何輸入 · 缺少 Evidence  ==>  Action 不得生效
+（現況：必須由 Server 後端強制執行；App 端檢查可被輕易繞過）
+```
+
+後端 **強制判斷式（Enforcement Predicate）** 存在兩種經典失效型態：
+1. **缺失型（Missing Predicate）**：該有的檢查根本不存在（如 Nextcloud CVE-2026-45810 未檢查留言屬於哪個檔案）。
+2. **未採用型（Ineffective Check）**：檢查邏輯有執行，但判定結果未被採用，或存入無人讀取的欄位（如 J2Store CVE-2026-77999 查證結果存進未讀取變數）。
+
+---
+
+### 2.6 Y2 核心輸出物規範：漏洞根因 ＋ 函式路徑風險矩陣
+第二年的白箱分析並非只輸出單一行號，而是輸出：
+1. **漏洞根因（Root Cause Predicate）**：精確描述缺失的 Invariant 條件式與應強制執行的層級（Service / Domain）。
+2. **函式路徑風險矩陣（Function Path Risk Matrix）**：利用 Call Graph / 拓撲圖結構，分析並標記系統中所有**共享同一業務 Invariant 的其他進入點與路徑（Shared Sinks / Entrypoints）**，直接為 Y3 的 Multi-Hunk 修補提供修補位置與優先順序。
+
+---
+
 ## 3. 文獻現況與 Novelty（新意）邊界分析
 
 ### 3.1 現有文獻支撐基礎
@@ -106,6 +144,25 @@ $$\text{Behavioral Violation} \longrightarrow \text{Implementation Mechanism} \l
   * 診斷輸出的候選修復 Method/Function Top-1 或 Top-3 是否涵蓋官方 Commit 修改的函數。
 * **Missing Invariant Match（語意與約束對齊）**：
   * 比對官方 Commit 補上的防禦條件式（如 `if (!order.isApproved())`）與系統診斷出的 Invariant 邏輯是否等價（利用 AST 或 Reasoning-level Match）。只要因果解釋與官方 Patch Diff 對齊，即客觀判定為 True Positive (TP)。
+
+#### 5.1.1 本計畫雙核心真實案例研究（Benchmark Anchor Cases）
+
+##### 案例一：J2Store 假冒付款通知（CVE-2026-77999，CVSS 8.7 High）
+* **弱點類型**：CWE-602（前後端信任）＋ CWE-472（參數型）
+* **官方修補基準**：Joomla 電商擴充 `payment_paypal.php`，官方 Commit `58dd786`
+* **根因機制與 Multi-Hunk 分佈**：
+  1. `_validateIPN()`（L951, 962–967）：CURL 啟用 SSL 憑證驗證，且**只接受 VERIFIED**（拒絕 UNVERIFIED 亦被當成通過）。
+  2. `_process()`（L995–1001）：將驗證錯誤 `$errorV` 正式賦值給 `$error` 往下游傳遞（**修復 Ineffective Check**：原代碼將驗證結果存入無人讀取的陣列，導致失敗結果被忽略）。
+  3. `_processSale()`（L1170–1171）：強制檢查 `$mc_gross` 欄位必須存在且大於 0（防禦不帶金額欄位時跳過金額比對）。
+* **診斷價值**：若診斷只指出單一 hunk（如只修查證或只修金額），攻擊者依然能繞過。系統必須輸出涵蓋上述檢查鏈的專案層級約束。
+
+##### 案例二：Nextcloud 留言跨檔案越權存取（CVE-2026-45810，CVSS 6.8 Medium）
+* **弱點類型**：CWE-639（授權型 BOLA / IDOR）
+* **官方修補基準**：Nextcloud Server `apps/dav/lib/Comments/EntityCollection.php`，官方 PR `#56982`
+* **根因機制與同源入口分佈**：
+  1. `getChild()`（L77–80，讀取入口 N1）：增加歸屬檢查 `if ($comment->getObjectId() !== $this->id) throw new NotFound();`。
+  2. `childExists()`（L131–134，存在檢查同源入口 N2）：同步增加同一條歸屬檢查 `$comment->getObjectId() === $this->id`。
+* **診斷價值**：若只在 `getChild()` 補上防禦，攻擊者依然可透過 `childExists()` 探測任意留言 ID 是否存在。**診斷引擎必須識別此兩個進入點共享同一個安全不變量（Shared Invariant）**，指導修復者同步修復。
 
 ---
 

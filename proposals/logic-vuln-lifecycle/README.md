@@ -22,6 +22,7 @@ flowchart LR
 
 ## 📂 本計畫目錄結構與核心文件
 
+* **003-三年計畫提出綱要-20261008.pdf**：2026/10/08 國科會三年計畫提出綱要簡報（S組 42 頁完整投影片，包含 DFD、9 大 CWE 威脅模型、CVE-2026-77999 與 CVE-2026-45810 案例與跨年度分工）。
 * **[三年度計畫整合與架構設計.md](./三年度計畫整合與架構設計.md)**：三年期計畫總體架構、分工矩陣（祐廷、侑宸、羿君）與各階段推進藍圖。
 * **[Y1-pentest-traces-context/](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y1-pentest-traces-context/)**：第一年滲透成果之對接規範與輸入格式定義。
   * 包含方法論依據：[移動端後端滲透測試方法論.md](./Y1-pentest-traces-context/移動端後端滲透測試方法論.md)
