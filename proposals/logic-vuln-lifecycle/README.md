@@ -20,8 +20,10 @@ flowchart LR
 
 ---
 
-## 📂 本計畫目錄結構
+## 📂 本計畫目錄結構與核心文件
 
+* **[三年度計畫整合與架構設計.md](./三年度計畫整合與架構設計.md)**：三年期計畫總體架構、分工矩陣（祐廷、侑宸、羿君）與各階段推進藍圖。
 * **[Y1-pentest-traces-context/](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y1-pentest-traces-context/)**：第一年滲透成果之對接規範與輸入格式定義。
+  * 包含方法論依據：[移動端後端滲透測試方法論.md](./Y1-pentest-traces-context/移動端後端滲透測試方法論.md)
 * **[Y2-root-cause-localization/](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/)**：**第二年研究核心工作區**（包含問題定義、三維評估設計與文獻對照）。
 * **[Y3-repair-handover-specs/](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y3-repair-handover-specs/)**：交接給第三年自動修復模組的診斷接口格式與評估協議。
