@@ -104,6 +104,9 @@ $$\text{Behavioral Violation} \longrightarrow \text{Implementation Mechanism} \l
 * **INTENTFIX (ICSE 2026)**：
   * *論文全名*：《INTENTFIX: Automated Logic Vulnerability Repair via LLM-Driven Intent Modeling》
   * *核心方法*：將邏輯漏洞定義為「開發者意圖（Developer Intent）」與「實作（Implementation）」之間的落差。流程為：形式化意圖 $\to$ 比對差距 $\to$ 實施修復。
+  * 📑 **專題對標分析**：
+    * [INTENTFIX_論文價值與參考借鑑.md](./INTENTFIX_論文價值與參考借鑑.md)：5-Tuple 意圖模型、1,107 筆 CVE Benchmark 資料庫與消融實驗規範。
+    * [INTENTFIX_對標局限與Y2核心創新點.md](./INTENTFIX_對標局限與Y2核心創新點.md)：剖析 INTENTFIX 純靜態與單檔案局限，確立場景中 Y2 獨立的「路徑還原、失效判定與拓撲風險矩陣」創新點。
 
 ### 3.2 不可宣稱的無效 Novelty（已被做過）
 * ❌ 不能宣稱「沒有人研究 Workflow」。
