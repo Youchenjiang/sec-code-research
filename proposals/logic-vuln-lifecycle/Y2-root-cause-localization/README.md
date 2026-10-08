@@ -102,7 +102,7 @@ $$\text{Behavioral Violation} \longrightarrow \text{Implementation Mechanism} \l
 * **DetLogic**：將預期行為建立為狀態機（FSM），進而導出約束規則。
 * **LoopRepair**：利用 Proof-of-Vulnerability (PoV) 與執行軌跡（Execution Trace）改善自動修復，並獲得頂會最佳論文獎。
 * **INTENTFIX (ICSE 2026)**：
-  * *論文全名*：《Fixing Logic Vulnerabilities via LLM-Driven Specification Mining and Repair》
+  * *論文全名*：《INTENTFIX: Automated Logic Vulnerability Repair via LLM-Driven Intent Modeling》
   * *核心方法*：將邏輯漏洞定義為「開發者意圖（Developer Intent）」與「實作（Implementation）」之間的落差。流程為：形式化意圖 $\to$ 比對差距 $\to$ 實施修復。
   * 📑 **專題對標分析三部曲**：
     1. [INTENTFIX_論文核心技術解讀.md](./INTENTFIX_論文核心技術解讀.md)：客觀解構論文背景、$(D,A,R,P,SC)$ 意圖模型、三階段演算法與 1,107 筆 CVE 評測成效。

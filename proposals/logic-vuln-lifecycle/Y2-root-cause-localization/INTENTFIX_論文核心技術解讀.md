@@ -1,10 +1,11 @@
 # INTENTFIX 論文核心技術解讀與架構剖析
 
-> **論文原題**：*Fixing Logic Vulnerabilities via LLM-Driven Specification Mining and Repair*  
-> **發表會議**：ACM/IEEE International Conference on Software Engineering (ICSE 2026)  
+> **論文原題**：*INTENTFIX: Automated Logic Vulnerability Repair via LLM-Driven Intent Modeling*  
+> **發表會議**：ACM/IEEE International Conference on Software Engineering (**ICSE 2026**)  
 > **論文出處**：DOI: `10.1145/3744916.3773260` | 本地存檔：`code-security-research/3744916.3773260.pdf`  
-> **作者團隊**：Yikun Li (浙江大學 / 新加坡國立大學), Zhenhao Li (南洋理工大學), Jie Zhang (浙江大學), Zhe Xie (南洋理工大學), David Lo (新加坡管理大學), Yang Liu (南洋理工大學), Jianhai Chen (浙江大學)  
-> **官方開源資產**：[GitHub - intentfix-icse2026/intentfix](https://github.com/intentfix-icse2026/intentfix)（釋出 1,107 筆真實邏輯漏洞 CVE 基準庫）
+> **作者團隊**：Jinseok Heo (成均館大學 SKKU), Dongwook Choi (SKKU), Jinyoung Kim (SKKU), Misoo Kim (全南大學 CNU), Eunseok Lee (SKKU)  
+> **研究機構**：Sungkyunkwan University (韓國成均館大學), Chonnam National University (韓國全南大學)  
+> **評測數據集**：1,107 筆真實世界 CVE 邏輯漏洞修復數據集（涵蓋 5 大漏洞類型、19 種程式語言）
 
 ---
 
@@ -16,13 +17,13 @@ INTENTFIX 發表於軟體工程頂級會議 ICSE 2026，是首個系統性結合
 
 ```mermaid
 flowchart LR
-    A["脆弱程式原始碼<br/>(Target Code)"] --> B["階段一：意圖挖掘<br/>(Intent Mining)"]
-    B --> C["階段二：漏洞審計<br/>(Vuln Auditing)"]
-    C --> D["階段三：意圖引導修復<br/>(Intent-Guided Repair)"]
-    D --> E["安全補丁<br/>(Validated Patch)"]
+    A["目標程式原始碼<br/>(Target Code)"] --> B["階段一：LLM 意圖建模<br/>(Intent Modeling)"]
+    B --> C["階段二：語意落差檢測<br/>(Semantic Gap Detection)"]
+    C --> D["階段三：補丁合成與精煉<br/>(Patch Synthesis & Refinement)"]
+    D --> E["修復補丁<br/>(Refined Patch)"]
     
-    B -.->|"5-tuple Specification<br/>(D, A, R, P, SC)"| C
-    C -.->|"Semantic Gap &<br/>Conceptual Attack Vector"| D
+    B -.->|"5-tuple Intent Model<br/>(D, A, R, P, SC)"| C
+    C -.->|"Semantic Gaps &<br/>Attack Vectors"| D
 ```
 
 ---
