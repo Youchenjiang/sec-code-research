@@ -108,6 +108,13 @@ $$\text{Behavioral Violation} \longrightarrow \text{Implementation Mechanism} \l
     1. [INTENTFIX_論文核心技術解讀.md](./INTENTFIX_論文核心技術解讀.md)：客觀解構論文背景、$(D,A,R,P,SC)$ 意圖模型、三階段演算法與 1,107 筆 CVE 評測成效。
     2. [INTENTFIX_論文價值與參考借鑑.md](./INTENTFIX_論文價值與參考借鑑.md)：提煉可借鑑之資料集資產、消融實驗設計與意圖形式化規範。
     3. [INTENTFIX_對標局限與Y2核心創新點.md](./INTENTFIX_對標局限與Y2核心創新點.md)：剖析 INTENTFIX 純靜態與單檔案局限，確立場景中 Y2 獨立的「路徑還原、失效判定、拓撲風險矩陣與斷言探針」核心創新點。
+* **ANOTA (NDSS 2026)**：
+  * *論文全名*：《Anota: Identifying Business Logic Vulnerabilities via Annotation-Based Sanitization》
+  * *核心方法*：機制與政策分離之動態 Sanitizer。由人類專家在原始碼撰寫輕量註解政策（Table II），執行期監控器攔截違規並觸發 Crash 引導 Fuzzer。
+  * 📑 **專題對標分析三部曲**：
+    1. [ANOTA_論文核心技術解讀.md](./ANOTA_論文核心技術解讀.md)：客觀解構 Sanitizer 框架、4 大異常行為註解體系、Policy Monitor 機制與 43 已知/22 零日漏洞成果。
+    2. [ANOTA_論文價值與參考借鑑.md](./ANOTA_論文價值與參考借鑑.md)：提煉對 Y1 測試 Oracle、Y2 斷言探針語法標準、Y3 補丁不變量驗證之參考資產。
+    3. [ANOTA_對標局限與Y2核心創新點.md](./ANOTA_對標局限與Y2核心創新點.md)：鎖定 ANOTA 依賴人工標註的痛點，以 Y2「軌跡導向自動化反推、全域路徑風險矩陣、失效模式雙軌診斷與雙向探針驗證」完美攻克其留下的學術空白。
 
 ### 3.2 不可宣稱的無效 Novelty（已被做過）
 * ❌ 不能宣稱「沒有人研究 Workflow」。
