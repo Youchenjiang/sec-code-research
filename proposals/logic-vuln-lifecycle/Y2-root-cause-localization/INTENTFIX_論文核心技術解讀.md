@@ -78,12 +78,16 @@ $$\text{Intent} = (D, A, R, P, SC)$$
 ## 📊 實驗設計與評測結果 (Evaluation & Results)
 
 ### 1. 基準數據集 (Benchmark Dataset)
-* **規模**：涵蓋 2014 至 2024 年間、來自 879 個開源儲存庫的 **1,107 個真實 CVE 邏輯漏洞**。
-* **漏洞類別涵蓋**：
-  * **CWE-639 / CWE-284**：物件層級授權失效（BOLA / IDOR）——佔比最大（約 241 筆專門案例）。
-  * **CWE-862 / CWE-863**：缺少授權 / 不正確授權驗證。
-  * **CWE-287 / CWE-306**：認證失效與重要功能未經身分認證。
-  * **CWE-840 / CWE-20**：業務邏輯與流程驗證缺陷。
+* **規模**：**1,107 筆**漏洞–修補檔案對（vulnerability-patch pairs），涵蓋 19 種程式語言（§4.2.2、§5）。
+* **篩選範圍**：僅收 CWE-840（Business Logic Errors）及其子類 CWE-283、639、640、708、770、826、837、841（§4.2.1 Stage 2）。
+* **單位**：修補前後的**單一原始碼檔案**，非完整專案（§4.2.1 Stage 4；Definition 3.3 明言分析範圍為 single source file）。
+* **類別分布**（Table 1、§4.2.2、§5.1）：
+  * **CWE-770**（Allocation of Resources Without Limits）：**72.6%**，佔比最大，論文自承資料偏斜。
+  * **CWE-639**（Authorization Bypass / BOLA / IDOR）：**241 筆（21.8%）**。
+  * **CWE-841**（Improper Behavioral Workflow）：n=10，論文提醒樣本過小。
+* **語言**：Table 1 列出的主要語言為 PHP 20.7%、Go 14.5%、Python 13.7%、Scala 9.6%、C# 9.1%、Ruby 7.7%；**未列出 Java 比例**。
+
+> 註（2026-10-12 對照原文 `3744916.3773260.pdf` 更正）：舊版寫「CWE-639 / CWE-284 佔比最大」「涵蓋 CWE-862/863/287/306/20」「2014–2024、879 個儲存庫」，原文均查無依據，已刪除。
 
 ### 2. 關鍵實驗問題 (Research Questions) 與表現
 

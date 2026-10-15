@@ -21,7 +21,7 @@ flowchart TD
         direction TB
         A1["動態 Sanitizer Oracle 範式<br/>(Policy Monitor $\to$ Crash)"]
         A2["4 大執行期違規語法原語<br/>(Table II Annotation System)"]
-        A3["真實 Web/API 邏輯漏洞庫<br/>(43 已知 CVE + 22 零日漏洞)"]
+        A3["Python 漏洞案例集<br/>(Table III 47 筆已知、重現 43 + Table IV 22 筆新漏洞)"]
     end
 
     A1 ==>|"解決黑箱封包的 Oracle 盲區"| Y1["第一年 (Y1 祐廷)<br/>黑箱 API 測試與 PoC 生成"]
@@ -38,8 +38,9 @@ flowchart TD
    * **痛點**：Y1 在發送變異 HTTP 封包時，伺服器若未回傳 500 內部錯誤（通常回傳 200 OK 且附帶非授權資料），黑箱端極難判定是否成功越權。
    * **借鑑**：Y1 在建構灰箱或沙箱測試環境時，可參考 ANOTA 的 **Runtime Monitor 機制**，將後端敏感 API 設置為監聽點；一旦收到 Y1 的測試封包產生違規資料流或未授權物件存取，後端立即拋出信號中斷，使 Y1 的探索模組能瞬間捕捉到攻擊成功的軌跡（PoC Trace）。
 
-2. **滲透測試 Payloads 的變異方向引導**：
-   * ANOTA 指出 CWE-862（缺授權）與 CWE-863（授權不當）最容易在多角色、多資源切換時觸發。Y1 可借鑑其思路，重點針對「不同憑證主體存取同一 Object ID」進行封包變異設計。
+2. **測試身分與 mutator 設計**：
+   * ANOTA 在測試存取控制漏洞時，只給 fuzzer 低權限身分（未註冊訪客或一般使用者），其他情況才給高權限帳號；Web mutator 聚焦變異 cookie、query 參數、header 與 URL，並保留登入 session cookie 以測試登入後端點（Section V）。Y1 可參考此設定。
+   * 注意：ANOTA 並未針對「不同憑證主體存取同一 Object ID」的 BOLA 變異策略提出主張；這是本計畫自己的設計，不應歸功於 ANOTA。
 
 ---
 
@@ -47,14 +48,14 @@ flowchart TD
 
 1. **借鑑成熟的「斷言探針形式化語法」（Assertion Probe Primitives）**：
    * **痛點**：Y2 在推導出缺失的不變量（Missing Invariant）後，需要將其轉化為可執行的探針（Assertion Probe）注入原始碼進行因果驗證，但若自創語法容易遭審查委員質疑通用性。
-   * **借鑑**：Y2 可**直接繼承 ANOTA 的 Table II 語法標準**作為因果探針的形式化表達：
-     * 針對水平/垂直越權：採用 `EXECUTION.BLOCK(condition)` 形式。
-     * 針對資料外洩：採用 `WATCH.ALLOW(object, 'r')` 形式。
-     * 針對敏感資料流：採用 `TAINT(var, sink)` 形式。
-   * 在論文與計畫書中可直接主張：*「本研究之診斷探針採用 NDSS 2026 ANOTA 驗證過之執行期違規語法原語，具備高度通用性與跨語言遷移能力。」*
+   * **借鑑**：Y2 可參考 ANOTA 的 Table II 語法作為因果探針的形式化表達：
+     * 針對越權：採用 `EXECUTION.BLOCK(condition)` 形式（條件為真即違規，等同反轉的 assert）。論文範例為角色層級檢查（`user.type != 'admin'`）；BOLA 需要的物件擁有權謂詞必須自行定義。
+     * 針對特權物件的非預期讀寫：採用 `WATCH.ALLOW/BLOCK(object, 'r'|'w'|'x')` 形式（WATCH 管的是程式對變數的存取權限，不是資料外洩）。
+     * 針對資料外洩／敏感資料流：採用 `TAINT(var, sanitization=[...], Sink=[...])` 形式。
+   * **措辭須保守**：ANOTA 原型**僅實作 Python**；JS/PHP 只有示意 Listing 與 VI.D 的移植構想，**未經驗證**。不可宣稱「ANOTA 驗證過跨語言遷移能力」。也要注意 Y2 標的以 Java/Spring 為主，Table II 語法的 Java 對應需自行定義。
 
-2. **消融實驗與基準度量衡設計**：
-   * ANOTA 在評估檢出能力時，以 CWE Top 40 中的業務邏輯漏洞清單作為橫向對比基準。Y2 在評估 RQ1（根因覆蓋率）時，可直接引用 ANOTA 的分類法，驗證系統在 9 大 CWE 類別上的定位能力。
+2. **評估分類法參考**：
+   * ANOTA 用 CWE Top 40 做的是**涵蓋範圍分析**（Table I：哪些 CWE 屬業務邏輯、ANOTA 支援哪些），並非作為評估實驗的對比基準；實際評估以 Table III/IV 的個別漏洞與 Table VII 的 35 個靶場漏洞計分。Y2 的 RQ1 若要按 CWE 類別報告，可引用 Table I 的業務邏輯分類作為依據。
 
 ---
 
@@ -68,6 +69,12 @@ flowchart TD
 
 ### 四、評測基準數據庫共享資產 (Benchmark Assets)
 
-ANOTA 在 Home Assistant、PyGoat、OWASP Flask 等主流架構上復現了 43 個已知漏洞，並挖掘了 22 個全新零日漏洞（獲得 17 個 CVE）：
-* **真實架構貼近性**：包含 Home Assistant（具備複雜的智慧家庭權限模型、多層 Controller/Service 呼叫鏈），與本計畫關注的現代 Web / 行動端微服務後端架構高度相符。
-* **可重現實驗環境**：該論文公開的實驗標的均具備完整的 Docker 容器化重現環境，可直接納入本三年計畫的實證數據庫（Benchmark Suite）中。
+ANOTA 的評估資料分為三組，彼此獨立：
+* **Table III（已知漏洞重現）**：47 個 Snyk 收錄的 Python 套件漏洞，重現 43 個。以 System Call 類（SSRF、path traversal、上傳、反序列化）為主，授權類（Object Access / Code Execution）僅約 8 筆。
+* **Table IV（0-day）**：22 個新漏洞（17 CVE）。Home Assistant Core 在此組，其發現為 CWE-532 log 洩漏（Data Flow），**與權限模型或 Controller/Service 呼叫鏈無關**。授權類僅 ihatemoney 1 筆（CWE-732）。
+* **Table VII（消融與 SOTA 比較）**：PyGoat、OWASP Vulnerable Flask App、DSVW、VAmPI 四個刻意留洞靶場中的 35 個漏洞。
+
+對本計畫的可用性評估：
+* **語言不符**：全部標的皆為 Python；Y2 以 Java/Spring 為主（MocGuard、IDORacle 路線），無法直接沿用，也無法直接拿 ANOTA 當 baseline 執行。
+* **漏洞類型不符**：BOLA / missing-owner-check 在 ANOTA 資料中幾乎沒有代表；若要借用，只有 Table III 的少數 OA/CE 案例（如 indico CWE-639、Apache-Airflow CWE-862、MobSF、mlflow、calibre-web）可作為跨語言對照。
+* **重現環境**：論文表示 Table III 每個應用都建了 Docker 容器，實作與評估腳本公開於 https://github.com/ANOTA-Sanitizer/ANOTA；各容器是否完整公開需實際檢查 repo 後確認。
