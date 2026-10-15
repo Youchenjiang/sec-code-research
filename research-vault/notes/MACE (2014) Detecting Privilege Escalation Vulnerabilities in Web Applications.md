@@ -5,7 +5,7 @@
 > - **作者陣容**：Maliheh Monshizadeh, Prasad Naldurg, V.N. Venkatakrishnan (University of Illinois at Chicago, IBM Research)
 > - **發表頂會**：ACM Conference on Computer and Communications Security (CCS 2014)
 > - **發表年份**：2014
-> - **DOI / 連結**：DOI: 10.1145/2660267.2660309
+> - **DOI / 連結**：DOI: 10.1145/2660267.2660337（2026-10-12 經 Crossref 更正；原寫 …2660309 為另一篇論文）
 > - **研究標籤**：`#PrivilegeEscalation` `#HorizontalPrivilegeEscalation` `#HPE` `#WebSecurity` `#ACM-CCS`
 
 ---
