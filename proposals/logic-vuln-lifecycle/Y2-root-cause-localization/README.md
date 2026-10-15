@@ -271,7 +271,7 @@ graph TD
 
 ## 7. 後續具體執行步驟
 
-1. **文獻盤點與收斂**：參閱 [Y2_文獻三大梯隊盤點與精準收斂.md](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/Y2_文獻三大梯隊盤點與精準收斂.md) 與 [Y2_擴展文獻全景檢索指南.md](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/Y2_擴展文獻全景檢索指南.md)，確立第一梯隊核心演算法工程邊界。
+1. **文獻盤點與收斂**：參閱 [Y2_文獻評估總表.md](./Y2_文獻評估總表.md) 與 [Y2_擴展文獻全景檢索指南.md](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/Y2_擴展文獻全景檢索指南.md)，依各文獻判定（核心參考／限定用途等）確立核心演算法工程邊界。
 2. **資料集準備**：從 CVEfixes / Vul4J 或專案既有漏洞案例庫中，篩選出 20–30 個具備明確修復 Commit 的業務邏輯／BOLA 漏洞。
 3. **診斷引擎實作**：聚焦由 PoC Trace + Workflow 推導出 Enforcement Diagnosis 的分析演算法。
 4. **實驗腳本編寫**：
