@@ -375,6 +375,21 @@ CATEGORIES = {
             "target_domain": ["通用 (General)"],
             "powered_by": ["傳統規則與啟發式 (Rule-based / Heuristics)", "大語言模型與智慧 Agent (LLM / Agent-based)"]
         },
+        {
+            "filename": "2B.5-自動化測試生成 (Automated Test Generation - ATG).md",
+            "title": "2B.5 自動化測試生成 (Automated Test Generation - ATG)",
+            "concept": "利用符號執行、演化搜尋或大語言模型，自動導出能夠覆蓋目標程式碼分支或觸發特定斷言違規的測試案例套件。",
+            "sub_genres": [
+                {"name": "演化搜尋測試生成 (EvoSuite)", "desc": "以基因演算法追蹤覆蓋率目標，自動生成與最小化單元測試套件。"},
+                {"name": "LLM 驅動單元測試生成", "desc": "利用 LLM 理解程式碼語意並自動生成高可讀性之測試案例。"}
+            ],
+            "keywords": ["automated test generation", "EvoSuite", "search-based software testing", "test suite generation", "LLM test generation"],
+            "tools": ["EvoSuite", "Randoop", "KLEE", "Aster"],
+            "methodology": ["動態分析 - 自動化測試生成 (Dynamic - ATG)"],
+            "testing_level": ["單元級 (Unit-level)", "系統級 (System-level)"],
+            "target_domain": ["通用 (General)"],
+            "powered_by": ["傳統規則與啟發式 (Rule-based / Heuristics)", "大語言模型與智慧 Agent (LLM / Agent-based)"]
+        },
                 {"name": "變異引導測試生成 (Mutation-guided Generation)", "desc": "以變異得分為引導指標，演化生成能殺死更多變異體的安全測試案例。"},
                 {"name": "等價變異體偵測 (Equivalent Mutant Detection)", "desc": "識別語意上與原程式等價、無法被任何測試殺死的變異體（這是變異測試的經典難題）。"},
             ],
