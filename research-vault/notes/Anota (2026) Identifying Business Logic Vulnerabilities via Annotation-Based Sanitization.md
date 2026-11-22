@@ -14,7 +14,7 @@ categories:
 # 📖 Anota: Identifying Business Logic Vulnerabilities via Annotation-Based Sanitization (NDSS 2026)
 
 ## 📄 文獻存檔與關聯專題
-- **PDF 原文**：[code-security-research/2026-f938-paper.pdf](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/2026-f938-paper.pdf)
+- **PDF 原文**：`2026-f938-paper.pdf`（僅本機副本，PDF 不進 repo；公開來源見檔頭 url 的 DOI）
 - **技術解讀專題**：[ANOTA_論文核心技術解讀.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/paper-notes/ANOTA_論文核心技術解讀.md)
 - **專案借鑑分析**：[ANOTA_論文價值與參考借鑑.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/paper-notes/ANOTA_論文價值與參考借鑑.md)
 - **對標局限與創新**：[ANOTA_對標局限與Y2核心創新點.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/paper-notes/ANOTA_對標局限與Y2核心創新點.md)
