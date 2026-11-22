@@ -15,7 +15,7 @@ categories:
 
 ## 📄 本地專題關聯
 - **所屬矩陣專題**：`[C.1 現代 API、微服務與授權模型]`, `[A.2 安全不變量與規格挖掘]`, `[A.3 語意錯誤定位與失效判定]`
-- **關聯檢索指南**：[Y2_擴展文獻全景檢索指南.md](../../proposals/logic-vuln-lifecycle/Y2-root-cause-localization/05-literature/Y2_擴展文獻全景檢索指南.md)
+- **關聯檢索指南**：[Y2_擴展文獻全景檢索指南.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/Y2_擴展文獻全景檢索指南.md)
 
 ---
 

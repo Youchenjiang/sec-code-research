@@ -14,7 +14,7 @@ categories:
 
 ## 📄 本地專題關聯
 - **所屬矩陣專題**：`[A.3 語意錯誤定位與失效判定]`, `[A.5 跨程序拓撲與全域風險矩陣]`
-- **關聯檢索指南**：[Y2_擴展文獻全景檢索指南.md](../../proposals/logic-vuln-lifecycle/Y2-root-cause-localization/05-literature/Y2_擴展文獻全景檢索指南.md)
+- **關聯檢索指南**：[Y2_擴展文獻全景檢索指南.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/Y2_擴展文獻全景檢索指南.md)
 
 ---
 
