@@ -225,6 +225,9 @@ research-vault/pdfs/
 
 # Local PDFs
 *.pdf
+# Saved web pages
+*.mhtml
+*.mht
 
 # Local penetration test case studies & temporary scratch
 case-studies/
