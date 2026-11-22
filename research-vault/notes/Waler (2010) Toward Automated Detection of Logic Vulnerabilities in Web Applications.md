@@ -15,7 +15,7 @@ categories:
 
 ## 📄 本地專題關聯
 - **所屬矩陣專題**：`[A.2 安全不變量與規格挖掘]`, `[B.1 差分與對比執行分析]`
-- **關聯檢索指南**：[Y2_擴展文獻全景檢索指南.md](../../proposals/logic-vuln-lifecycle/Y2-root-cause-localization/05-literature/Y2_擴展文獻全景檢索指南.md)
+- **關聯檢索指南**：[Y2_擴展文獻全景檢索指南.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/Y2_擴展文獻全景檢索指南.md)
 
 ---
 

@@ -15,9 +15,9 @@ categories:
 
 ## 📄 文獻存檔與關聯專題
 - **PDF 原文**：[code-security-research/2026-f938-paper.pdf](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/2026-f938-paper.pdf)
-- **技術解讀專題**：[ANOTA_論文核心技術解讀.md](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/05-literature/paper-notes/ANOTA_論文核心技術解讀.md)
-- **專案借鑑分析**：[ANOTA_論文價值與參考借鑑.md](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/05-literature/paper-notes/ANOTA_論文價值與參考借鑑.md)
-- **對標局限與創新**：[ANOTA_對標局限與Y2核心創新點.md](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/05-literature/paper-notes/ANOTA_對標局限與Y2核心創新點.md)
+- **技術解讀專題**：[ANOTA_論文核心技術解讀.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/paper-notes/ANOTA_論文核心技術解讀.md)
+- **專案借鑑分析**：[ANOTA_論文價值與參考借鑑.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/paper-notes/ANOTA_論文價值與參考借鑑.md)
+- **對標局限與創新**：[ANOTA_對標局限與Y2核心創新點.md](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/05-literature/paper-notes/ANOTA_對標局限與Y2核心創新點.md)
 
 ---
 
@@ -44,4 +44,4 @@ categories:
 
 ## 🧠 對 Y2 計畫之對照索引
 本論文為三年期計畫之第二年（Y2 業務邏輯漏洞根因定位）提供了關鍵的**反方對標與動機背書**（Anota 在 Section VI.C 坦承依賴人工標註，留待未來利用 LLM 實現自動化）：
-* [Y2 根因定位總目錄](file:///c:/Users/LabStrix/Documents/GitHub/Youchen/Security/code-security-research/proposals/logic-vuln-lifecycle/Y2-root-cause-localization/README.md)
+* [Y2 根因定位總目錄](https://github.com/Youchenjiang/sec-logic-vuln-rca/blob/main/README.md)

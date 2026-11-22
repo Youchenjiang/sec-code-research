@@ -5,7 +5,7 @@
 > 📌 **計畫提案文件分流說明**：
 > 國科會計畫申請、三年度架構設計與審查意見回覆等提案性質文件，已獨立歸檔至專門的 **[proposals/](../../proposals/)** 目錄：
 > * 舊計畫封存：[proposals/archive-secverify/](../../proposals/archive-secverify/)
-> * 新三年計畫：[proposals/logic-vuln-lifecycle/](../../proposals/logic-vuln-lifecycle/)
+> * 新三年計畫：~~[proposals/logic-vuln-lifecycle/](../../proposals/logic-vuln-lifecycle/)~~〔2026-11-22：Y2 部分含未送出的計畫書，已移到私人 repo sec-logic-vuln-rca，本 repo 不再保留〕
 
 ---
 
